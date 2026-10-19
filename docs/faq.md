@@ -2,11 +2,11 @@
 
 [中文](faq.md) · [English](faq.en.md) · [主页](../README.md) · [使用说明](usage.md)
 
-以下回答针对 `v1.3.0-alpha.1`（圆屏 version code 7）。兼容条件见[安装前确认](install.md#安装前确认)，实际使用情况见[测试记录](testing.md)。
+以下回答针对 `v1.3.0`（圆屏 version code 8）。兼容条件见[安装前确认](install.md#安装前确认)，实际使用情况见[测试记录](testing.md)。
 
 ## 1. 下载源码、构建 APK 或导入插件后就能使用吗？
 
-请从 [Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1) 下载 Magisk ZIP 或 Android 安装器 APK，按[安装说明](install.md)完成模块安装。安装器装在 U30 Pro 本机，核心在准备时从官方在线下载。
+请从 [Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0) 下载 Magisk ZIP 或 Android 安装器 APK，按[安装说明](install.md)完成模块安装。安装器装在 U30 Pro 本机，核心在准备时从官方在线下载。
 
 重启后首次 VPN 关闭、订阅为空。在已有 UFI-TOOLS 中导入 `U30ProVPN.txt`，录入自己的订阅后再开启。只构建 APK 或导入网页插件不会安装网关。只想看界面，可以使用[电脑预览](usage.md#在电脑上预览)。
 

@@ -2,7 +2,7 @@
 
 [简体中文](install.md) · [Project home](../README.en.md) · [Usage](usage.en.md) · [FAQ](faq.en.md)
 
-For **v1.3.0-alpha.1**, choose the Magisk ZIP or the Android installer APK. Both install the same module on the U30 Pro. Magisk and UFI-TOOLS must already be working; this release prepares a fresh installation rather than upgrading an existing private deployment.
+For **v1.3.0**, choose the Magisk ZIP or the Android installer APK. Both install the same module on the U30 Pro. Magisk and UFI-TOOLS must already be working; this release prepares a fresh installation and does not upgrade an existing alpha or private deployment.
 
 ## Before installation
 
@@ -33,12 +33,12 @@ For manual ZIP installation, Magisk can replace same-ID staged content before th
 
 ## Files to download
 
-Open the [v1.3.0-alpha.1 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1) and download from **Assets**:
+Open the [v1.3.0 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0) and download from **Assets**:
 
 | File | Purpose |
 | --- | --- |
-| `U30ProVPN-1.3.0-alpha.1-Magisk.zip` | Install through Magisk on the U30 Pro |
-| `U30ProVPN-1.3.0-alpha.1-Installer.apk` | Android entry on the U30 Pro, containing the same ZIP |
+| `U30ProVPN-1.3.0-Magisk.zip` | Install through Magisk on the U30 Pro |
+| `U30ProVPN-1.3.0-Installer.apk` | Android entry on the U30 Pro, containing the same ZIP |
 | `U30ProVPN.txt` | Import into UFI to enter your first subscription |
 | `SHA256SUMS` | Checksums for the downloads |
 
@@ -64,7 +64,7 @@ Upstream addresses are resolved through IPv4 DNS `223.5.5.5:53`. That service an
 
 ## Route 1: Magisk ZIP
 
-1. Transfer `U30ProVPN-1.3.0-alpha.1-Magisk.zip` to the **U30 Pro itself**.
+1. Transfer `U30ProVPN-1.3.0-Magisk.zip` to the **U30 Pro itself**.
 2. In Magisk, open **Modules**, install from local storage and select the ZIP.
 3. Wait for preparation and the core download to finish. When Magisk confirms staging, reboot.
 4. After startup, use the module card's **Action** to open “VPN 控制”. Allow initialization to finish if it is not ready yet.
@@ -74,7 +74,7 @@ Upstream addresses are resolved through IPv4 DNS `223.5.5.5:53`. That service an
 
 Install this APK on the **U30 Pro**, using your usual device-management method.
 
-1. Install `U30ProVPN-1.3.0-alpha.1-Installer.apk` and open “U30 Pro VPN 安装”.
+1. Install `U30ProVPN-1.3.0-Installer.apk` and open “U30 Pro VPN 安装”.
 2. Tap **安装模块** (Install module) and approve its root request in Magisk.
 3. Wait for confirmed staging, then tap **现在重启** (Reboot now), or reboot later yourself.
 4. After reboot, reopen the installer and tap **打开控制** (Open control), or use the Magisk module's Action.
@@ -86,7 +86,7 @@ Install this APK on the **U30 Pro**, using your usual device-management method.
 With the U30 Pro selected as your ADB target, run from the download directory:
 
 ```sh
-adb install "U30ProVPN-1.3.0-alpha.1-Installer.apk"
+adb install "U30ProVPN-1.3.0-Installer.apk"
 adb shell am start --user 0 -n com.codex.u30vpn.installer/.MainActivity
 ```
 
@@ -121,7 +121,7 @@ Normal boots use your saved desired VPN state. If it was enabled, the gateway st
 
 The first boot creates empty nodes, a device-generated management key and trust for the installed control APK, with VPN off. It does not import another device's subscription, UID, trust or private signing key.
 
-An interrupted same-release installation resumes only a verifiable transaction owned by this installer. It preserves its key and committed configuration. Existing private deployments and unknown same-package apps are refused; this alpha has no upgrade, signer-migration or forced-reinstall path. Do not copy trust files between devices or delete existing data to force installation.
+An interrupted same-release installation resumes only a verifiable transaction owned by this installer. It preserves its key and committed configuration. Existing alpha or private deployments and unknown same-package apps are refused; this release has no upgrade, signer-migration or forced-reinstall path. Do not copy trust files between devices or delete existing data to force installation.
 
 Magisk's disable setting controls later module startup; it need not stop a gateway already running. Disable VPN and check stock connectivity before disabling or removing the module.
 

@@ -2,7 +2,7 @@
 
 [English](device-integration.en.md) · [返回首页](../README.md)
 
-`v1.3.0-alpha.1` 提供面向固定设备条件的首次安装器：Magisk ZIP，以及内嵌同一 ZIP 的 Android 安装器 APK。下载者先读[安装与恢复](install.md)。设备需要事先完成固件、root 与 Magisk 准备；已有私有部署的升级需要另行处理。
+`v1.3.0` 提供面向固定设备条件的首次安装器：Magisk ZIP，以及内嵌同一 ZIP 的 Android 安装器 APK。下载者先读[安装与恢复](install.md)。设备需要事先完成固件、root 与 Magisk 准备；已有私有部署的升级需要另行处理。
 
 ## 已有运行环境
 

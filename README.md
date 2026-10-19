@@ -1,6 +1,6 @@
 # U30 Pro VPN Controller
 
-[中文](README.md) · [English](README.en.md) · [下载安装](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)
+[中文](README.md) · [English](README.en.md) · [下载安装](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)
 
 给已经 root 的中兴 U30 Pro 加上 VPN 管理功能。可以直接在设备圆屏上开关 VPN、切换节点和测速，也可以用手机或电脑打开 UFI 网页面板管理订阅。连接 U30 Pro 的设备共用它的 VPN 出口。
 
@@ -21,13 +21,13 @@
 
 ## 安装
 
-当前版本：**[v1.3.0-alpha.1](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)**。两种入口选一种，安装的模块相同。
+当前版本：**[v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)**。两种入口选一种，安装的模块相同。
 
 | 文件 | 怎么用 |
 | --- | --- |
-| [Magisk 模块 ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN-1.3.0-alpha.1-Magisk.zip) | 在 U30 Pro 的 Magisk 中从本地安装 |
-| [Android 安装器 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN-1.3.0-alpha.1-Installer.apk) | 安装到 U30 Pro 本机，打开后授权 root 并安装模块 |
-| [UFI 网页插件](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN.txt) | 导入已有 UFI-TOOLS，用来录入自己的订阅 |
+| [Magisk 模块 ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0/U30ProVPN-1.3.0-Magisk.zip) | 在 U30 Pro 的 Magisk 中从本地安装 |
+| [Android 安装器 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0/U30ProVPN-1.3.0-Installer.apk) | 安装到 U30 Pro 本机，打开后授权 root 并安装模块 |
+| [UFI 网页插件](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0/U30ProVPN.txt) | 导入已有 UFI-TOOLS，用来录入自己的订阅 |
 
 1. 按下表确认设备条件，下载一个安装包和网页插件。
 2. 安装模块，完成后重启 U30 Pro。

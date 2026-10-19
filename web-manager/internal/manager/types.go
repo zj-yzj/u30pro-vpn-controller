@@ -10,7 +10,7 @@ import (
 )
 
 const BasePath = "/data/adb/u30pro-vpn"
-const Version = "1.3.0-alpha.1"
+const Version = "1.3.0"
 const MaxEnvelope = 24576
 const envelopeLabel = "u30pro-vpn-web-v1"
 

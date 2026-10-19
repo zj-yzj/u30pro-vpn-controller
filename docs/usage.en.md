@@ -2,7 +2,7 @@
 
 [中文](usage.md) · [English](usage.en.md) · [Home](../README.en.md) · [FAQ](faq.en.md)
 
-This guide covers **v1.3.0-alpha.1**, with round-screen controller version code `7`. The app interface is currently Chinese. For a new installation, start with [Installation and recovery](install.en.md).
+This guide covers **v1.3.0**, with round-screen controller version code `8`. The app interface is currently Chinese. For a new installation, start with [Installation and recovery](install.en.md).
 
 ## Before using a device
 

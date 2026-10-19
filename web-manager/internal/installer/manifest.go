@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-const Version = "1.3.0-alpha.1"
+const Version = "1.3.0"
 const ModuleID = "codex_u30pro_vpn"
 const Base = "/data/adb/u30pro-vpn"
 const stageRoot = "/data/adb/.u30pro-vpn-install-" + Version

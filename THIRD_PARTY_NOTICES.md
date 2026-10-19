@@ -46,7 +46,7 @@ UFI authentication assets, signing identities, or a Mihomo executable.
   its Unix HTTP controller. This repository does not distribute that executable
   or its source. A release that adds the executable must separately handle its
   license, notices, and corresponding-source requirements.
-- The `v1.3.0-alpha.1` Magisk ZIP and Android installer APK do not embed the
+- The `v1.3.0` Magisk ZIP and Android installer APK do not embed the
   executable. Their device-side preparation downloads the pinned official
   upstream asset directly with TLS, size and digest verification. This project
   makes no complete corresponding-source distribution claim for that separately

@@ -2,9 +2,9 @@
 
 [English](install.en.md) · [项目首页](../README.md) · [使用说明](usage.md) · [常见问题](faq.md)
 
-当前版本为 **`v1.3.0-alpha.1`，仅用于首次安装**。可以选择 Magisk 模块 ZIP 或 Android 安装器 APK，两者安装同一个模块，都需要 U30 Pro 已有兼容的 Magisk。
+当前版本为 **`v1.3.0`，仅用于首次安装**。可以选择 Magisk 模块 ZIP 或 Android 安装器 APK，两者安装同一个模块，都需要 U30 Pro 已有兼容的 Magisk。
 
-已在自用 U30 Pro 实测，日常使用正常，详见[测试记录](testing.md)。本项目不获取 root、不刷写固件，也不覆盖升级已有的私有部署。
+已在自用 U30 Pro 实测，日常使用正常，详见[测试记录](testing.md)。本项目不获取 root、不刷写固件，也不覆盖升级已有的 alpha 或私有部署。
 
 ## 安装前确认
 
@@ -28,12 +28,12 @@
 
 ## 下载哪些文件
 
-在 [v1.3.0-alpha.1 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1) 的 Assets 下载：
+在 [v1.3.0 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0) 的 Assets 下载：
 
 | 文件 | 用途 |
 | --- | --- |
-| `U30ProVPN-1.3.0-alpha.1-Magisk.zip` | 用 Magisk 安装模块 |
-| `U30ProVPN-1.3.0-alpha.1-Installer.apk` | 可选的 U30 Pro 本机安装入口，内嵌同一个 ZIP |
+| `U30ProVPN-1.3.0-Magisk.zip` | 用 Magisk 安装模块 |
+| `U30ProVPN-1.3.0-Installer.apk` | 可选的 U30 Pro 本机安装入口，内嵌同一个 ZIP |
 | `U30ProVPN.txt` | 首次录入订阅需要的 UFI 网页插件，两种入口都需手动导入 |
 | `SHA256SUMS` | 下载文件的 SHA-256 校验清单 |
 | `APK-CERTIFICATE.txt` | APK 签名信息与证书指纹 |
@@ -62,7 +62,7 @@ U30 Pro 需要能访问 GitHub 和固定 IPv4 DNS `223.5.5.5:53`。下载失败�
 ## 方式一：使用 Magisk ZIP
 
 1. 把模块 ZIP 传到 **U30 Pro 本机**，保持设备联网。
-2. 在 Magisk 的“模块”中选择从本地存储安装，选中 `U30ProVPN-1.3.0-alpha.1-Magisk.zip`。
+2. 在 Magisk 的“模块”中选择从本地存储安装，选中 `U30ProVPN-1.3.0-Magisk.zip`。
 3. 等待核心下载与校验，确认 Magisk 显示模块已暂存后重启。这一步只暂存模块，不开启 VPN，也不改动热点路由或安装控制 APK。
 4. 重启并等初始化完成，在 Magisk 模块卡片点“操作 / Action”，打开“VPN 控制”。首次应显示 **VPN 已关闭、无节点、未保存订阅**。
 5. 按下文导入 UFI 插件并录入订阅。
@@ -71,7 +71,7 @@ U30 Pro 需要能访问 GitHub 和固定 IPv4 DNS `223.5.5.5:53`。下载失败�
 
 安装器要装在 **U30 Pro 上**。它的包名为 `com.codex.u30vpn.installer`；日常圆屏控制应用为 `com.codex.u30vpn`。
 
-1. 通过已有的设备管理方式安装 `U30ProVPN-1.3.0-alpha.1-Installer.apk`，打开“U30 Pro VPN 安装”。如需安装来源权限，按系统提示授权。
+1. 通过已有的设备管理方式安装 `U30ProVPN-1.3.0-Installer.apk`，打开“U30 Pro VPN 安装”。如需安装来源权限，按系统提示授权。
 2. 点“安装模块”，在 Magisk 提示中允许本次 root 授权。
 3. 等待“模块已暂存”，再点“现在重启”，或稍后自行重启。应用不会自动重启。
 4. 重启后打开安装器，点“打开控制”，也可使用 Magisk 模块 Action。首次应为 VPN 关闭、未配置订阅，然后继续下文。
@@ -84,7 +84,7 @@ U30 Pro 需要能访问 GitHub 和固定 IPv4 DNS `223.5.5.5:53`。下载失败�
 确认连接目标是 U30 Pro 后，在下载目录执行；有多个连接时先选择正确的设备：
 
 ```sh
-adb install "U30ProVPN-1.3.0-alpha.1-Installer.apk"
+adb install "U30ProVPN-1.3.0-Installer.apk"
 adb shell am start --user 0 -n com.codex.u30vpn.installer/.MainActivity
 ```
 
@@ -113,7 +113,7 @@ ADB 用于安装和打开 APK，模块安装仍需设备已有 Magisk 和本次 
 - 首次启动会生成本机管理密钥，创建空 provider 和节点列表，VPN 关闭。
 - 后续重启读取已保存的 VPN 开关状态。上次为开启时，需等 Android 和网关就绪；这段冷启动时间不保证所有客户端流量受隧道或阻断保护，有此要求时请等 VPN 运行后再接入客户端。
 - 同版本安装中断后，只继续可核验的原安装事务，保留已有密钥和已提交配置。不要复制其他设备的 trust 来补齐安装。
-- 已有私有部署、未知同包应用会被拒绝。本版不提供覆盖升级、签名迁移或自动卸载重装，请保留现状另行规划迁移。
+- 已有 alpha 或私有部署、未知同包应用会被拒绝。本版不提供覆盖升级、签名迁移或自动卸载重装，请保留现状另行规划迁移。
 - Magisk 禁用模块影响后续启动。禁用或卸载前，先在控制页关闭 VPN，确认原厂联网恢复。
 
 ## 卸载与保留的数据

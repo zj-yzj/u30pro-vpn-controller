@@ -2,7 +2,7 @@
 
 [中文](usage.md) · [English](usage.en.md) · [返回主页](../README.md) · [FAQ](faq.md)
 
-本页介绍 `v1.3.0-alpha.1`（圆屏 version code 7）的日常操作。首次使用请先完成[安装](install.md)；运行情况见[测试记录](testing.md)。
+本页介绍 `v1.3.0`（圆屏 version code 8）的日常操作。首次使用请先完成[安装](install.md)；运行情况见[测试记录](testing.md)。
 
 <a id="目录"></a>
 

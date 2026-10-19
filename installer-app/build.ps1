@@ -50,7 +50,7 @@ if ($signingRequested) {
 [xml]$appManifest = Get-Content -Raw -LiteralPath (Join-Path $source 'AndroidManifest.xml')
 $ns = 'http://schemas.android.com/apk/res/android'
 $version = $appManifest.manifest.GetAttribute('versionName', $ns)
-if ($version -ne '1.3.0-alpha.1') { throw 'Unexpected installer source version.' }
+if ($version -ne '1.3.0') { throw 'Unexpected installer source version.' }
 $inputHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $ModuleZip).Hash.ToLowerInvariant()
 $zipReader = [IO.Compression.ZipFile]::OpenRead($ModuleZip)
 try {

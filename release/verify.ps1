@@ -11,8 +11,8 @@ function EntryBytes($Entry) {
 }
 $assetsRoot=(Resolve-Path -LiteralPath $Assets).Path
 $report=Get-Content -LiteralPath (Join-Path $assetsRoot 'release-manifest.json') -Raw | ConvertFrom-Json
-if ($report.sourceDirty -or $report.version -ne '1.3.0-alpha.1' -or $report.core.bundled) { throw 'Unexpected release provenance.' }
-[string[]]$payloadAssets=@('U30ProVPN-1.3.0-alpha.1-Magisk.zip','U30ProVPN-1.3.0-alpha.1-Installer.apk','U30ProVPN.txt','APK-CERTIFICATE.txt')
+if ($report.sourceDirty -or $report.version -ne '1.3.0' -or $report.core.bundled) { throw 'Unexpected release provenance.' }
+[string[]]$payloadAssets=@('U30ProVPN-1.3.0-Magisk.zip','U30ProVPN-1.3.0-Installer.apk','U30ProVPN.txt','APK-CERTIFICATE.txt')
 $checksums=Read-ChecksumInventory @(Get-Content -LiteralPath (Join-Path $assetsRoot 'SHA256SUMS')) @($payloadAssets + 'release-manifest.json')
 foreach ($name in $checksums.Keys) {
     $expected=$checksums[$name]

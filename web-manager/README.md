@@ -1,6 +1,6 @@
 # U30 Pro VPN 管理后端
 
-此目录提供 Go 管理程序、原生屏幕控制桥、固定设备首次安装引擎及测试。`v1.3.0-alpha.1` 提供 Magisk ZIP 和内嵌同一 ZIP 的 Android 安装器，要求已有兼容 Magisk、固定 MU5358/B23/API35 profile 与现有 UFI。设备需事先完成固件和 root 准备；下载者从[安装与恢复](../docs/install.md)开始。已有私有部署的升级需要另行处理。
+此目录提供 Go 管理程序、原生屏幕控制桥、固定设备首次安装引擎及测试。`v1.3.0` 提供 Magisk ZIP 和内嵌同一 ZIP 的 Android 安装器，要求已有兼容 Magisk、固定 MU5358/B23/API35 profile 与现有 UFI。设备需事先完成固件和 root 准备；下载者从[安装与恢复](../docs/install.md)开始。已有私有部署的升级需要另行处理。
 
 ## 程序与接口
 

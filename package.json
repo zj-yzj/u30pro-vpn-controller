@@ -1,6 +1,6 @@
 {
   "name": "u30pro-vpn-controller",
-  "version": "1.3.0-alpha.1",
+  "version": "1.3.0",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -12,7 +12,7 @@
     "check:publication": "node scripts/check-publication.mjs",
     "build:ui": "node web-manager/ui/assemble.mjs",
     "test:ui": "node web-manager/ui/logic.test.mjs",
-    "test:release": "node --test release/module.test.mjs release/package.test.mjs",
+    "test:release": "node --test release/module.test.mjs release/package.test.mjs release/version.test.mjs",
     "test:preview": "node web-manager/ui/preview-http.test.mjs",
     "preview": "node web-manager/ui/serve-preview.mjs"
   },

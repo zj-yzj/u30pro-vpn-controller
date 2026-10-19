@@ -6,13 +6,13 @@ For everyday controls, see [Usage](usage.en.md). For the supported device profil
 
 ## 1. Can I use it immediately after downloading source, building an APK or importing the plugin?
 
-Use one of the installation packages from the [Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1): the Magisk ZIP or the installer APK. Both go on the U30 Pro and install the same module. The module prepares the backend and controller; importing `U30ProVPN.txt` adds the web interface to your existing UFI.
+Use one of the installation packages from the [Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0): the Magisk ZIP or the installer APK. Both go on the U30 Pro and install the same module. The module prepares the backend and controller; importing `U30ProVPN.txt` adds the web interface to your existing UFI.
 
 The device downloads the official Mihomo core during installation. After reboot, enter your own subscription through UFI and enable VPN. To explore the interface without a device, use the [offline preview](usage.en.md#preview-on-a-computer).
 
 ## 2. Does it support other U30 Pro firmware, hotspots or OpenWrt?
 
-This alpha supports the [fixed device profile](install.en.md#before-installation). Other firmware, root implementations, hotspots and OpenWrt need their own integration. The APK's `minSdk 26` is not the installer's supported Android range. See [Device integration](device-integration.en.md) for the network layout and porting requirements.
+This release supports the [fixed device profile](install.en.md#before-installation). Other firmware, root implementations, hotspots and OpenWrt need their own integration. The APK's `minSdk 26` is not the installer's supported Android range. See [Device integration](device-integration.en.md) for the network layout and porting requirements.
 
 ## 3. What if the local service is disconnected, trust fails or controls are disabled?
 

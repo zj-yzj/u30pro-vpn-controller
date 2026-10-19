@@ -59,7 +59,7 @@ public final class MainActivity extends Activity implements InstallController.Ob
         LinearLayout content = new LinearLayout(this); content.setOrientation(LinearLayout.VERTICAL);
         scroll.addView(content, new ScrollView.LayoutParams(-1, -2));
         content.addView(text("U30 Pro VPN 安装", 13));
-        content.addView(text(BuildConfig.MODULE_VERSION + " · 预发布", 8));
+        content.addView(text("v" + BuildConfig.MODULE_VERSION, 8));
         content.addView(text(controller.summary(), 10), new LinearLayout.LayoutParams(-1, -2));
         InstallerCore.Phase phase = controller.phase();
         Button install = button("安装模块", view -> controller.install());

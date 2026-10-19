@@ -2,7 +2,7 @@
 
 [简体中文](device-integration.md) · [Project home](../README.en.md)
 
-`v1.3.0-alpha.1` adds a fixed-profile first installer: a Magisk ZIP and an
+`v1.3.0` adds a fixed-profile first installer: a Magisk ZIP and an
 Android installer APK embedding the same ZIP. Downloaders should start with
 [Installation and recovery](install.en.md). Prepare the required firmware, root
 and Magisk environment first. Existing private deployments need their own upgrade procedure.

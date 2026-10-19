@@ -35,11 +35,11 @@ variables:
 ./installer-app/build.ps1 -JavaHome $env:JAVA_HOME -AndroidJar /path/android.jar -BuildTools /path/build-tools -ModuleZip /path/U30ProVPN.zip -OutputDir /absolute/external/apk-output
 ```
 
-The module must contain one root `module.prop` with version `1.3.0-alpha.1`.
+The module must contain one root `module.prop` with version `1.3.0`.
 The builder generates `BuildConfig` with that version and the exact copied ZIP
 size/hash, runs host tests, and writes `U30ProVPNInstaller-unsigned.apk` and
 `build-manifest.json`. Android source minSdk is 26, targetSdk is 35 and the
-versionCode is 130001. Only build-time Java constants can select the embedded ZIP.
+versionCode is 130100. Only build-time Java constants can select the embedded ZIP.
 
 Signing is opt-in: pass all of `-Keystore`, `-KeystorePasswordFile`, `-KeyAlias`.
 The script never searches for or creates an identity. Signed output is

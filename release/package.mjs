@@ -3,7 +3,7 @@ import {readdir,readFile,lstat,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-export const version='1.3.0-alpha.1';
+export const version='1.3.0';
 export const moduleId='codex_u30pro_vpn';
 const allowed=new Set(['module.prop','customize.sh','service.sh','action.sh','uninstall.sh','u30setup',
   'payload/webctl','payload/webbridge','payload/U30ProVPN.apk','payload/config.yaml',

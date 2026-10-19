@@ -1,6 +1,6 @@
 # U30 Pro native VPN controller
 
-Version 1.3.0-alpha.1 (Android version code 7) is a small Java touchscreen companion for the root-side controller in this repository. It targets the U30 Pro's physically circular 240 × 240 panel. Interactive controls fit inside a centered 164 × 164 pixel safe area.
+Version 1.3.0 (Android version code 8) is a small Java touchscreen companion for the root-side controller in this repository. It targets the U30 Pro's physically circular 240 × 240 panel. Interactive controls fit inside a centered 164 × 164 pixel safe area.
 
 This directory contains the everyday control app and its standalone build. The separate [Android installer](../installer-app/README.md) and Magisk ZIP provide first installation for the fixed device profile. Prepare root and Magisk first, then follow [Installation and recovery](../docs/install.en.md) ([中文](../docs/install.md)). Existing private deployments need their own upgrade procedure.
 

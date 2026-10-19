@@ -1,6 +1,6 @@
 # U30 Pro VPN Controller
 
-[中文](README.md) · [English](README.en.md) · [Download](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)
+[中文](README.md) · [English](README.en.md) · [Download](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)
 
 VPN controls for a rooted ZTE U30 Pro. Switch VPN on or off, pick a node and test latency on the device's round touchscreen, or open the UFI web panel from a phone or computer to manage subscriptions. Devices connected to the U30 Pro share its VPN exit.
 
@@ -21,13 +21,13 @@ Tests measure latency in milliseconds. New nodes have no results until you run a
 
 ## Installation
 
-Current release: **[v1.3.0-alpha.1](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)**. Choose one installation entry; both install the same module.
+Current release: **[v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)**. Choose one installation entry; both install the same module.
 
 | File | How to use it |
 | --- | --- |
-| [Magisk module ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN-1.3.0-alpha.1-Magisk.zip) | Install from local storage in Magisk on the U30 Pro |
-| [Android installer APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN-1.3.0-alpha.1-Installer.apk) | Install on the U30 Pro, open it and grant root to install the module |
-| [UFI web plugin](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN.txt) | Import into existing UFI-TOOLS to enter your subscription |
+| [Magisk module ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0/U30ProVPN-1.3.0-Magisk.zip) | Install from local storage in Magisk on the U30 Pro |
+| [Android installer APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0/U30ProVPN-1.3.0-Installer.apk) | Install on the U30 Pro, open it and grant root to install the module |
+| [UFI web plugin](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0/U30ProVPN.txt) | Import into existing UFI-TOOLS to enter your subscription |
 
 1. Check the device requirements below, then download one installation package and the plugin.
 2. Install the module and reboot the U30 Pro.

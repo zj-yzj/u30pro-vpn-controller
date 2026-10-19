@@ -4,7 +4,7 @@
 
 所有命令从仓库根目录开始；需要 Node.js/npm、Go 1.27 或兼容版本、JDK 17。Android 构建使用 Platform 35 与 Build Tools 35，工具链由使用者自行安装。
 
-只想安装的用户直接使用 [v1.3.0-alpha.1 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1) 和[安装说明](install.md)，无需电脑上的编译工具。
+只想安装的用户直接使用 [v1.3.0 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0) 和[安装说明](install.md)，无需电脑上的编译工具。
 
 ## 双入口发布构建
 
@@ -20,7 +20,7 @@
 
 Node 可用 `-Node` 显式指定；已在源码树外安装固定 Forge 依赖时，可设置 `U30PRO_NODE_RUNTIME`。Android 工具链和发行签名由构建者提供。发行身份应与开发设备隔离、在后续发行中复用并妥善备份；私钥和密码保存在源码树外。
 
-上传文件仅为 `U30ProVPN-1.3.0-alpha.1-Magisk.zip`、`U30ProVPN-1.3.0-alpha.1-Installer.apk`、`U30ProVPN.txt`、`APK-CERTIFICATE.txt`、`release-manifest.json`、`SHA256SUMS`。输出中的 `work/` 是构建中间目录，不是待上传资产。`installer-app/build.ps1` 可单独使用 `-ModuleZip` 编译安装器，参数与主机测试见[安装器说明](../installer-app/README.md)。
+上传文件仅为 `U30ProVPN-1.3.0-Magisk.zip`、`U30ProVPN-1.3.0-Installer.apk`、`U30ProVPN.txt`、`APK-CERTIFICATE.txt`、`release-manifest.json`、`SHA256SUMS`。输出中的 `work/` 是构建中间目录，不是待上传资产。`installer-app/build.ps1` 可单独使用 `-ModuleZip` 编译安装器，参数与主机测试见[安装器说明](../installer-app/README.md)。
 
 发布前核对产物摘要、APK 签名和内嵌 ZIP 一致性，并在 Release 说明中记录测试结果与跳过项。项目的主机测试和设备验证范围见[测试与设备验证](testing.md)。
 

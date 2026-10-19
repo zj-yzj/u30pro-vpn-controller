@@ -12,7 +12,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
-$version = '1.3.0-alpha.1'
+$version = '1.3.0'
 $coreSHA = 'bb9afbd48717f92d59e07da35fb694b83d40d6edb63eb9033c2ee4174137d195'
 $utf8 = [Text.UTF8Encoding]::new($false)
 function Checked([string]$Exe,[string[]]$Arguments) {

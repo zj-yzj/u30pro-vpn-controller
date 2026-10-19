@@ -7,7 +7,7 @@ Install Node.js 18 or newer, npm, Go 1.27 or a compatible toolchain, and JDK 17.
 Android builds also require Android Platform 35 and Build Tools 35.
 SDKs and signing identities are supplied by the person building the project.
 
-Downloaders can use the [v1.3.0-alpha.1 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)
+Downloaders can use the [v1.3.0 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)
 and [installation guide](install.en.md) without installing host build tools.
 
 ## Build both release entries
@@ -32,8 +32,8 @@ release signer explicitly. Keep a dedicated
 release identity separate from the development device, reuse it for subsequent
 releases and back it up privately. Store keys and password files outside the checkout.
 
-Upload only `U30ProVPN-1.3.0-alpha.1-Magisk.zip`,
-`U30ProVPN-1.3.0-alpha.1-Installer.apk`, `U30ProVPN.txt`, `APK-CERTIFICATE.txt`,
+Upload only `U30ProVPN-1.3.0-Magisk.zip`,
+`U30ProVPN-1.3.0-Installer.apk`, `U30ProVPN.txt`, `APK-CERTIFICATE.txt`,
 `release-manifest.json` and `SHA256SUMS`. The output `work/` directory contains
 intermediate files and is not an asset. For the standalone installer build with
 `-ModuleZip`, parameters and host tests, see [installer documentation](../installer-app/README.md).
