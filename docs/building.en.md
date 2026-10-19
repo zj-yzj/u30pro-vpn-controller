@@ -27,10 +27,10 @@ outside the checkout**, and a dedicated release keystore/password file/alias:
 ```
 
 `-Node` can select Node explicitly. Use `U30PRO_NODE_RUNTIME` for pinned Forge
-dependencies installed outside the checkout. The build downloads no Android
-toolchain and does not discover the original device signer. Keep a dedicated
+dependencies installed outside the checkout. Supply the Android toolchain and
+release signer explicitly. Keep a dedicated
 release identity separate from the development device, reuse it for subsequent
-releases and back it up privately. Keys/passwords are never upload artifacts.
+releases and back it up privately. Store keys and password files outside the checkout.
 
 Upload only `U30ProVPN-1.3.0-alpha.1-Magisk.zip`,
 `U30ProVPN-1.3.0-alpha.1-Installer.apk`, `U30ProVPN.txt`, `APK-CERTIFICATE.txt`,
@@ -38,10 +38,9 @@ Upload only `U30ProVPN-1.3.0-alpha.1-Magisk.zip`,
 intermediate files and is not an asset. For the standalone installer build with
 `-ModuleZip`, parameters and host tests, see [installer documentation](../installer-app/README.md).
 
-Checksums, signatures and embedded-ZIP identity checks establish artifact identity.
-Record actual verification results and skips in Release notes. This alpha has
-no complete fresh-device acceptance; a successful build does not establish
-physical installation, network restoration or teardown success.
+Before publishing, check artifact digests, APK signatures and embedded-ZIP identity,
+and record test results and skips in Release notes. See [Testing](testing.en.md)
+for host-test coverage and device-validation records.
 
 ## Web plugin and offline preview
 
@@ -69,8 +68,8 @@ directories, the `U30PRO_UI_OUT` setting, and externally installed test dependen
 ## Go backend
 
 Put `java` and `javac` on PATH so the Java/Go envelope interoperability test
-runs. That test is skipped when the JDK is unavailable; a successful command
-with skipped tests is not equivalent to the complete verification.
+runs. The test is skipped when the JDK is unavailable; include any skips in
+your test report.
 
 ```sh
 cd web-manager
@@ -93,8 +92,7 @@ go build -trimpath -ldflags='-s -w' -o build/webbridge ./cmd/nativebridge
 
 Clear cross-compilation environment variables before returning to host tests.
 The normal build does not enable the optional `diagnostic` build tag.
-Git source excludes these executables; Release modules separately contain the
-compiled project programs.
+Build output is ignored by Git. Release modules contain the compiled project programs.
 
 ## Android application
 
@@ -111,9 +109,9 @@ The script compiles Android sources and executes host crypto and swipe tests.
 For `TestOnly`, custom output directories, explicit signing options and the
 smoke test, see [native application documentation](../native-manager/README.md).
 
-Keep signing keys and password files outside the repository. Installing an
-application requires its own signing identity and root-side trust provisioning;
-a successful build does not perform those operations.
+Keep signing keys and password files outside the repository. Installation also
+requires a signing identity and root-side trust provisioning; see the native
+application documentation for those steps.
 
 ## Publication checks
 
@@ -127,5 +125,4 @@ caches. The publication scanner reports locations and categories rather than
 matching secret values. It checks common sensitive file types, personal paths,
 private-key material, non-example credential URLs and supported image assets.
 The link checker validates local Markdown file and image references.
-These checks support human review; they do not prove that arbitrary future
-changes contain no sensitive material.
+Review the changes alongside the check results before publishing.

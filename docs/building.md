@@ -18,11 +18,11 @@
   -KeystorePasswordFile $passwordFile -KeyAlias $keyAlias
 ```
 
-Node 可用 `-Node` 显式指定；已在源码树外安装固定 Forge 依赖时，可设置 `U30PRO_NODE_RUNTIME`。构建不自动下载 Android 工具链，不搜索原设备签名。发行身份应与原开发设备隔离、在后续发行中复用并妥善备份；私钥和密码不进入源码或上传文件。
+Node 可用 `-Node` 显式指定；已在源码树外安装固定 Forge 依赖时，可设置 `U30PRO_NODE_RUNTIME`。Android 工具链和发行签名由构建者提供。发行身份应与开发设备隔离、在后续发行中复用并妥善备份；私钥和密码保存在源码树外。
 
 上传文件仅为 `U30ProVPN-1.3.0-alpha.1-Magisk.zip`、`U30ProVPN-1.3.0-alpha.1-Installer.apk`、`U30ProVPN.txt`、`APK-CERTIFICATE.txt`、`release-manifest.json`、`SHA256SUMS`。输出中的 `work/` 是构建中间目录，不是待上传资产。`installer-app/build.ps1` 可单独使用 `-ModuleZip` 编译安装器，参数与主机测试见[安装器说明](../installer-app/README.md)。
 
-构建产物的摘要、签名与 ZIP 一致性检查只说明文件身份；完整验证结果与跳过项应写入 Release 说明。本 alpha 尚无干净设备全流程实机验收，不能因构建成功就宣称首装、网络恢复或卸载已在实机通过。
+发布前核对产物摘要、APK 签名和内嵌 ZIP 一致性，并在 Release 说明中记录测试结果与跳过项。项目的主机测试和设备验证范围见[测试与设备验证](testing.md)。
 
 ## 网页插件与离线预览
 
@@ -55,7 +55,7 @@ go build -trimpath -ldflags='-s -w' -o build/webctl ./cmd/webctl
 go build -trimpath -ldflags='-s -w' -o build/webbridge ./cmd/nativebridge
 ```
 
-这些环境变量仅供交叉编译；运行主机测试前应清除 `GOOS`、`GOARCH` 的交叉编译设置。输出目录由 Git 忽略，Git 源码树不提交这些二进制；Release 模块另含已编译的项目程序。
+这些环境变量仅供交叉编译；运行主机测试前应清除 `GOOS`、`GOARCH` 的交叉编译设置。输出目录由 Git 忽略。Release 模块会包含编译后的项目程序。
 
 ## Android 应用
 
@@ -72,4 +72,4 @@ node scripts/check-publication.mjs
 node scripts/check-doc-links.mjs
 ```
 
-该检查只输出相对路径、行号和问题类别，不打印匹配到的敏感内容。它检查发布目录结构、敏感文件类型、个人路径、私钥文本和非示例订阅凭据等常见问题；它不能替代人工代码审查。构建测试完成后，发布目录中不应包含生成物或依赖缓存。
+发布检查会报告相对路径、行号和问题类别，涵盖目录结构、敏感文件类型、个人路径、私钥文本和非示例订阅凭据等常见问题。链接检查验证本地 Markdown 文件和图片引用。发布前结合检查结果审阅改动，并从源码目录移出构建生成物与依赖缓存。

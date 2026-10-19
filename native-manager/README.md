@@ -2,9 +2,9 @@
 
 Version 1.3.0-alpha.1 (Android version code 7) is a small Java touchscreen companion for the root-side controller in this repository. It targets the U30 Pro's physically circular 240 × 240 panel. Interactive controls fit inside a centered 164 × 164 pixel safe area.
 
-This directory contains the everyday control app and its standalone build. The separate [Android installer](../installer-app/README.md) and Magisk ZIP are published as a fixed-profile first-install alpha. Follow [Installation and recovery](../docs/install.en.md) ([中文](../docs/install.md)); neither roots/flashes a device or upgrades a private deployment. No signing private key or real subscription is supplied.
+This directory contains the everyday control app and its standalone build. The separate [Android installer](../installer-app/README.md) and Magisk ZIP provide first installation for the fixed device profile. Prepare root and Magisk first, then follow [Installation and recovery](../docs/install.en.md) ([中文](../docs/install.md)). Existing private deployments need their own upgrade procedure.
 
-Use Magisk's module Action or the installer's Open control button after reboot. First installation has an empty node list and VPN off. Enter your own URL through the existing UFI plugin before enabling; the circular Subscription page updates only an already saved URL. Optional overlay consent is still a separate user action. This alpha has no complete fresh-device physical installation/network/teardown acceptance.
+Use Magisk's module Action or the installer's Open control button after reboot. First installation has an empty node list and VPN off. Enter your own URL through the existing UFI plugin before enabling; the circular Subscription page updates an already saved URL. The optional overlay needs separate user consent.
 
 ## On-device controls
 
@@ -19,9 +19,9 @@ External node measurements are initiated manually. Foreground refreshes and the 
 
 The APK requests Android overlay, foreground-service, special-use foreground-service and boot-completed permissions. It has no INTERNET permission and does not request direct root access. The optional shortcut requires explicit user authorization, appears only on the unlocked factory Home screen, and hides while the screen is off or another page is focused.
 
-Commands use the local abstract Unix socket and existing encrypted request protocol. The app requires a root peer. The root-side bridge must independently validate the caller's UID, package identity and pinned APK. A new build or signing identity therefore needs corresponding root-side trust provisioning. Copying an APK onto an arbitrary rooted hotspot is insufficient.
+Commands use the local abstract Unix socket and existing encrypted request protocol. The app requires a root peer. The root-side bridge validates the caller's UID, package identity and pinned APK. A new build or signing identity needs corresponding root-side trust provisioning.
 
-Android updates also require the same signing certificate as the installed app. No previously used private key is supplied. Release signing uses a separate identity outside the checkout. The first installer accepts only its fixed release APK and provisions the actual UID/path plus pinned digest; it refuses unknown existing same-package apps and does not migrate the old device signer. Coordinate any later signer/APK-pin change with a reviewed installation/recovery procedure.
+Android updates require the same signing certificate as the installed app. Release signing uses a dedicated identity outside the checkout. The first installer accepts only its fixed release APK and provisions the actual UID/path plus pinned digest; it refuses unknown existing same-package apps. Coordinate later signer/APK-pin changes with the installation and recovery procedure.
 
 ## Build
 
@@ -59,7 +59,7 @@ node ./android/tests/round-screen-geometry.mjs
   -BuildTools $buildTools -OutputDir $freshOutputDir
 ```
 
-The smoke test requires a fresh output directory, runs both TestOnly and a full unsigned build, checks the artifact checksum, verifies the absence of an APK signature and checks that no signing directory was created. Host tests cover real Java encryption and the swipe intent state machine. Geometry checks bound the round-screen controls and shortcut corners; they do not substitute for Android lifecycle, peer-credential or physical touch validation.
+The smoke test requires a fresh output directory, runs both TestOnly and a full unsigned build, checks the artifact checksum, verifies the absence of an APK signature and checks that no signing directory was created. Host tests cover Java encryption and the swipe intent state machine. Geometry checks bound the round-screen controls and shortcut corners. See [Testing](../docs/testing.en.md) for the full test scope and device-validation record.
 
 `android/tests/round-screen-preview.html` contains no screenshot or embedded image. This offline viewer lets you select your own local screenshot, apply a circular mask and inspect safe-area guides without uploading the image.
 

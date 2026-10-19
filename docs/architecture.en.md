@@ -39,8 +39,8 @@ reconciles runtime, APK, trust and commit after reboot.
 First state has no subscription/nodes and VPN off, with a device-generated key.
 Trust accepts actual UID/path only when the installed APK matches the fixed
 release digest. Unknown runtimes or same-package applications are refused.
-See [Installation and recovery](install.en.md) for the physical-validation limits,
-enabled cold-boot window, potentially deferred teardown and retained private backups.
+See [Installation and recovery](install.en.md) for the full flow, cold-boot behavior,
+deferred teardown and retained private backups, and [Testing](testing.en.md) for test coverage.
 
 The Mihomo controller uses a device-local Unix socket. This project does not
 add a LAN TCP administration listener. The web panel relies on UFI's existing
@@ -53,9 +53,8 @@ Node measurement jobs are queued by explicit batch-refresh or single-node test
 actions. A single-node test does not change the selected exit. Status reads
 retrieve existing results and do not initiate measurements.
 
-The foreground interface and optional floating entry still perform local
-status and visibility reads. “No background node testing” therefore does not
-mean “no local status reads.” Subscription updates retain their one-time
+The foreground interface and optional floating entry read local status and
+visibility. Subscription updates perform one-time
 configuration and selected-exit validation. The reference configuration has
 neither periodic provider health checks nor a URLTest group.
 
@@ -63,6 +62,5 @@ neither periodic provider health checks nor a URLTest group.
 
 Gateway scripts depend on the stock device network layout, including the LAN
 bridge, policy routing, DNS and SFP acceleration state. The reference source
-retains protection and restoration logic. Read
-[gateway integration notes](../gateway/reference/README.md) before adapting it.
-The repository excludes device snapshots and historical installation transactions.
+includes protection and restoration logic. Read
+[gateway integration notes](../gateway/README.en.md) before adapting it.

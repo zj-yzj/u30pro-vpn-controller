@@ -4,8 +4,8 @@
 
 `v1.3.0-alpha.1` adds a fixed-profile first installer: a Magisk ZIP and an
 Android installer APK embedding the same ZIP. Downloaders should start with
-[Installation and recovery](install.en.md). It bundles no firmware or root
-acquisition tools and supports neither arbitrary firmware nor private-deployment upgrades.
+[Installation and recovery](install.en.md). Prepare the required firmware, root
+and Magisk environment first. Existing private deployments need their own upgrade procedure.
 
 ## Required environment
 
@@ -40,10 +40,14 @@ release control APK and provisions its actual local trust before committing.
 First installation starts no core, changes no routes and never enables VPN.
 
 Existing private runtimes, unknown same-package APKs/modules and reserved-object
-conflicts prevent first installation. They are not assumed upgradeable. Only a
+conflicts prevent first installation. Only a
 verifiable interrupted same-release transaction can resume, retaining its key
 and committed configuration. Subsequent normal boots use saved desired state;
-enabled cold boots have a startup window without a zero-leak guarantee.
+enabled cold boots have a window before network protection is ready.
+
+Teardown performs a controlled stop, removes only proven-owned objects and
+retains a root-private backup. Unavailable PM/network administration can defer
+cleanup. See [recovery](install.en.md#uninstalling-and-retained-data).
 
 ## Native application trust
 
@@ -53,15 +57,14 @@ and SHA-256. Do not reuse another device's UID or a previous APK's digest.
 The runtime trust record is not distributed in this repository.
 
 The standalone Android build defaults to an unsigned APK. Release builds use a
-separate identity outside the checkout and never read/publish the development
-device's private signer. Installer trust uses actual UID/path only after the
-installed APK matches the fixed release digest. It must never pin whichever
-unknown APK happens to be installed. Same-package signer conflicts are refused,
-without forced uninstall/replacement.
+dedicated identity outside the checkout. Installer trust uses actual UID/path
+only after the installed APK matches the fixed release digest. Unknown APKs
+and same-package signer conflicts are refused. The installer never uninstalls
+an existing app to bypass a signer conflict.
 
 ## Gateway adaptation
 
-Read the fixed assumptions in [gateway/reference/README.md](../gateway/reference/README.md):
+Read the fixed assumptions in [gateway/reference/README.en.md](../gateway/reference/README.en.md):
 they include `br0`, the LAN subnet, SFP control, TUN name, route table, rule
 priorities and protected directories. The two digest parameters in the supervisor
 template must be rendered from the actual reviewed core and final configuration.
@@ -72,13 +75,7 @@ the installer. Ports still need reviewed baseline, digest and recovery adaptatio
 
 ## Verification scope
 
-Automated tests use mocked controllers and synthetic nodes. They do not need
-an actual subscription or perform node tests on the hotspot. Coverage includes
-envelope cryptography, input limits, transaction recovery, node operations and
-screen geometry.
-
-This alpha has no complete fresh-device acceptance for installation/reboot,
-client DNS/TLS/HTTPS, stop and uninstall. Host tests do not establish those results.
-Teardown first performs a controlled stop and acts only on proven-owned objects,
-retaining a root-private backup. Unavailable PM/network administration can defer
-cleanup. See [recovery](install.en.md#uninstalling-and-retained-data).
+Automated tests cover envelope cryptography, input limits, transaction recovery,
+node operations and screen geometry using mocked controllers and synthetic nodes.
+Everyday use has been tested successfully on the author's own U30 Pro. See
+[Testing](testing.en.md) for the full test scope and device-validation record.

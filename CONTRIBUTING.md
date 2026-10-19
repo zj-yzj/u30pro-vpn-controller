@@ -30,9 +30,9 @@ identify illustrations accurately, and keep build paths configurable.
 
 Follow [构建说明](docs/building.md) / [building instructions](docs/building.en.md).
 Run the relevant existing tests, publication scan and local-link checker.
-Distinguish automated host verification from physical-device results in your
-change description. Do not claim a new firmware is supported solely because
-the code compiles.
+Include test results and any device or firmware used in your change description.
+See [测试记录](docs/testing.md) / [Testing](docs/testing.en.md) for the current
+coverage and device-validation record.
 
 原创代码和文档贡献按本仓库 MIT 许可提供；引入第三方内容时需要保留其准确来源与许可。
 Original code and documentation contributions are provided under this

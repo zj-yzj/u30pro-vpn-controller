@@ -2,26 +2,25 @@
 
 [简体中文](README.md) · [Project home](../../README.en.md)
 
-This is reviewable shell source for the controller's gateway environment.
-It contains no firmware, root tools, upstream binaries, node configurations,
-device snapshots or historical installation transactions. Runtime protection
-is retained. Completed per-device migration branches have been excluded, and
-deployment-specific runtime digests are required template parameters.
+This directory contains shell source for the fixed-layout Android gateway:
+a control entry, Mihomo supervisor and Magisk startup template. Integration
+requires root, a Mihomo executable, private configuration and the matching
+core/configuration digests.
 
 ## Files
 
 | File | Purpose |
 | --- | --- |
-| `control.sh` | Fixed-path start, stop, status and disable entry. Retains supervisor identity checks, explicit stop markers and conservative cleanup. |
+| `control.sh` | Fixed-path start, stop, status and disable entry with supervisor identity checks, explicit stop markers and conservative cleanup. |
 | `vpn-service.sh.in` | File-provider supervisor with process/boot identity, digest checks, dedicated routing/firewall objects, SFP control, failure blocking and explicit-stop restoration. Only core/config digests become parameters. |
-| `service.sh.in` | Long-term Magisk startup reference. Retains root and module-disable checks, optional native-bridge ownership/permissions, bounded network readiness waiting and `webctl boot`. |
+| `service.sh.in` | Magisk startup template with root/module-disable checks, optional native-bridge ownership/permissions, bounded network readiness waiting and `webctl boot`. |
 
-The original device's historical first-install, update, authenticated bootstrap,
-diagnostic capture and migration-recovery scripts are excluded. They depended on
-private baselines/transactions. The new `v1.3.0-alpha.1` fixed-profile installer
-uses `release/module/` and `web-manager/internal/installer/`, without copying those
-historical transactions. Downloaders should use [Installation and recovery](../../docs/install.en.md).
-This reference directory itself is not an installation package or an old-deployment upgrader.
+For first installation, use the ZIP or APK in
+[Installation and recovery](../../docs/install.en.md). The release module entry
+is in `release/module/`, with installation recovery in
+`web-manager/internal/installer/`. This directory is for development and porting;
+do not copy and execute it directly on a device. Existing private deployments
+need a separately designed migration procedure.
 
 ## Required digests
 
@@ -39,11 +38,9 @@ private backups. Do not replace checks with unconditional success. Core or
 fixed-configuration changes require renewed validation and a matching digest
 update in the same recoverable transaction.
 
-`service.sh.in` remains a template without its own installation recovery.
-Release modules use a separate `release/module/service.sh` calling `u30setup boot`
-to reconcile installation before normal saved-state startup. Ports must preserve
-that recovery boundary rather than treat a template or an old device transaction
-path as a complete installer.
+`service.sh.in` is an integration template. Release modules handle installation
+recovery through `release/module/service.sh`, which calls `u30setup boot` before
+normal saved-state startup. Ports also need to provide this recovery stage.
 
 ## Explicit device assumptions
 
@@ -66,8 +63,8 @@ path as a complete installer.
   provisions trust from the fixed APK digest and actual local UID/path. Other
   integrations must manage their own signer/trust.
 
-These assumptions have not been generalized into device discovery. They do not
-establish support for every U30 Pro firmware, other hotspot models or OpenWrt.
+The scripts use these fixed values. Review and adapt each assumption when
+porting to other firmware, hotspot models or OpenWrt.
 
 ## Protection and measurements
 
@@ -81,8 +78,7 @@ provider has no automatic health check and `Auto` is an inner select group set
 by the manager from manual measurement results. Do not introduce periodic
 URLTest/provider checks while claiming the existing manual-only semantics.
 
-Offline shell syntax and host tests do not verify physical link, SFP, DNS, TUN,
-failure blocking or power-loss recovery. This alpha has no complete fresh-device
-installation/reboot/network/teardown acceptance. Enabled cold boots also have a
-startup window without continuous-protection guarantees from power-on. See
-Installation/Release notes for scope, deferred cleanup and retained private backups.
+See [Testing](../../docs/testing.en.md) for test coverage and device-validation
+records. Enabled cold boots have a window before network protection is ready;
+[Installation and recovery](../../docs/install.en.md) describes startup, deferred
+cleanup and retained private backups.

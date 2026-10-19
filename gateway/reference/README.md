@@ -2,17 +2,17 @@
 
 [English](README.en.md) · [项目首页](../../README.md)
 
-这些是控制器运行环境中可审核的 shell 源码，不包含固件、root 工具、上游二进制、节点配置、设备快照或历史安装事务。公开时保留原有运行保护逻辑，移除了已完成设备迁移的事务分支，并将部署相关的运行校验摘要转换为必填模板参数。
+这里提供固定布局 Android 网关的 shell 源码，包括控制入口、Mihomo supervisor 和 Magisk 启动模板。部署时需准备 root、Mihomo 与私有配置，并填写核心和配置的校验摘要。
 
 ## 文件选择
 
-| 文件 | 保留原因与处理 |
+| 文件 | 用途 |
 | --- | --- |
-| `control.sh` | 原始固定路径控制源码。提供 start、stop、status 和 disable，保留 supervisor 身份核验、显式停止标记和保守清理条件。 |
-| `vpn-service.sh.in` | 采用支持 file provider 配置的最新 supervisor 源码。保留进程与启动身份核验、摘要校验、专用路由/防火墙规则、SFP 控制、故障阻断和显式停止后的恢复。只将核心及配置的具体摘要替换为下述参数。 |
-| `service.sh.in` | 从原生控制启动源中提取长期启动逻辑。保留 root 和模块 disable 检查、可选控制桥的所有权/权限检查、有限等待网络管理能力就绪及 `webctl boot`。不包含某次设备安装或更新的事务目录、编号或恢复程序。 |
+| `control.sh` | 固定路径控制入口，提供 start、stop、status 和 disable，包含 supervisor 身份核验、显式停止标记和保守清理条件。 |
+| `vpn-service.sh.in` | 支持 file provider 的 supervisor，包含进程与启动身份核验、摘要校验、专用路由/防火墙规则、SFP 控制、故障阻断和显式停止后的恢复。核心及配置摘要使用下述参数。 |
+| `service.sh.in` | Magisk 启动模板，检查 root、模块 disable 状态及可选控制桥的所有权和权限，有限等待网络管理能力就绪后调用 `webctl boot`。 |
 
-未包含原设备历史首次安装器、更新器、认证启动器、诊断采集器和迁移恢复脚本。它们依赖某台设备的固定基线、历史事务和私有输入。`v1.3.0-alpha.1` 新的固定范围首次安装入口位于 `release/module/`，恢复逻辑位于 `web-manager/internal/installer/`，不是复用旧设备事务。下载者使用[安装与恢复](../../docs/install.md)中的 ZIP/APK；本目录本身仍不是安装包，也不支持旧部署升级。
+首次安装使用[安装与恢复](../../docs/install.md)中的 ZIP/APK。发行模块入口位于 `release/module/`，安装恢复逻辑位于 `web-manager/internal/installer/`。本目录供开发和移植参考，不要直接复制到设备执行；已有私有部署的升级需要单独设计迁移过程。
 
 ## 摘要参数
 
@@ -25,7 +25,7 @@
 
 每个参数在模板中恰好出现一次。用本地工具计算摘要，按字面替换，拒绝格式不符的值和任何残留的 `@@...@@`。然后检查输出语法、逐项审查差异，并通过带私有备份和断电恢复能力的部署事务安装。不要将变量改成“始终通过”的判断，也不要删除摘要校验。配置或核心发生变化时，应重新验证功能并在同一个可恢复事务中更新对应摘要。
 
-`service.sh.in` 仍是集成模板，本文件自身没有安装事务恢复阶段。发行模块使用独立的 `release/module/service.sh` 调用 `u30setup boot`，先完成首次安装协调再按保存状态启动。其他移植须保留恢复边界，不能把模板或旧设备事务路径当作完整安装器。
+`service.sh.in` 是集成模板，安装事务恢复由发行模块的 `release/module/service.sh` 调用 `u30setup boot` 完成，随后再按保存状态启动。其他移植也需要安排这一恢复阶段。
 
 ## 已保留的设备假设
 
@@ -37,7 +37,7 @@
 - 已建立 root 私有的 runtime、cache、log 和 web 管理目录、配置、file provider、状态和密钥。新安装器首先创建空节点/订阅与关闭状态；只有用户录入自己的订阅并主动开启后才使用 supervisor。公开模板不包含可用节点。
 - 可选本机控制桥位于 `native-ui/webbridge`，其父目录与可执行文件须符合源码的 root 所有权和权限要求；Android 应用签名与信任记录由部署方创建。
 
-这组假设尚未抽象成通用设备发现逻辑。保留固定值是为了明确实现边界，不能据此声称适配所有 U30 Pro 版本、所有随身 Wi-Fi 或 OpenWrt。
+脚本按以上固定值工作。移植到其他固件、随身 Wi-Fi 或 OpenWrt 时，需要逐项检查并适配。
 
 ## 运行保护与测速
 
@@ -45,4 +45,4 @@ supervisor 的 `healthy()` 只检查进程身份、TUN ifindex、SFP 与专用�
 
 配合 `../../web-manager/device/config.yaml` 使用时，provider 没有自动 health-check，`Auto` 是由管理后端根据手动测速结果设置的内层 select 组。不要重新加入周期 url-test 或 provider health-check，从而改变此包的手动测速语义。
 
-离线 shell 语法和主机测试不能验证真实设备的链路、SFP、DNS、TUN、断网保护或断电恢复。本 alpha 尚无干净设备安装/重启/网络/卸载全流程验收，后续启用状态也有冷启动窗口，不承诺从通电起全程受保护。具体范围、延后清理与私有备份保留见安装页和 Release 说明。
+测试记录见[测试与设备验证](../../docs/testing.md)。冷启动有网络保护尚未就绪的窗口；启动、延后清理和私有备份保留的具体行为见[安装与恢复](../../docs/install.md)。

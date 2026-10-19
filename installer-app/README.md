@@ -20,11 +20,11 @@ unknown outcome. That state blocks repeat installation and instructs the user to
 inspect Magisk. It does not assert that Magisk stopped or rolled anything back.
 Root output is never displayed verbatim or written to app logs.
 
-A successful zero exit plus the exact `U30PRO_MODULE_STAGED` output line means
-only that the module was staged. The explicit reboot button is enabled only in
-that state. Opening an available control application does not prove that module
-boot reconciliation completed. After a detected reboot the installer asks the
-user to verify the module and open the controller.
+A zero exit plus the exact `U30PRO_MODULE_STAGED` output line marks the module
+as staged and enables the reboot button. Boot reconciliation runs after reboot;
+the installer then asks the user to verify the module and open the controller.
+The Open control button is available whenever a control app is installed,
+independently of the module's boot stage.
 
 Build without Gradle using PowerShell 7, JDK 17+, Android Platform 35 and Android
 Build Tools 35. Supply explicit local toolchain paths or standard SDK environment
@@ -50,5 +50,5 @@ licenses and notices travel inside the embedded module ZIP.
 
 Host tests check actual file preservation on asset corruption/truncation/size
 overflow, argument quoting, Magisk version/CLI validation, stage-result rules,
-repeat/timeout state safety, a real subprocess output flood and deadline. They
-do not establish physical fresh-device installation compatibility.
+repeat/timeout state safety, a real subprocess output flood and deadline. See
+[Testing](../docs/testing.en.md) for the full test scope and device-validation record.

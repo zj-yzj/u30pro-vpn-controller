@@ -1,175 +1,89 @@
 # U30 Pro VPN Controller
 
-[中文](README.md) · [English](README.en.md)
+[中文](README.md) · [English](README.en.md) · [Download](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)
 
-Manage VPN on a rooted ZTE U30 Pro running stock Android, either from its round touchscreen or through an existing UFI web interface. This project contains an **Android controller, Go backend, UFI web plugin and first-install alpha**. A [Mihomo](https://github.com/MetaCubeX/mihomo) executable downloaded separately on the device from official upstream handles proxy traffic.
+VPN controls for a rooted ZTE U30 Pro. Switch VPN on or off, pick a node and test latency on the device's round touchscreen, or open the UFI web panel from a phone or computer to manage subscriptions. Devices connected to the U30 Pro share its VPN exit.
 
-![Illustration of the round-screen app, web panel and device manager](docs/assets/overview.svg)
+This started with what I wanted from my own U30 Pro, where I have tested it and use it day to day. It keeps stock Android and uses [Mihomo](https://github.com/MetaCubeX/mihomo) for proxy traffic.
 
-> The native UI, overview and architecture images on this page are explanatory illustrations. The web image uses offline mock data. None is an on-device screenshot or evidence of a new device deployment test.
+![Round-screen control and web management illustration](docs/assets/overview.svg)
 
-**Current release: `v1.3.0-alpha.1`; round-screen control app Android version code 7.** The layout targets a 240 × 240 circular framebuffer, with main controls in a centered 164 × 164 safe area.
+## Features
 
-**[Download the Magisk ZIP or Android installer APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1) → [follow installation and recovery](docs/install.en.md).** Both routes use the same Magisk module and require existing Magisk 28.1+, MU5358, arm64, API 35, firmware display `U30ProV1.0.0B23`, and SELinux already Permissive. They do not obtain root, flash firmware or overwrite existing private deployments. First install is empty with VPN off; existing UFI-TOOLS is needed to enter your subscription, and core acquisition requires Internet access.
+- **On-device control:** switch VPN on or off and see its running state and current exit.
+- **Node selection:** tap a node to select it; hold an ordinary row and swipe left to reveal its Test button.
+- **Manual tests:** use Refresh at the bottom of Nodes to test the whole list, or test one node. Results appear when the task finishes; there is no periodic node probing.
+- **Subscriptions:** add or change a URL in the web panel, then update the saved subscription from either interface.
+- **Home shortcut:** enable a draggable VPN button to reopen controls from the unlocked stock Home screen.
+- **Saved settings:** keep the VPN power state and node selection for later boots.
 
-**This is a first-install prerelease without complete fresh-device installation, reboot, client-networking and uninstall acceptance.** Host verification and illustrations do not establish physical compatibility; see Release notes for actual tests. A cold-boot window exists before a previously enabled gateway becomes ready; continuous tunnel/blocking protection from power-on is not promised.
+Tests measure latency in milliseconds. New nodes have no results until you run a test. Tests require VPN already running; a single-node test leaves your selection unchanged. A complete manual round can choose an inner `Auto` exit while keeping the outer manual selection.
 
-Before manual ZIP installation, verify that Magisk has no installed or pending-reboot `codex_u30pro_vpn` module. Magisk can replace same-ID staging before project checks; preservation of that prior stage is not promised. The APK route additionally prechecks directories before the CLI. See [prerequisites](docs/install.en.md#before-installation).
+## Installation
 
-## Contents
+Current release: **[v1.3.0-alpha.1](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)**. Choose one installation entry; both install the same module.
 
-- [Features and action semantics](#features-and-action-semantics)
-- [Interface previews](#interface-previews)
-- [Compatibility and prerequisites](#compatibility-and-prerequisites)
-- [Getting started](#getting-started)
-- [Installation and recovery](docs/install.en.md)
-- [Architecture and source layout](#architecture-and-source-layout)
-- [Building and verification](#building-and-verification)
-- [Privacy and security boundaries](#privacy-and-security-boundaries)
-- [Questions and support](#questions-and-support)
-- [License and upstream projects](#license-and-upstream-projects)
+| File | How to use it |
+| --- | --- |
+| [Magisk module ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN-1.3.0-alpha.1-Magisk.zip) | Install from local storage in Magisk on the U30 Pro |
+| [Android installer APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN-1.3.0-alpha.1-Installer.apk) | Install on the U30 Pro, open it and grant root to install the module |
+| [UFI web plugin](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/v1.3.0-alpha.1/U30ProVPN.txt) | Import into existing UFI-TOOLS to enter your subscription |
 
-## Features and action semantics
+1. Check the device requirements below, then download one installation package and the plugin.
+2. Install the module and reboot the U30 Pro.
+3. Import the plugin into your existing UFI page and save your own subscription. The first installation starts with VPN off and no nodes or saved URL.
+4. Once nodes appear, enable VPN and use either the round screen or the web panel.
 
-| Entry point | Existing capability | Boundary |
-| --- | --- | --- |
-| Native Home | Toggle VPN; read actual running state and current exit | Exiting the app leaves VPN running; explicitly use the power control to stop it |
-| Native Nodes | Tap to select; bottom Refresh manually tests the whole list | VPN must already be running; tests never enable it implicitly |
-| Per-node action | Hold an ordinary row and swipe left to reveal Test; swipe right to close | Tests only that node without changing nodes/groups; `Auto` has no individual Test button |
-| Auto selection | Prefers an inner `Auto` exit from successful results in a complete manual round | No periodic `url-test` or provider `health-check`; preserves the outer `VPN` manual selection |
-| Native More | Update the saved subscription, configure a draggable Home shortcut, exit | Add/change URLs in the web panel; overlay needs system authorization |
-| UFI web panel | Toggle VPN, search/select nodes, save/update or reuse a saved subscription | Requires UFI's existing authenticated root interface; top-right Refresh only reads status |
+Preparation downloads about **21.9 MB** from official Mihomo upstream on the device; the core is not bundled and first installation needs Internet access. No subscription is included. This version is for a fresh installation; see [Installation and recovery](docs/install.en.md) if you already have a deployment.
 
-“Test” measures **latency in milliseconds** to a fixed HTTPS connectivity target, not download bandwidth. A failed check does not prove the node is unusable for every application. Delay/connectivity fields may be empty before a measurement exists.
+### Compatibility and prerequisites
 
-Foreground interfaces and the optional shortcut poll local status. The gateway supervisor checks process, TUN, routing and protection state. These operations do not automatically test the entire node list. Applying a subscription with VPN enabled still checks the current exit's HTTPS connectivity once; normal VPN traffic also uses the network. See [Usage](docs/usage.en.md#measurements-auto-and-status-reads).
+| Item | Required profile |
+| --- | --- |
+| Device | U30 Pro; device and model properties `MU5358` |
+| Firmware | `U30ProV1.0.0B23` |
+| System | Stock Android API 35, `arm64-v8a`, SELinux already `Permissive` |
+| Root | Existing Magisk 28.1 or newer, version code at least `28100` |
+| Web management | Existing UFI-TOOLS with authenticated root access |
+
+The installer checks the device and network environment. It does not obtain root or flash firmware; other firmware needs separate integration. Full steps, troubleshooting and uninstall instructions are in the [English installation guide](docs/install.en.md) / [中文安装说明](docs/install.md).
 
 ## Interface previews
 
-### Native round screen
+### Round-screen control
 
-![Native UI illustration: Home, a swiped node and a per-node test](docs/assets/native-ui.svg)
+![Home, a swiped node and a single-node test](docs/assets/native-ui.svg)
 
-*Drawn from the source layout, not an on-device screenshot. The current interface is Chinese; English documentation does not imply an English app interface.*
+Round-screen UI illustration. The app is currently Chinese, with the main controls centered on the 240 × 240 screen.
 
-### UFI web panel
+### Web management
 
-![Offline web preview showing mock state and nodes](docs/assets/web-preview.png)
+![Offline UFI VPN panel preview](docs/assets/web-preview.png)
 
-*Offline mock preview: nodes, keys and state are simulated; it does not connect to a device or real subscription.*
+Offline web preview with sample nodes.
 
-## Compatibility and prerequisites
+## A few usage tips
 
-| Item | Current scope | Integrator must still verify |
-| --- | --- | --- |
-| Device | device/model `MU5358`, display `U30ProV1.0.0B23` | No other model/firmware support claim or fresh-device complete acceptance |
-| System | Stock API 35, arm64, Magisk version code at least 28100, SELinux already Permissive | Does not lower SELinux or install Magisk; no generic support for other root implementations |
-| Android app | `minSdk 26`, `targetSdk 35`, 240 × 240 round screen | SDK declarations do not expand the installer's fixed profile; Home detection and overlay depend on the system |
-| Backend | Linux/arm64 Go helpers; fixed `/data/adb/u30pro-vpn` | Root ownership, private permissions, configuration, state, keys and startup recovery |
-| Core | Fixed official Mihomo v1.19.32 downloaded during preparation with size/hash verification | No core embedded in ZIP/APK; no offline first install; see [core acquisition](docs/install.en.md#the-core-is-downloaded-online) |
-| Web | Existing UFI-TOOLS with root management enabled | Existing authentication and `runShellWithRoot`; UFI and authentication assets are not included |
-| Network | Reference fixes objects including `br0`, `192.168.0.0/24` and `U30VPN` | SFP, DNS, ownership of rules/tables, IPv4 forwarding and recovery; see [reference assumptions](gateway/reference/README.en.md#explicit-device-assumptions) |
-| Install/upgrade | Magisk ZIP and Android entry embedding the same ZIP, first-install alpha | Refuses private runtimes, unknown same-package applications and conflicts; no old-deployment upgrade |
+- Exiting the controller leaves VPN running. Tap Disable VPN to stop it.
+- Add or change subscription URLs in the web panel; the round screen updates a saved URL.
+- Allow display over other apps in system settings when enabling the floating shortcut.
+- Web Refresh reads status; Refresh at the bottom of the round-screen Nodes page starts a full-list test.
+- After reboot, wait for VPN to report running before starting tasks that need it.
 
-Acquire UFI-TOOLS, Magisk and build tools separately; the device obtains Mihomo directly from official upstream. This repository/project installers do not bundle those programs, firmware, SDKs, authentication assets, private keys or original device configuration. Their respective licenses remain applicable.
+See [Usage](docs/usage.en.md) for the controls and the [FAQ](docs/faq.en.md) for common questions.
 
-## Getting started
+## Development
 
-**First install:** download `U30ProVPN-1.3.0-alpha.1-Magisk.zip` or `U30ProVPN-1.3.0-alpha.1-Installer.apk`, plus `U30ProVPN.txt`, from [Release Assets](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1). Follow [Installation and recovery](docs/install.en.md) to check prerequisites/checksums and use one route. After reboot VPN starts off; manually import the plugin into existing UFI, enter your subscription, then explicitly enable VPN. The Android installer belongs on the U30 Pro itself.
+The project consists of a native Android app, a Go manager, a UFI web plugin and Magisk gateway scripts. Both interfaces share node and subscription state. Subscriptions are processed on the device, and Mihomo's controller uses a local Unix socket.
 
-**Inspect the interface:** run the offline preview on a development computer. No device, root or subscription is needed.
+- [Building](docs/building.en.md): build the web interface, Android apps and both installation packages.
+- [Architecture](docs/architecture.en.md): how management requests and client traffic pass through the components.
+- [Device integration](docs/device-integration.en.md): fixed network layout, trust records and porting requirements.
+- [Testing](docs/testing.en.md): device use and automated checks.
+- [Contributing](CONTRIBUTING.md): report problems or propose changes.
 
-```sh
-npm ci
-npm test
-npm run build
-npm run test:preview
-npm run preview
-```
+To [report a problem](https://github.com/zj-yzj/u30pro-vpn-controller/issues), include the model, firmware, version and reproduction steps. Remove subscription URLs and node credentials before sharing logs or screenshots.
 
-Open the printed address, normally `http://127.0.0.1:18771/`. Outputs default to `build/web-ui/`; see the [web plugin guide](web-manager/ui/README.md) for output options and UFI import.
+## License
 
-**Already integrated device:** open “VPN 控制” on the round screen, check actual state, then toggle VPN or select a node. Nodes → Refresh runs a full manual test; swipe an ordinary node left and tap Test for one node. More → Subscription updates a saved URL; use UFI to add a new one. See [Usage](docs/usage.en.md).
-
-**Porting source:** read [device integration boundaries](docs/device-integration.en.md), the [gateway overview](gateway/README.en.md) and [fixed-layout reference](gateway/reference/README.en.md). The reference directory itself is not the installation entry. Host tests cannot verify actual DNS, forwarding, failure blocking, stock-network restoration after stopping, or power-loss recovery.
-
-## Architecture and source layout
-
-![Architecture illustration: two control interfaces cross trust boundaries to the manager, which controls independent Mihomo and gateway components](docs/assets/architecture.svg)
-
-*Explanatory diagram, not a device-state screenshot.*
-
-The web panel calls `webctl` through UFI's authenticated root interface. The native app connects over a local Unix socket to `webbridge`, which validates callers and invokes restricted commands. `webctl` handles state, subscriptions and operation transactions. Independent Mihomo accepts control over a local Unix HTTP controller; gateway scripts manage device network objects. See [Architecture](docs/architecture.en.md).
-
-| Path | Contents |
-| --- | --- |
-| `native-manager/android/src/` | Native Java app, model, encryption, shortcut and boot receiver |
-| `installer-app/` | Separate Android installer: fixed embedded ZIP, user root consent and explicit reboot |
-| `release/` | Magisk wrappers and two-entry release build |
-| `web-manager/cmd/u30setup/`, `web-manager/internal/installer/` | Fixed-profile checks, core acquisition, installation recovery and owned teardown |
-| `native-manager/build.ps1` | Explicit-toolchain build, host tests, optional signing and manifest |
-| `native-manager/android/tests/` | Crypto/gesture tests, geometry and local screenshot inspection |
-| `web-manager/cmd/webctl/` | Root management program |
-| `web-manager/cmd/nativebridge/` | Native bridge, built as `webbridge` |
-| `web-manager/cmd/normalize/` | Converts private inline `proxies` into an initial provider, metadata and validation configuration |
-| `web-manager/internal/` | Management, storage, download, normalization, protocols and tests |
-| `web-manager/device/config.yaml` | Configuration template with no subscription credentials or usable nodes |
-| `web-manager/ui/` | Original web interface, assembly, mock preview and logic tests |
-| `gateway/reference/` | Fixed-layout control, supervisor and startup templates requiring integration |
-| `docs/` | Bilingual usage/FAQ, build, architecture, integration guidance and illustrations |
-| `third_party/licenses/` | Separately applicable third-party license texts |
-
-## Building and verification
-
-Web requires Node.js 18+ and npm; the lockfile pins `node-forge@1.4.0`. The Go module requires 1.27.0 or later; source preparation used 1.27.2. Full interoperability tests need `java` and `javac` in `PATH`. Android requires PowerShell, JDK 17+, Android Platform 35 `android.jar`, and Build Tools 35 or a compatible later version. It has no Gradle/Maven dependency or build-time Android toolchain downloads.
-
-After the web commands from the repository root, run:
-
-```sh
-cd web-manager
-go test -count=1 ./...
-go test -count=1 -tags diagnostic ./...
-go vet ./...
-go vet -tags diagnostic ./...
-```
-
-For Android, set `JAVA_HOME` and `ANDROID_SDK_ROOT` in PowerShell and run from the repository root:
-
-```powershell
-./native-manager/build.ps1 -TestOnly
-./native-manager/build.ps1
-node ./native-manager/android/tests/round-screen-geometry.mjs
-```
-
-Defaults produce `native-manager/build/U30ProVPN-unsigned.apk` and a build manifest. Unsigned APKs cannot be installed normally. See [Building](docs/building.en.md), [Native](native-manager/README.md) and [Backend](web-manager/README.md) for signing, cross-compilation, output options and smoke tests. Keep signing identities outside the source tree; the script does not locate or generate an existing project's identity.
-
-Verification scope includes host manager/installer-engine tests, web logic, Java crypto/gesture and installer subprocess tests, Android compilation, and signature/file checks. Use the matching Release notes for actual passes and skips; old fixed test counts do not establish that this release is entirely passing. Mock controllers, temporary keys and synthetic nodes do not replace fresh-device acceptance. Missing JDK may skip interoperability checks, so inspect output. See [Building](docs/building.en.md) for the two-entry release build.
-
-```sh
-# Run on a publication source copy without node_modules, build output or caches
-npm run check:publication
-node scripts/check-doc-links.mjs
-```
-
-The publication check reports relative paths, line numbers and categories for common sensitive content without printing matched values. It does not replace manual review or prove arbitrary inputs have been sanitized. Public source should contain no generated outputs, caches or runtime data.
-
-## Privacy and security boundaries
-
-- **Subscriptions are processed on the device**, without a public conversion service. URLs, node credentials, providers, state, backups and logs are private runtime data and belong outside repositories and public issues.
-- **The circular control app has no `INTERNET` permission and does not request root directly.** It invokes fixed operations through the local bridge. RSA-OAEP-SHA256/AES-256-GCM requests accompany peer UID, package and pinned APK checks. The separate installer APK also has no `INTERNET` permission, but requests user root consent for module installation; its root helper downloads the fixed core online.
-- **Web relies on existing UFI trust.** Encryption, freshness and replay checks do not replace UFI authentication or defend against an attacker controlling root or the host web environment. Mihomo uses a local Unix controller; this project adds no LAN TCP management listener.
-- **The shortcut needs user permission.** The implementation displays it only on unlocked stock Home and hides it when the display is off, locked or another page is active. Its local reads do not imply periodic external node tests.
-- **Subscription updates have operation-level transactions.** Failures preserve/attempt to restore prior configuration; recovery can fail, so inspect actual state. Separate first-install journals do not imply support for old-deployment upgrades. Teardown can defer and private backups remain; see [recovery](docs/install.en.md#uninstalling-and-retained-data).
-- **The gateway assumes a fixed baseline.** Reference source retains failure blocking, identity checks and controlled cleanup, whose effect needs validation on the actual system.
-
-## Questions and support
-
-The [FAQ](docs/faq.en.md) covers local services, trust, subscriptions, measurements, overlay permissions, exiting versus stopping, stock WebUI lock prompts and ports. In [repository issues](https://github.com/zj-yzj/u30pro-vpn-controller/issues), provide model, firmware, source/app version, reproduction steps and sanitized error categories. Do not upload real subscriptions, node configuration, private keys, trust/state/provider files, raw logs or unchecked backups.
-
-English: [Install](docs/install.en.md) · [Usage](docs/usage.en.md) · [FAQ](docs/faq.en.md) · [Building](docs/building.en.md) · [Architecture](docs/architecture.en.md) · [Integration](docs/device-integration.en.md). Chinese: [安装](docs/install.md) · [使用](docs/usage.md) · [FAQ](docs/faq.md) · [构建](docs/building.md) · [架构](docs/architecture.md) · [集成](docs/device-integration.md).
-
-## License and upstream projects
-
-Original code and documentation use the [MIT License](LICENSE), under its published terms and without suitability or fault-free-operation guarantees. Third parties retain their licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): node-forge uses the BSD-3-Clause option; yaml.v3 retains file-specific MIT/Apache-2.0 texts; Go binary distributions also require the Go license.
-
-Mihomo, UFI-TOOLS, Magisk and Android are independent upstream projects/integration environments. Their programs, firmware, SDKs, authentication assets and original device signing key are not bundled. Future distributions adding components must meet each one's license obligations. This project is independently maintained and does not represent ZTE, Mihomo, UFI or other upstream projects.
+Original code and documentation use the [MIT License](LICENSE). Mihomo, Magisk, UFI-TOOLS and other upstream components retain their own licenses; see [Third-party notices](THIRD_PARTY_NOTICES.md) for dependencies and license texts.
