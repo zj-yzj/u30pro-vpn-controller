@@ -10,6 +10,8 @@
 
 重启后首次 VPN 关闭、订阅为空。在已有 UFI-TOOLS 中导入 `U30ProVPN.txt`，录入自己的订阅后再开启。只构建 APK 或导入网页插件不会安装网关。只想看界面，可以使用[电脑预览](usage.md#在电脑上预览)。
 
+还没有 UFI 时，可下载[完整安装材料](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip)或[单独的 4.1.2 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk)，按[准备流程](setup.md#3-安装-ufi-并确认高级功能)选择 Windows 安装器或手动 ADB。已有可用 UFI 时跳过。
+
 ## 2. 能用于其他 U30 Pro 固件、其他随身 Wi-Fi 或 OpenWrt 吗？
 
 目前只支持[安装页列出的固定条件](install.md#安装前确认)，其他固件、硬件和 root 实现暂不支持。请勿关闭 SELinux 或伪造属性绕过检查。
@@ -74,4 +76,4 @@ UFI 或原厂 WebUI 登录可能触发设备原有的屏幕锁定提示，项目
 
 反馈请按[使用说明](usage.md#故障反馈与部署验收)提供版本、复现步骤和脱敏错误，提交到 [GitHub issues](https://github.com/zj-yzj/u30pro-vpn-controller/issues)。含订阅、凭据、私钥或设备状态的文件请勿公开。
 
-原创代码和文档采用 [MIT](../LICENSE)，Mihomo、UFI-TOOLS、Magisk、Android 及各依赖遵循各自上游许可。再分发前请阅读[第三方说明](../THIRD_PARTY_NOTICES.md)。
+原创代码和文档采用 [MIT](../LICENSE)，Mihomo、UFI-TOOLS、Magisk、Android 及各依赖遵循各自上游许可。单独提供的 B23 root 和 UFI 材料存档不统一适用本项目的 MIT 许可；UFI-TOOLS 自身由 Minikano / kanoqwq 以 MIT 发布，其他随附组件分别保留原有许可。再分发前请阅读[第三方说明](../THIRD_PARTY_NOTICES.md)。

@@ -104,4 +104,4 @@ adb -s SERIAL shell am start -n com.topjohnwu.magisk/com.topjohnwu.magisk.ui.Mai
 
 root 与 Magisk 准备好后，回到[完整准备流程第 3 步](setup.md#3-安装-ufi-并确认高级功能)：安装 UFI 完整版，确认插件使用的认证 RootShell 可用，再安装 v1.3.0，导入自己的订阅。
 
-`F50PRO通用高级后台` 文件夹中提供的是 UFI 安装材料，目录名不能证明它能给 U30 Pro root。其 UFI 组件应按 [UFI-TOOLS 作者说明](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md)使用。root 工具、高级后台和本项目安装包分别取得、分别核对；本项目的 MIT 许可不覆盖这些外部文件。
+UFI 安装材料已提供[完整存档 ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip)和[单独的 4.1.2 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk)，不必另找本地文件夹。完整存档含 Windows 安装器 1.6、手册和辅助工具；它不替代本节的 root 准备。按[准备流程第 3 步](setup.md#3-安装-ufi-并确认高级功能)安装，已有可用 UFI 时跳过。UFI-TOOLS 的作者为 Minikano / kanoqwq，各组件保留自己的许可，不能用本项目的 MIT 许可概括整套外部文件。

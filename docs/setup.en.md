@@ -20,7 +20,7 @@ Record the full model, hardware version and firmware version from the stock scre
 
 ### Read the full properties if USB ADB is already available
 
-Install Google's [Android Platform-Tools](https://developer.android.com/tools/releases/platform-tools) on your computer, then connect the powered-on U30 Pro with a data-capable USB cable. Open a terminal in the Platform-Tools directory. In Windows PowerShell, use `./adb.exe` in place of `adb` below, or add that directory to PATH first.
+On the computer, use the already extracted `adb-fastboot` directory in the [complete UFI archive](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip), or download Google's [Android Platform-Tools](https://developer.android.com/tools/releases/platform-tools). Keep `adb.exe` and its DLLs together, then connect the powered-on U30 Pro with a data-capable USB cable. Open a terminal in that tools directory. In Windows PowerShell, use `./adb.exe` in place of `adb` below, or add that directory to PATH first.
 
 ```sh
 adb devices -l
@@ -78,9 +78,16 @@ If shell authorization is denied, check root authorization for that caller first
 
 Entering the first subscription URL requires the **full UFI-TOOLS version on the device**, with package name `com.minikano.f50_sms`. The PE version installed on a phone cannot replace it.
 
-Follow the download channels linked from the [UFI-TOOLS author's repository](https://github.com/kanoqwq/UFI-TOOLS), and choose an installation method using the [official usage guide](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md). The [author's one-click installer directory](https://pan.kanokano.cn/UFI-TOOLS-UPDATE/UFI-TOOLS%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E5%99%A8) is another link provided there. UFI's installer and this project's VPN installer are separate tools.
+Download the [recommended UFI 4.1.2 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk), or the [complete installation-material ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip) ([separate archive Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/ufi-tools-archive-20261019)). The ZIP's `UFI-Tools/` directory retains all original files, including Windows installer 1.6, the 4.1.1/4.1.2 APKs, the original manual and helper tools. Documentation, a manifest and checksums are added separately. If UFI already works, skip installation rather than reinstalling over it.
 
-1. Keep the U30 Pro's stock connection working, and install UFI on the **U30 Pro itself** using a USB ADB installation method supported by its author.
+UFI-TOOLS is developed by **Minikano / kanoqwq** and uses the MIT license. Other helper programs in the archive retain their own author and license information; the archive is not given a blanket MIT license. See the [UFI-TOOLS repository](https://github.com/kanoqwq/UFI-TOOLS) and [official manual](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md) for the author's instructions. UFI's installer and this project's VPN installer are separate tools.
+
+| Installation route | Files to use |
+| --- | --- |
+| Windows one-click installer | Extract the complete ZIP, open `UFI-TOOLS一键安装器1.6.exe` inside `UFI-Tools/`, connect the powered-on U30 Pro, and follow the author's installer prompts to confirm the target and install |
+| Manual ADB, pinned to 4.1.2 | Download the standalone 4.1.2 APK, use the archive's `adb-fastboot` directory or official Platform-Tools, and follow the commands below |
+
+1. Keep the U30 Pro's stock connection working, and use one route above to install UFI on the **U30 Pro itself**.
 2. Complete the permissions and service setup in the UFI instructions. Enter the device's actual gateway address; this project's supported address is `192.168.0.1`.
 3. Connect a phone or computer to the U30 Pro network and open `http://192.168.0.1:2333/`. Log in with your own UFI password and the stock management password requested by the page.
 4. If advanced features are not enabled yet, open “高级功能” (Advanced features), choose “添加高级功能” (Add advanced features) and wait for completion. Keep the file-sharing feature it depends on enabled as directed by UFI.
@@ -89,9 +96,11 @@ Follow the download channels linked from the [UFI-TOOLS author's repository](htt
 <details>
 <summary>Install and open UFI through USB ADB</summary>
 
-Static inspection of the maintainer's retained `UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk` confirmed package name `com.minikano.f50_sms`, version `4.1.2` and version code `20260819`. The examples below use that version; check other versions against the author's instructions. Its SHA-256 is `4831924e9a7cea2184dc2b515d816c9182e4e6fee44111ea62b7d8e9acf28347`. This identifies the historical file; it does not mean this project has verified the original author's signature or provides a download.
+Static inspection of the directly downloadable `UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk` confirmed package name `com.minikano.f50_sms`, version `4.1.2`, version code `20260819` and size `22936046` bytes. The commands below apply only to this APK; follow the author's installer prompts for the Windows one-click route. The APK's SHA-256 is `4831924e9a7cea2184dc2b515d816c9182e4e6fee44111ea62b7d8e9acf28347`. This checks the archived file's identity; it does not mean this project has verified the original author's signature.
 
 Confirm the target device first and replace `SERIAL` with its serial number. If UFI is already working, skip installation rather than reinstalling over it:
+
+If your terminal is currently in the ADB tools directory, copy the downloaded APK there first, or replace the quoted filename below with the APK's full path.
 
 ```sh
 adb -s SERIAL install "UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk"
@@ -129,7 +138,7 @@ See [UFI's upstream requests.js](https://github.com/kanoqwq/UFI-TOOLS/blob/http-
 
 Opening the UFI page confirms only that the web service is reachable. A working standalone TTYD web terminal also does not replace step 5. Check the plugin channel using [UFI's RootShell interface documentation](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md#123-功能内容). Check UFI advanced features and Magisk separately: the current VPN installer needs both working. Resolve missing UFI root access before installing the VPN. The UFI author also states that the Pro series must be rooted first; see [issue #144](https://github.com/kanoqwq/UFI-TOOLS/issues/144).
 
-The VPN controller's installation packages provide this project's plugin, retain UFI's author attribution and do not embed a UFI installer or rooting tools. The B23 toolkit linked above is provided separately as a third-party historical archive.
+The VPN controller's installation packages provide this project's plugin, retain UFI's author attribution and do not embed a UFI installer or rooting tools. The UFI installation materials and B23 toolkit are provided as separate third-party historical archives.
 
 ## 4. Install v1.3.0
 

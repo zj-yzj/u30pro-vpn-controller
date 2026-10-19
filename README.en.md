@@ -25,6 +25,8 @@ Setting up a device for the first time? Start with [Device preparation to workin
 
 For a matching B23 device that still needs root, read the [B23 rooting record](docs/root-b23.en.md) before downloading the [third-party toolkit archive](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip). It is archived separately from the VPN installation routes below; skip it if root already works. Its image attempts at boot to enable TCP `5555` ADB, relax authentication and disable update components. The project's MIT license does not cover the toolkit, and it provides no complete stock backup or recovery guarantee. Read the full record before use.
 
+If UFI is missing, download the [UFI 4.1.2 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk), or the [complete archive with Windows installer 1.6, the manual and ADB tools](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip). This separately archives Minikano / kanoqwq's UFI-TOOLS and the supplied materials. Follow [step 3 of preparation](docs/setup.en.md#3-install-ufi-and-check-its-advanced-features); skip installation if UFI already works.
+
 Current release: **[v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)**. Choose one installation entry; both install the same module.
 
 | File | How to use it |

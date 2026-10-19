@@ -10,6 +10,8 @@ Use one of the installation packages from the [Release](https://github.com/zj-yz
 
 The device downloads the official Mihomo core during installation. After reboot, enter your own subscription through UFI and enable VPN. To explore the interface without a device, use the [offline preview](usage.en.md#preview-on-a-computer).
 
+If UFI is missing, download the [complete installation materials](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip) or [standalone 4.1.2 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk), then choose the Windows installer or manual ADB in the [preparation guide](setup.en.md#3-install-ufi-and-check-its-advanced-features). Skip installation if UFI already works.
+
 ## 2. Does it support other U30 Pro firmware, hotspots or OpenWrt?
 
 This release supports the [fixed device profile](install.en.md#before-installation). Other firmware, root implementations, hotspots and OpenWrt need their own integration. The APK's `minSdk 26` is not the installer's supported Android range. See [Device integration](device-integration.en.md) for the network layout and porting requirements.
@@ -74,4 +76,4 @@ The native build defaults to an unsigned APK. Installation needs signing; updati
 
 [Report a problem](https://github.com/zj-yzj/u30pro-vpn-controller/issues) with the model, firmware, version, steps and error category. Review logs and screenshots before sharing: remove subscription URLs, credentials, keys, providers, state, trust and backups.
 
-Original code and documentation use [MIT](../LICENSE). Dependencies and separately obtained programs retain their own licenses; see [Third-party notices](../THIRD_PARTY_NOTICES.md) before redistribution. Mihomo, UFI-TOOLS, Magisk and Android are independent upstream projects, and their programs are not bundled here.
+Original code and documentation use [MIT](../LICENSE). Mihomo, UFI-TOOLS, Magisk, Android and other dependencies retain their upstream licenses. The separate B23 root and UFI material archives are not given a blanket license under this project's MIT terms. UFI-TOOLS itself is published by Minikano / kanoqwq under MIT; other bundled components retain their own licenses. See [Third-party notices](../THIRD_PARTY_NOTICES.md) before redistribution.

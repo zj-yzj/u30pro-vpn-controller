@@ -25,6 +25,8 @@
 
 尚未 root 的匹配 B23 设备可先读 [B23 root 记录](docs/root-b23.md)，再下载[第三方工具包存档](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip)。它单独存档，不属于下面的 VPN 安装入口；已有 root 时跳过。镜像会在开机时尝试开启 TCP `5555` ADB、放宽认证并禁用更新组件，工具包不适用本项目的 MIT 许可，也不提供完整原厂备份或恢复保证，操作前请读完整记录。
 
+还没有 UFI 时，可直接下载 [UFI 4.1.2 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk)，或[包含 Windows 安装器 1.6、手册和 ADB 工具的完整存档](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip)。这是 Minikano / kanoqwq 的 UFI-TOOLS 及随附材料的独立存档，安装方法见[准备流程第 3 步](docs/setup.md#3-安装-ufi-并确认高级功能)；已有可用 UFI 时跳过。
+
 当前版本：**[v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)**。两种入口选一种，安装的模块相同。
 
 | 文件 | 怎么用 |

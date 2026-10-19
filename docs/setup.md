@@ -20,7 +20,7 @@
 
 ### 已有 USB ADB 时，读取完整属性
 
-电脑安装 [Android 官方 Platform-Tools](https://developer.android.com/tools/releases/platform-tools)，用可传数据的数据线连接已经开机的 U30 Pro。在 Platform-Tools 目录打开终端；Windows PowerShell 可把下面的 `adb` 写成 `./adb.exe`，或者先将该目录加入 PATH。
+电脑可使用 [UFI 完整存档](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip)中已解压的 `adb-fastboot` 目录，也可下载 [Android 官方 Platform-Tools](https://developer.android.com/tools/releases/platform-tools)。保持 `adb.exe` 与配套 DLL 在同一目录，用可传数据的数据线连接已经开机的 U30 Pro。在该工具目录打开终端；Windows PowerShell 可把下面的 `adb` 写成 `./adb.exe`，或者先将该目录加入 PATH。
 
 ```sh
 adb devices -l
@@ -78,9 +78,16 @@ magisk -V
 
 订阅链接第一次录入需要设备上的 **UFI-TOOLS 完整版**，包名为 `com.minikano.f50_sms`。装在手机上的 PE 版不能替代它。
 
-从 [UFI-TOOLS 作者仓库](https://github.com/kanoqwq/UFI-TOOLS)进入作者的下载渠道，按[官方使用说明](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md)选择安装方式；[作者一键安装器目录](https://pan.kanokano.cn/UFI-TOOLS-UPDATE/UFI-TOOLS%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E5%99%A8)也是原文提供的入口。UFI 的安装器和本项目的 VPN 安装器是两个独立的工具。
+直接下载[推荐的 UFI 4.1.2 APK](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk)，或[完整安装材料 ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip)（[独立存档 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/ufi-tools-archive-20261019)）。ZIP 的 `UFI-Tools/` 目录保留 Windows 安装器 1.6、4.1.1/4.1.2 APK、原手册和辅助工具等全部原始文件，另外附上说明、清单与校验文件。已有可用 UFI 时跳过安装，不覆盖重装。
 
-1. 保持 U30 Pro 原厂联网正常，通过作者支持的 USB ADB 安装方式把 UFI 装到 **U30 Pro 本机**。
+UFI-TOOLS 由 **Minikano / kanoqwq** 开发，原项目采用 MIT 许可；存档内的其他辅助程序分别保留原有作者与许可信息，不为整个存档统一授予 MIT。作者与使用说明见 [UFI-TOOLS 仓库](https://github.com/kanoqwq/UFI-TOOLS)和[官方手册](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md)。UFI 安装器与本项目的 VPN 安装器是两个工具。
+
+| 安装方式 | 使用文件 |
+| --- | --- |
+| Windows 一键安装 | 完整解压 ZIP，在 `UFI-Tools/` 内打开 `UFI-TOOLS一键安装器1.6.exe`，连接已开机的 U30 Pro，按作者安装器提示确认目标并安装 |
+| 手动 ADB，固定使用 4.1.2 | 下载单独的 4.1.2 APK，使用存档中的 `adb-fastboot` 或官方 Platform-Tools，按下方命令安装 |
+
+1. 保持 U30 Pro 原厂联网正常，用上面一种方式把 UFI 装到 **U30 Pro 本机**。
 2. 按 UFI 说明完成所需权限和服务设置，设备网关填写实际地址。本项目适配的地址是 `192.168.0.1`。
 3. 用手机或电脑连接 U30 Pro 网络，打开 `http://192.168.0.1:2333/`。使用自己的 UFI 口令和页面要求的原厂管理密码登录。
 4. 如果尚未启用，在“高级功能”中选择“添加高级功能”，等待操作完成，并按 UFI 说明保持其依赖的文件共享功能开启。
@@ -89,9 +96,11 @@ magisk -V
 <details>
 <summary>通过 USB ADB 安装并打开 UFI</summary>
 
-维护者保留的 `UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk` 已静态核对为包名 `com.minikano.f50_sms`、版本 `4.1.2`、版本码 `20260819`。以下按这个版本举例；其他版本按作者说明核对。其 SHA-256 为 `4831924e9a7cea2184dc2b515d816c9182e4e6fee44111ea62b7d8e9acf28347`，用于识别历史文件，不代表本项目已经核验原作者签名或提供下载。
+上方可直接下载的 `UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk` 已静态核对为包名 `com.minikano.f50_sms`、版本 `4.1.2`、版本码 `20260819`，大小 `22936046` 字节。以下命令只针对这份 APK；Windows 一键安装路线以作者安装器的提示为准。APK 的 SHA-256 为 `4831924e9a7cea2184dc2b515d816c9182e4e6fee44111ea62b7d8e9acf28347`，用于核对存档文件身份，不代表本项目已核验原作者签名。
 
 先确认目标设备，将 `SERIAL` 替换为其序列号。已有可用 UFI 时跳过安装，不覆盖重装：
+
+如果终端当前位于 ADB 工具目录，先把下载的 APK 复制到该目录，或把下面引号内的文件名替换为 APK 的完整路径。
 
 ```sh
 adb -s SERIAL install "UFI-TOOLS_WEB_V4.1.2_20260819_1854.apk"
@@ -129,7 +138,7 @@ await runShellWithRoot('id', 10000)
 
 能打开 UFI 页面，只说明网页服务可达；独立的 TTYD 网页终端可用也不能代替第 5 项。可按 [UFI 的 RootShell 接口说明](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md#123-功能内容)检查插件通道。UFI 高级功能与 Magisk 分别检查：当前 VPN 安装包需要两者都可用。无法取得 UFI root 时先处理这一层，再安装 VPN；UFI 作者也说明 Pro 系列需先 root，见 [issue #144](https://github.com/kanoqwq/UFI-TOOLS/issues/144)。
 
-VPN 控制器安装包提供本项目的插件，不修改 UFI 的作者信息，也不内嵌 UFI 安装器或 root 工具。上文的 B23 工具包另作第三方历史存档提供。
+VPN 控制器安装包提供本项目的插件，不修改 UFI 的作者信息，也不内嵌 UFI 安装器或 root 工具。UFI 安装材料和 B23 工具包分别作为独立的第三方历史存档提供。
 
 ## 4. 安装 v1.3.0
 

@@ -4,8 +4,9 @@ The root MIT license covers the original controller code and documentation.
 It does not replace the licenses of the following dependencies or external
 programs. The controller source and v1.3.0 installer packages do not bundle
 firmware, upstream tool repositories, UFI authentication assets, signing
-identities, or a Mihomo executable. A separate third-party B23 toolkit archive
-is described below; the controller's MIT license does not cover that archive.
+identities, or a Mihomo executable. Separate third-party B23 root and UFI
+installation archives are described below; the controller's MIT license does
+not cover those collections.
 
 ## node-forge 1.4.0
 
@@ -88,3 +89,34 @@ interface markers identifying those integrations are retained accurately.
 - The archive contains its own `THIRD-PARTY-NOTICES.md`, `MAGISK-SOURCE.md`,
   file manifest and checksums. Device scope, bundled wireless-ADB/update changes
   and backup requirements are documented in the [B23 root record](docs/root-b23.en.md).
+
+## Separate UFI installation archive
+
+- Archive: [ufi-tools-archive-20261019](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/ufi-tools-archive-20261019).
+- Scope: all 13 original files supplied by the maintainer, with original bytes,
+  names and relative paths retained. It includes UFI 4.1.1 and 4.1.2 APKs, the
+  Windows one-click installer 1.6, the original PDF manual and ADB helpers.
+  The guide recommends the 4.1.2 APK; 4.1.1 is a historical backup.
+- UFI-TOOLS author: Minikano / [kanoqwq](https://github.com/kanoqwq/UFI-TOOLS).
+  The pinned upstream source at
+  [commit 51b86de](https://github.com/kanoqwq/UFI-TOOLS/tree/51b86de2036859050094b24780a55ad7ff687d78)
+  declares version 4.1.2. Its MIT license, including
+  `Copyright (c) [2025] [Minikano]`, is included unchanged as
+  `licenses/UFI-TOOLS-MIT.txt` in the installation archive. The same Release
+  provides the upstream source snapshot and a receipt covering its 231 files.
+- The supplied APK's package is `com.minikano.f50_sms`, version 4.1.2,
+  version code 20260819. Its hash identifies the supplied file; the source
+  snapshot does not establish an official publisher signature, a reproducible
+  whole-APK build or complete corresponding source for all native components.
+- Both APKs retain their embedded notices, including
+  `doc-files/speclicense.html` and `okhttp3/internal/publicsuffix/NOTICE`.
+  Native tools and libraries, including ADB, curl, iperf3, jq, socat and ttyd,
+  retain their own terms. UFI's MIT license does not replace them.
+- Exact build provenance and applicable license statements for the independent
+  Windows installers and helper tools remain unconfirmed (`NOASSERTION`).
+  The supplied Windows ADB files, README and shortcut are preserved as received;
+  their inclusion does not establish an official Google distribution identity.
+- The archive adds bilingual instructions, a file manifest, checksums, source
+  references and these attribution boundaries. No supplied executable was run
+  while preparing the archive, and this is not a complete binary security or
+  component-license audit. See the [setup guide](docs/setup.en.md) for usage.
