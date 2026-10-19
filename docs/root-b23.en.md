@@ -49,7 +49,7 @@ The supplied driver directory has Win7, Win8 and Win10 directories. This does no
 
 Backups must come from **your own device before flashing**. Readbacks of `init_boot` or `trustos` after rooting contain the modified state, not stock recovery images. The package's `tos.bin` is `5,195,528` bytes, while the corresponding TrustOS partition on the tested device is `6,291,456` bytes. They are not interchangeable full backups.
 
-The package does not provide a verifiable backup or complete recovery procedure. Before a first flash, obtain read, verification and recovery steps matching your device from the tool provider. This guide does not add unverified partition-read commands or promise recovery from an unbootable device.
+The original package does not provide a complete recovery procedure. This project separately provides **[B23 backup before root and conditional recovery](backup-b23.en.md)**: use the pinned reader to read both slots' `init_boot` and `trustos`, plus `misc`, twice and check them offline before considering recovery of the actual changed partitions with an intact table and the other stated conditions. Complete that process before a first flash. It does not supply whole-device firmware, NV or damaged-table recovery.
 
 ### Check the kit's identity
 

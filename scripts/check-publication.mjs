@@ -12,6 +12,7 @@ const blockedDirs = /^(?:private|inspection|tools|tools-cache|node_modules|build
 const blockedFiles = /(?:\.(?:p12|pfx|jks|keystore|key|pem|apk|aab|class|dex|exe|dll|so|zip|bin|log)$|^(?:provider\.yaml|state\.json|trust\.json|\.env(?:\..*)?)$)/i;
 const generated = new Set(['U30ProVPN.txt', 'preview-bundle.js', 'build-manifest.json']);
 const textExtension = /\.(?:go|java|mjs|js|css|html|md|json|sum|mod|ps1|yaml|yml|xml|txt|sh|in)$/i;
+const reviewedTextFiles = new Set(['support/b23-backup/expected-sizes.example.csv']);
 // Only these two reviewed image formats, directly inside this directory, are allowed.
 const documentationAsset = /^docs\/assets\/[^/]+\.(svg|png)$/;
 const report = (file, line, category) => findings.push({file, ...(line ? {line} : {}), category});
@@ -199,7 +200,7 @@ async function visit(directory, relative = '') {
       }
       continue;
     }
-    if (!textExtension.test(entry.name) && !/^(?:LICENSE|NOTICE|\.gitignore|\.gitattributes)$/.test(entry.name)) {
+    if (!textExtension.test(entry.name) && !reviewedTextFiles.has(rel) && !/^(?:LICENSE|NOTICE|\.gitignore|\.gitattributes)$/.test(entry.name)) {
       report(rel, 0, 'unreviewed_file_type'); continue;
     }
     scanText(rel, await readFile(full, 'utf8'));

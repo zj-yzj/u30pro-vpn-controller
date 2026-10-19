@@ -21,7 +21,9 @@
 
 ## 安装
 
-第一次准备设备，先看[从设备准备到 VPN 可用](docs/setup.md)：包括固件核对、B23 root 记录、UFI 准备、安装和订阅配置。已经有可用的 Magisk 和 UFI，也请先确认下面的 B23 适配条件。
+第一次准备设备，先看[从设备准备到 VPN 可用](docs/setup.md)：包括固件核对、刷前备份、B23 root、UFI、安装和订阅配置。已经有可用的 Magisk 和 UFI，也请先确认下面的 B23 适配条件。
+
+未 root 的设备先按[关键分区备份与有条件恢复](docs/backup-b23.md)保存本机原件。[配套工具包](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-backup-tools-20261019/U30Pro-B23-Backup-Tools-20261019.zip)提供固定版本 reader 和离线校验脚本；恢复范围限于分区表正常、下载通道可用时实际改动的目标。
 
 尚未 root 的匹配 B23 设备可先读 [B23 root 记录](docs/root-b23.md)，再下载[第三方工具包存档](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip)。它单独存档，不属于下面的 VPN 安装入口；已有 root 时跳过。镜像会在开机时尝试开启 TCP `5555` ADB、放宽认证并禁用更新组件，工具包不适用本项目的 MIT 许可，也不提供完整原厂备份或恢复保证，操作前请读完整记录。
 

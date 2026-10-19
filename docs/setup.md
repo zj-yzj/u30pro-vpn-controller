@@ -2,9 +2,20 @@
 
 [English](setup.en.md) · [项目首页](../README.md) · [安装与恢复](install.md)
 
-第一次用这个项目，可以按这条顺序准备：**核对固件 → 取得可用的 Magisk root → 安装并启用 UFI → 安装 VPN 模块 → 导入自己的订阅 → 测试热点客户端**。已经完成的步骤可以跳过。
+第一次用这个项目，可以按这条顺序准备：**核对固件 → 备份并校验本机关键分区 → 取得可用的 Magisk root → 安装并启用 UFI → 安装 VPN 模块 → 导入自己的订阅 → 测试热点客户端**。已经完成的步骤可以跳过。
 
 当前 v1.3.0 适配的是 **MU5358 / `U30ProV1.0.0B23` / Android API 35**。Root 和 VPN 安装是两件事：下载本项目的 APK 或 ZIP 不会给原厂设备获取 root。
+
+开始前可按这张表下载，避免设备关机后再找文件：
+
+| 材料 | 下载与用途 |
+| --- | --- |
+| 备份支持包 | [固定 reader、双读校验脚本与教程](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-backup-tools-20261019/U30Pro-B23-Backup-Tools-20261019.zip) |
+| B23 root 套件 | [刷写工具、下载模式驱动与配套 Magisk](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip) |
+| UFI 安装材料 | [完整 UFI、ADB 工具和手册](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip) |
+| VPN 安装文件 | [v1.3.0 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0) 中选模块 ZIP 或安装器 APK，并下载 `U30ProVPN.txt` |
+
+自备 Windows 电脑、数据线、可用网络和自己的订阅。首次安装还会由设备联网下载官方 Mihomo 核心；源码参考包仅供查阅，不是运行必需文件。
 
 ## 1. 先确认自己从哪一步开始
 
@@ -52,6 +63,8 @@ pm list packages com.minikano.f50_sms
 ## 2. 原厂设备先完成 root
 
 维护者给实测 B23 刷过 root，使用的套件和步骤已单独整理为 **[B23 root：工具、步骤与核验](root-b23.md)**。其中包括 Windows 下载模式驱动、直接插电流程、配套 Magisk `28103`、修复与重启核验。
+
+第一次刷写前，先完成[关键分区双读备份与有条件恢复准备](backup-b23.md)。支持包需提前下载，备份通过下载模式进行，不要求先取得 root 或开启 ADB；原一键 root 脚本不会替你备份。该流程提供本机关键分区的有限恢复准备，不是完整原厂固件或救砖保证。
 
 需要同一套件时，可下载[第三方 B23 工具包存档 ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip)（[独立存档 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-rootkit-archive-20261019)）。这是单独的历史镜像，不属于 VPN 控制器 v1.3.0 安装包；已有可用 root 时跳过，不为安装 VPN 重刷。
 

@@ -1,0 +1,6 @@
+partition,bytes
+init_boot_a,REPLACE_FROM_SIZE_PART
+init_boot_b,REPLACE_FROM_SIZE_PART
+trustos_a,REPLACE_FROM_SIZE_PART
+trustos_b,REPLACE_FROM_SIZE_PART
+misc,REPLACE_FROM_SIZE_PART

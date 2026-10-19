@@ -21,7 +21,9 @@ Tests measure latency in milliseconds. New nodes have no results until you run a
 
 ## Installation
 
-Setting up a device for the first time? Start with [Device preparation to working VPN](docs/setup.en.md), covering firmware checks, the B23 rooting record, UFI, installation and your subscription. If Magisk and UFI already work, check the B23 requirements below before installing.
+Setting up a device for the first time? Start with [Device preparation to working VPN](docs/setup.en.md), covering firmware checks, pre-root backups, B23 rooting, UFI, installation and your subscription. If Magisk and UFI already work, check the B23 requirements below before installing.
+
+Before rooting, save your device's originals using [Critical-partition backup and conditional recovery](docs/backup-b23.en.md). The [support package](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-backup-tools-20261019/U30Pro-B23-Backup-Tools-20261019.zip) provides a pinned reader and an offline checker. Recovery is limited to the targets actually changed, with an intact partition map and working download access.
 
 For a matching B23 device that still needs root, read the [B23 rooting record](docs/root-b23.en.md) before downloading the [third-party toolkit archive](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip). It is archived separately from the VPN installation routes below; skip it if root already works. Its image attempts at boot to enable TCP `5555` ADB, relax authentication and disable update components. The project's MIT license does not cover the toolkit, and it provides no complete stock backup or recovery guarantee. Read the full record before use.
 

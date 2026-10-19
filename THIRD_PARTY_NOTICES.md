@@ -120,3 +120,27 @@ interface markers identifying those integrations are retained accurately.
   references and these attribution boundaries. No supplied executable was run
   while preparing the archive, and this is not a complete binary security or
   component-license audit. See the [setup guide](docs/setup.en.md) for usage.
+
+## Separate B23 backup support package
+
+- Release: [b23-backup-tools-20261019](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-backup-tools-20261019).
+- The reader is locally built from TomKing062/spreadtrum_flash commit
+  [23c5ab211ca1e58e2fb8c70108d2bccfd0110925](https://github.com/TomKing062/spreadtrum_flash/tree/23c5ab211ca1e58e2fb8c70108d2bccfd0110925),
+  using static Windows CRT linkage and no debug information. Its protocol code
+  is unchanged. It is distinct from the opaque reader in the historical root
+  archive and from newer versions with automatic partition-table repair.
+- The same Release preserves the upstream source snapshot, build recipe,
+  provenance and file hashes. Original source notices are retained. The fork
+  does not provide an independently verified blanket license grant; its status
+  is recorded as `NOASSERTION`, rather than relabeled as controller MIT code.
+- The original ilyakurdyukov/spreadtrum_flash project uses the Unlicense. That
+  reference does not establish a license for all later fork modifications or
+  independent vendor files. The supplied `Channel9.dll` and configuration are
+  unchanged from the pinned source snapshot; their distribution terms remain
+  separately unconfirmed (`NOASSERTION`).
+- This project's offline PowerShell checker and CSV template use the root MIT
+  license. The checker does not connect to devices or write partitions. It
+  establishes local file consistency only, not stock origin, a full-device
+  clone or a successfully tested restore. The package contains no device dumps,
+  NV/calibration files, subscriber data or stock firmware image. See the
+  [backup guide](docs/backup-b23.en.md) for the exact scope.

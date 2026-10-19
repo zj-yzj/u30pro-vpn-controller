@@ -2,9 +2,20 @@
 
 [简体中文](setup.md) · [Project home](../README.en.md) · [Installation and recovery](install.en.md)
 
-If this is your first time using the project, work through these steps: **check the firmware → get working Magisk root → install UFI and enable its advanced features → install the VPN module → add your own subscription → test from a hotspot client**. Skip any steps you have already completed.
+If this is your first time using the project, work through these steps: **check the firmware → back up and verify your device's critical partitions → get working Magisk root → install UFI and enable its advanced features → install the VPN module → add your own subscription → test from a hotspot client**. Skip any steps you have already completed.
 
 The current v1.3.0 release supports **MU5358 / `U30ProV1.0.0B23` / Android API 35**. Rooting the device and installing the VPN are separate steps: downloading this project's APK or ZIP does not root a stock device.
+
+Download these before powering off the device:
+
+| Material | Download and purpose |
+| --- | --- |
+| Backup support package | [Pinned reader, two-pass checker and guide](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-backup-tools-20261019/U30Pro-B23-Backup-Tools-20261019.zip) |
+| B23 root kit | [Flashing tools, download-mode driver and matching Magisk](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip) |
+| UFI installation materials | [Full UFI, ADB tools and manual](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/ufi-tools-archive-20261019/U30Pro-UFI-Tools-Archive-20261019.zip) |
+| VPN installation files | Choose the module ZIP or installer APK from [v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0), plus `U30ProVPN.txt` |
+
+Provide your own Windows computer, data cable, working network and subscription. The device also downloads the official Mihomo core during first installation. Source-reference packages are optional and are not needed to run the tools.
 
 ## 1. Find your starting point
 
@@ -52,6 +63,8 @@ No ADB access does not necessarily mean the device lacks root. You can inspect i
 ## 2. Root a stock device first
 
 The maintainer rooted the tested B23 device. The kit and steps are recorded separately in **[B23 root: tools, steps and verification](root-b23.en.md)**, including the Windows download-mode driver, direct-connection procedure, supplied Magisk `28103`, environment repair and reboot checks.
+
+Before a first flash, complete the [two-read critical-partition backup and conditional recovery preparation](backup-b23.en.md). Download the support package in advance. Backup uses download mode and does not require root or ADB first; the original one-click root script does not back up for you. This prepares limited recovery of your device's critical partitions, not complete stock firmware or a guaranteed unbrick route.
 
 If you need the same kit, download the [third-party B23 toolkit archive ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip) ([separate archive Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-rootkit-archive-20261019)). This historical mirror is separate from the VPN controller's v1.3.0 installation packages. Skip it if root already works; do not reflash to install the VPN.
 
