@@ -53,7 +53,9 @@ pm list packages com.minikano.f50_sms
 
 维护者给实测 B23 刷过 root，使用的套件和步骤已单独整理为 **[B23 root：工具、步骤与核验](root-b23.md)**。其中包括 Windows 下载模式驱动、直接插电流程、配套 Magisk `28103`、修复与重启核验。
 
-先读该页再操作：这份第三方包还内置了每次开机尝试开启无线 ADB、放宽认证和禁用更新组件的脚本，自动脚本没有备份步骤。Root 记录已附 UFI 作者提供的历史资源入口，但尚未确认网盘当前内容与这份 B23 包相同，原包再分发许可也未确认。本项目不附带它的镜像或程序；第一次刷写仍需具备自己的原厂备份和匹配的恢复方法。
+需要同一套件时，可下载[第三方 B23 工具包存档 ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip)（[独立存档 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-rootkit-archive-20261019)）。这是单独的历史镜像，不属于 VPN 控制器 v1.3.0 安装包；已有可用 root 时跳过，不为安装 VPN 重刷。
+
+先读 root 记录再操作：这份第三方包内置了每次开机尝试开启 TCP `5555` 无线 ADB、放宽认证和禁用更新组件的脚本，自动脚本没有备份步骤。存档保留工具原始字节，未重新刷机验证；除已核对官方文件身份的配套 Magisk 外，其他组件的原作者与再分发许可仍未确认，工具包不适用本项目的 MIT 许可。第一次刷写仍需具备自己的原厂备份和匹配的恢复方法，存档不提供完整恢复保证。
 
 [公开 B24 root 资料](https://github.com/SAMYUBA/u30pro-b24-root-kit)对应其他固件，不能替代 B23 套件。仅安装 Magisk APK 也没有完成 root；通用流程可参考 [Magisk 官方说明](https://topjohnwu.github.io/Magisk/install.html)，但不要把通用 fastboot 命令直接用于 U30 Pro。
 
@@ -127,7 +129,7 @@ await runShellWithRoot('id', 10000)
 
 能打开 UFI 页面，只说明网页服务可达；独立的 TTYD 网页终端可用也不能代替第 5 项。可按 [UFI 的 RootShell 接口说明](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md#123-功能内容)检查插件通道。UFI 高级功能与 Magisk 分别检查：当前 VPN 安装包需要两者都可用。无法取得 UFI root 时先处理这一层，再安装 VPN；UFI 作者也说明 Pro 系列需先 root，见 [issue #144](https://github.com/kanoqwq/UFI-TOOLS/issues/144)。
 
-本项目只提供 VPN 插件，不修改 UFI 的作者信息，也不分发其安装器或 root 工具包。
+VPN 控制器安装包提供本项目的插件，不修改 UFI 的作者信息，也不内嵌 UFI 安装器或 root 工具。上文的 B23 工具包另作第三方历史存档提供。
 
 ## 4. 安装 v1.3.0
 

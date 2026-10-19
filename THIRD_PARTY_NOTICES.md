@@ -2,8 +2,10 @@
 
 The root MIT license covers the original controller code and documentation.
 It does not replace the licenses of the following dependencies or external
-programs. This repository does not bundle firmware, upstream tool repositories,
-UFI authentication assets, signing identities, or a Mihomo executable.
+programs. The controller source and v1.3.0 installer packages do not bundle
+firmware, upstream tool repositories, UFI authentication assets, signing
+identities, or a Mihomo executable. A separate third-party B23 toolkit archive
+is described below; the controller's MIT license does not cover that archive.
 
 ## node-forge 1.4.0
 
@@ -61,6 +63,28 @@ UFI authentication assets, signing identities, or a Mihomo executable.
 The web plugin uses UFI's existing authenticated `runShellWithRoot` interface.
 The control and installer apps use Android platform APIs. The installer calls
 the existing Magisk CLI after user root consent; it does not ship Magisk. The
-gateway startup reference is for an already rooted device. No copied UFI HTML, requests.js, CryptoJS bundle,
-Magisk package, Android SDK, or root/flash tool is distributed here. Names and
+gateway startup reference is for an already rooted device. No copied UFI HTML,
+requests.js, CryptoJS bundle, Magisk package, Android SDK, or root/flash tool is
+included in the controller source or v1.3.0 installer packages. Names and
 interface markers identifying those integrations are retained accurately.
+
+## Separate B23 root toolkit archive
+
+- Archive: [b23-rootkit-archive-20261019](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-rootkit-archive-20261019).
+- Scope: the historical third-party toolkit supplied and used by the maintainer,
+  with original operational file bytes retained. Two old communication logs,
+  PDB debug symbols and one empty marker are omitted. It is not an official
+  vendor release or part of the controller's two installer routes.
+- The Magisk APK is byte-identical to official
+  [Canary 28103](https://github.com/topjohnwu/Magisk/releases/tag/canary-28103),
+  source commit `1e3edb888375c75777120a018637b5d945df6d15`. The archive contains
+  the full GPL v3 text. The same Release provides a separate source companion
+  with that tree, its ten pinned submodules, original licenses and a source receipt.
+- Original AndroidX, UNISOC/SPRD and Microsoft component notices and file
+  identities are retained in the original files. Exact provenance and applicable
+  license statements for the other independent scripts, images and tools remain
+  unconfirmed and are recorded as `NOASSERTION`. They are not relabeled MIT or
+  covered by the Magisk source's license.
+- The archive contains its own `THIRD-PARTY-NOTICES.md`, `MAGISK-SOURCE.md`,
+  file manifest and checksums. Device scope, bundled wireless-ADB/update changes
+  and backup requirements are documented in the [B23 root record](docs/root-b23.en.md).

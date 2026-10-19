@@ -53,7 +53,9 @@ No ADB access does not necessarily mean the device lacks root. You can inspect i
 
 The maintainer rooted the tested B23 device. The kit and steps are recorded separately in **[B23 root: tools, steps and verification](root-b23.en.md)**, including the Windows download-mode driver, direct-connection procedure, supplied Magisk `28103`, environment repair and reboot checks.
 
-Read that page before proceeding. This third-party package also includes a script that attempts to enable wireless ADB, relax authentication and disable update components at every boot. Its automatic script has no backup step. The root record links to a historical resource shared by the UFI author, but its current cloud contents have not been matched to this B23 package, and redistribution permission remains unconfirmed. This project does not include its images or programs. A first flash still requires your own stock backups and a matching recovery method.
+If you need the same kit, download the [third-party B23 toolkit archive ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip) ([separate archive Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-rootkit-archive-20261019)). This historical mirror is separate from the VPN controller's v1.3.0 installation packages. Skip it if root already works; do not reflash to install the VPN.
+
+Read the root record before proceeding. This third-party package includes a script that attempts at every boot to enable wireless ADB on TCP `5555`, relax authentication and disable update components. Its automatic script has no backup step. The archive preserves the supplied tool bytes, and no fresh flash test was performed. Apart from the supplied Magisk APK whose official file identity has been confirmed, other components' original authors and redistribution licenses remain unconfirmed. The project's MIT license does not cover the toolkit. A first flash still requires your own stock backups and a matching recovery method; the archive provides no complete recovery guarantee.
 
 The [public B24 rooting material](https://github.com/SAMYUBA/u30pro-b24-root-kit) covers different firmware and cannot replace the B23 kit. Installing only the Magisk APK does not complete rooting either. See the [official Magisk guide](https://topjohnwu.github.io/Magisk/install.html) for the general process, but do not apply generic fastboot commands directly to the U30 Pro.
 
@@ -127,7 +129,7 @@ See [UFI's upstream requests.js](https://github.com/kanoqwq/UFI-TOOLS/blob/http-
 
 Opening the UFI page confirms only that the web service is reachable. A working standalone TTYD web terminal also does not replace step 5. Check the plugin channel using [UFI's RootShell interface documentation](https://github.com/kanoqwq/UFI-TOOLS/blob/http-server-version/User_Doc.md#123-功能内容). Check UFI advanced features and Magisk separately: the current VPN installer needs both working. Resolve missing UFI root access before installing the VPN. The UFI author also states that the Pro series must be rooted first; see [issue #144](https://github.com/kanoqwq/UFI-TOOLS/issues/144).
 
-This project supplies only the VPN plugin. It keeps UFI's author attribution intact and does not distribute UFI's installer or rooting toolkits.
+The VPN controller's installation packages provide this project's plugin, retain UFI's author attribution and do not embed a UFI installer or rooting tools. The B23 toolkit linked above is provided separately as a third-party historical archive.
 
 ## 4. Install v1.3.0
 

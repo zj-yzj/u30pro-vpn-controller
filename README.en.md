@@ -23,6 +23,8 @@ Tests measure latency in milliseconds. New nodes have no results until you run a
 
 Setting up a device for the first time? Start with [Device preparation to working VPN](docs/setup.en.md), covering firmware checks, the B23 rooting record, UFI, installation and your subscription. If Magisk and UFI already work, check the B23 requirements below before installing.
 
+For a matching B23 device that still needs root, read the [B23 rooting record](docs/root-b23.en.md) before downloading the [third-party toolkit archive](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip). It is archived separately from the VPN installation routes below; skip it if root already works. Its image attempts at boot to enable TCP `5555` ADB, relax authentication and disable update components. The project's MIT license does not cover the toolkit, and it provides no complete stock backup or recovery guarantee. Read the full record before use.
+
 Current release: **[v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)**. Choose one installation entry; both install the same module.
 
 | File | How to use it |

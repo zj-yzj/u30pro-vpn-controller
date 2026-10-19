@@ -6,9 +6,17 @@ This record describes the third-party kit **`U30Pro_B23_一键Root 永久无线A
 
 This project inspected the package's scripts. Its `magisk.img` matches the readback of `init_boot_b` from the tested device, and its `tos.bin` matches the corresponding prefix of the `trustos_b` readback. This establishes the relationship between the package and the tested device; it does not guarantee a matching boot chain on another device with the same model. No device was reflashed while preparing this documentation.
 
-**The toolkit is not distributed with this project.** In a [public reply on June 4, 2026](https://github.com/kanoqwq/UFI-TOOLS/issues/97#issuecomment-4624994150), the UFI-TOOLS author provided a [U30 Pro one-click root resource link](https://www.123pan.com/s/7oa5Vv-h0yD3?pwd=xk9q), with public access code `xk9q`.
+**[Download the third-party B23 toolkit archive ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip)** · [Archive Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-rootkit-archive-20261019). This mirrors the historical kit supplied by the maintainer. The date `20261019` identifies this archive snapshot, not an upstream version or official release. It is separate from the VPN controller's v1.3.0 installation packages. **Skip this archive if root already works**, and continue checking Magisk and UFI.
 
-This is a historical link with an identifiable source, but the reply does not specify B23. The cloud directory could not be loaded during this review, so its current contents have not been matched to the local B23 kit. Providing the link also does not establish authorship of every bundled file. The package's original author and redistribution license remain unconfirmed. Check the firmware and file identities below after obtaining it; do not begin flashing without matching tools and your own device backups. The [public B24 tools](https://github.com/SAMYUBA/u30pro-b24-root-kit) cannot replace this B23 package.
+The archive contains **98 file entries: 91 kit files with their original bytes preserved under `B23-RootKit/`, plus 7 archive documentation and metadata files**. Two runtime logs, one PDB debug-symbol file and one empty marker file are omitted. After extraction, use the original directory layout inside `B23-RootKit/`. The archive contains no stock backup from your device and adds no complete recovery procedure.
+
+| Archive file | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `U30Pro-B23-RootKit-Archive-20261019.zip` | `52334651` | `87ee5dc281ea897f9861b1ba8afb16243cf57abf653870648900f8c24fa554bf` |
+
+The supplied Magisk APK's SHA-256 matches the [official Magisk Canary 28103 release](https://github.com/topjohnwu/Magisk/releases/tag/canary-28103). A separate [Magisk source companion](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/Magisk-Canary-28103-Source.zip), including the GPL license text, is provided in the same archive Release. This match establishes the APK's file provenance only; it does not establish the provenance of other images, loaders, drivers or programs. Their original authors and redistribution licenses remain unconfirmed. **This project's MIT license does not cover the third-party toolkit.**
+
+In a [public reply on June 4, 2026](https://github.com/kanoqwq/UFI-TOOLS/issues/97#issuecomment-4624994150), the UFI-TOOLS author also provided a [historical U30 Pro one-click root resource link](https://www.123pan.com/s/7oa5Vv-h0yD3?pwd=xk9q), with public access code `xk9q`. The reply does not specify B23, and the cloud directory could not be loaded during this review, so its current contents have not been matched to this archive. Providing the link does not establish authorship of every bundled file. Check the firmware and file identities below after obtaining the archive; do not begin flashing without matching tools and your own device backups. The [public B24 tools](https://github.com/SAMYUBA/u30pro-b24-root-kit) cannot replace this B23 package.
 
 ## Understand what it changes
 
@@ -88,7 +96,7 @@ adb -s SERIAL install "Magisk_28103_面具.apk"
 adb -s SERIAL shell am start -n com.topjohnwu.magisk/com.topjohnwu.magisk.ui.MainActivity
 ```
 
-If the matching app is already installed and working, skip the first line rather than reinstalling over it. A matching package name does not prove an official signature; this project has not verified the original author's signature on this historical APK.
+If the matching app is already installed and working, skip the first line rather than reinstalling over it. This APK's SHA-256 has been matched to the official Canary 28103 release file: `fa7e64af14e57194e2463d959e809812e9bdd48f4cc996565706f658e78694de`, as listed above. A matching package name alone does not establish that file identity.
 
 If modules later fail to start at boot, check the Magisk environment first. The tested device once lacked `/data/adb/magisk/busybox`; service startup recovered only after matching-version runtime files were restored. That history does not mean every device should receive a manual BusyBox copy. Check the local repair result first, and do not fill the gap with a binary of unknown origin.
 

@@ -6,9 +6,17 @@
 
 本项目核对了包内脚本；其中 `magisk.img` 与实测设备的 `init_boot_b` 回读一致，`tos.bin` 与 `trustos_b` 回读的对应前缀一致。这能确认这份包与实测设备的关系，不能保证另一台同型号设备的启动链也匹配。本次整理文档没有重新刷写设备。
 
-**工具包不随本项目分发。** UFI-TOOLS 作者在 [2026-06-04 的公开回复](https://github.com/kanoqwq/UFI-TOOLS/issues/97#issuecomment-4624994150)中提供过 [U30 Pro 一键 Root 资源入口](https://www.123pan.com/s/7oa5Vv-h0yD3?pwd=xk9q)，公开提取码为 `xk9q`。
+**[下载 B23 第三方工具包存档 ZIP](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/U30Pro-B23-RootKit-Archive-20261019.zip)** · [存档 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/b23-rootkit-archive-20261019)。这是维护者提供的历史套件镜像，日期 `20261019` 表示本次存档，不是上游版本或官方发布，也不属于 VPN 控制器 v1.3.0 安装包。**已有可用 root 时跳过此存档**，继续核对 Magisk 和 UFI。
 
-这是有出处的历史入口，但回复没有写明 B23，本次也未能加载网盘目录，尚未确认其当前内容与本地 B23 套件一致；提供链接也不能证明发布者是包内所有文件的原作者。原包的作者与再分发许可仍未确认。取得文件后先核对适用固件和下方文件身份，没有匹配工具和本机备份时不要进入刷写步骤。[B24 的公开工具](https://github.com/SAMYUBA/u30pro-b24-root-kit)不能替代这份 B23 包。
+存档共有 **98 个文件条目：91 个保留原始字节的套件文件，位于 `B23-RootKit/`，另加 7 个存档说明与元数据文件**。已移除两份运行日志、一个 PDB 调试符号文件和一个零字节提示文件。解压后从 `B23-RootKit/` 使用原有目录结构；存档不包含本机原厂备份，也没有补充完整恢复方案。
+
+| 存档文件 | 字节数 | SHA-256 |
+| --- | ---: | --- |
+| `U30Pro-B23-RootKit-Archive-20261019.zip` | `52334651` | `87ee5dc281ea897f9861b1ba8afb16243cf57abf653870648900f8c24fa554bf` |
+
+配套 Magisk APK 的 SHA-256 已与 [Magisk 官方 Canary 28103 发布](https://github.com/topjohnwu/Magisk/releases/tag/canary-28103)核对一致；[Magisk 源码配套包](https://github.com/zj-yzj/u30pro-vpn-controller/releases/download/b23-rootkit-archive-20261019/Magisk-Canary-28103-Source.zip)在同一存档 Release 单独提供，含 GPL 许可文本。这项核对只确认该 APK 的文件来源，不能替其他镜像、loader、驱动或程序作来源保证。其他组件的原作者与再分发许可仍未确认，**本项目的 MIT 许可不覆盖这份第三方工具包**。
+
+UFI-TOOLS 作者在 [2026-06-04 的公开回复](https://github.com/kanoqwq/UFI-TOOLS/issues/97#issuecomment-4624994150)中也提供过 [U30 Pro 一键 Root 历史资源入口](https://www.123pan.com/s/7oa5Vv-h0yD3?pwd=xk9q)，公开提取码为 `xk9q`。回复没有写明 B23，本次也未能加载网盘目录，尚未确认其当前内容与这份存档一致；提供链接不能证明发布者是包内所有文件的原作者。取得存档后先核对适用固件和下方文件身份，没有匹配工具和本机备份时不要进入刷写步骤。[B24 的公开工具](https://github.com/SAMYUBA/u30pro-b24-root-kit)不能替代这份 B23 包。
 
 ## 先看它会改什么
 
@@ -88,7 +96,7 @@ adb -s SERIAL install "Magisk_28103_面具.apk"
 adb -s SERIAL shell am start -n com.topjohnwu.magisk/com.topjohnwu.magisk.ui.MainActivity
 ```
 
-若配套应用已正常安装，跳过第一行，不覆盖重装。包名相同不证明官方签名，本项目没有核验这份历史 APK 的原作者签名。
+若配套应用已正常安装，跳过第一行，不覆盖重装。这里已核对该 APK 与官方 Canary 28103 发布文件的 SHA-256 一致，值为上表的 `fa7e64af14e57194e2463d959e809812e9bdd48f4cc996565706f658e78694de`；包名相同本身不构成这项文件身份核验。
 
 如果后续模块不能随开机运行，先检查 Magisk 环境。实测设备曾缺少 `/data/adb/magisk/busybox`；补齐同版本运行文件后才恢复服务启动。这个历史问题不意味着每台设备都应手动复制 BusyBox：优先检查本机的修复结果，来源不明的二进制不要填进去。
 
