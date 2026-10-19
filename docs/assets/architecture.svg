@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790" role="img" aria-labelledby="title desc">
+  <title id="title">U30 Pro VPN Controller — traffic and local control architecture</title>
+  <desc id="desc">Wi-Fi client traffic passes through the U30 Pro gateway and the Mihomo process running on that device to the Internet. The native Android app reaches webctl through a local Unix socket and webbridge. The UFI web plugin reaches webctl through the existing UFI authenticated root interface. Webctl uses the Mihomo controller's local Unix socket and gateway control scripts.</desc>
+  <defs>
+    <marker id="traffic" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#147D72"/>
+    </marker>
+    <marker id="control" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#668099"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="790" rx="24" fill="#F4F8FB"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', Arial, sans-serif">
+    <text x="52" y="66" font-size="40" font-weight="700" letter-spacing="-.5" fill="#142C46">Traffic &amp; local control architecture</text>
+    <text x="54" y="108" font-size="22" fill="#526B80">U30 Pro 专用 · 原厂 Android / root 集成 · 独立 Mihomo 核心</text>
+
+    <rect x="40" y="143" width="1120" height="214" rx="22" fill="#FFFFFF" stroke="#DDE7ED" stroke-width="1.5"/>
+    <text x="64" y="180" font-size="18" font-weight="700" letter-spacing="1" fill="#147D72">TRAFFIC / 网关转发</text>
+    <g fill="#EFF8F5" stroke="#BBDDD4" stroke-width="1.5">
+      <rect x="64" y="214" width="211" height="105" rx="16"/>
+      <rect x="351" y="214" width="211" height="105" rx="16"/>
+      <rect x="638" y="214" width="211" height="105" rx="16"/>
+      <rect x="925" y="214" width="211" height="105" rx="16"/>
+    </g>
+    <g fill="none" stroke="#147D72" stroke-width="3" marker-end="url(#traffic)">
+      <path d="M285 266H338"/>
+      <path d="M572 266H625"/>
+      <path d="M859 266H912"/>
+    </g>
+    <g text-anchor="middle" fill="#142C46" font-weight="700" font-size="25">
+      <text x="169.5" y="254">Wi-Fi client</text>
+      <text x="456.5" y="250">U30 Pro</text>
+      <text x="743.5" y="254">Mihomo</text>
+      <text x="1030.5" y="254">Internet</text>
+    </g>
+    <g text-anchor="middle" fill="#536E80" font-size="18">
+      <text x="169.5" y="286">联网设备</text>
+      <text x="456.5" y="279">gateway / 网关</text>
+      <text x="743.5" y="286">proxy core / 代理核心</text>
+      <text x="1030.5" y="286">网络出口</text>
+    </g>
+    <text x="456.5" y="304" text-anchor="middle" font-size="16" fill="#536E80">Stock Android + root</text>
+    <text x="743.5" y="307" text-anchor="middle" font-size="16" fill="#536E80">On U30 Pro / 设备内</text>
+
+    <rect x="40" y="385" width="1120" height="337" rx="22" fill="#FFFFFF" stroke="#DDE7ED" stroke-width="1.5"/>
+    <text x="64" y="423" font-size="18" font-weight="700" letter-spacing="1" fill="#375D80">CONTROL / 设备本地管理</text>
+
+    <g fill="#F3F7FC" stroke="#D3E0EC" stroke-width="1.5">
+      <rect x="64" y="467" width="235" height="82" rx="14"/>
+      <rect x="64" y="604" width="235" height="82" rx="14"/>
+      <rect x="390" y="467" width="206" height="82" rx="14"/>
+      <rect x="390" y="604" width="206" height="82" rx="14"/>
+      <rect x="923" y="467" width="213" height="82" rx="14"/>
+      <rect x="923" y="604" width="213" height="82" rx="14"/>
+    </g>
+    <rect x="650" y="527" width="200" height="104" rx="16" fill="#E2F3ED" stroke="#A5D4C4" stroke-width="1.5"/>
+
+    <g fill="none" stroke="#668099" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#control)">
+      <path d="M307 508H379"/>
+      <path d="M307 645H379"/>
+      <path d="M605 508H619V562H639"/>
+      <path d="M605 645H619V596H639"/>
+      <path d="M860 560H886V508H912"/>
+      <path d="M860 599H886V645H912"/>
+    </g>
+
+    <g text-anchor="middle" fill="#142C46" font-weight="700">
+      <text x="181.5" y="500" font-size="21">Native Android app</text>
+      <text x="181.5" y="637" font-size="22">UFI web plugin</text>
+      <text x="493" y="500" font-size="24">webbridge</text>
+      <text x="493" y="637" font-size="20">Existing UFI auth</text>
+      <text x="750" y="569" font-size="28">webctl</text>
+      <text x="1029.5" y="500" font-size="20">Mihomo controller</text>
+      <text x="1029.5" y="637" font-size="21">Gateway control</text>
+    </g>
+    <g text-anchor="middle" fill="#536E80">
+      <text x="181.5" y="529" font-size="18">圆屏原生应用</text>
+      <text x="181.5" y="666" font-size="18">UFI 网页插件</text>
+      <text x="493" y="529" font-size="16">UID · package · APK</text>
+      <text x="493" y="666" font-size="17">现有认证 root 接口</text>
+      <text x="750" y="600" font-size="18">Go manager / 管理器</text>
+      <text x="1029.5" y="529" font-size="17">Local Unix socket</text>
+      <text x="1029.5" y="666" font-size="18">control.sh</text>
+    </g>
+    <text x="344" y="487" text-anchor="middle" font-size="16" fill="#536E80">Unix</text>
+    <text x="344" y="537" text-anchor="middle" font-size="16" fill="#536E80">socket</text>
+    <text x="54" y="759" font-size="18" fill="#536E80">本地 Unix socket 控制 · 复用现有 UFI 认证接口 · Local control, existing UFI integration</text>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "name": "u30pro-vpn-controller",
+  "version": "1.2.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Native and UFI-compatible VPN controls for a rooted U30 Pro hotspot.",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "npm run test:ui",
+    "build": "npm run build:ui",
+    "check:publication": "node scripts/check-publication.mjs",
+    "build:ui": "node web-manager/ui/assemble.mjs",
+    "test:ui": "node web-manager/ui/logic.test.mjs",
+    "test:preview": "node web-manager/ui/preview-http.test.mjs",
+    "preview": "node web-manager/ui/serve-preview.mjs"
+  },
+  "dependencies": { "node-forge": "1.4.0" }
+}

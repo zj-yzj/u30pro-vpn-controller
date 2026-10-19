@@ -1,0 +1,247 @@
+#!/system/bin/sh
+# Root-only supervisor. Only the fixed stop marker authorizes network rollback.
+set -u
+BASE=/data/adb/u30pro-vpn
+MODULE=/data/adb/modules/codex_u30pro_vpn
+BIN="$BASE/mihomo"
+CFG="$BASE/config.yaml"
+LOCK="$BASE/lock"
+STOP="$BASE/stop"
+STATE="$BASE/state"
+SFP=/proc/net/sfp/enable
+TUN=U30VPN
+TABLE=20131
+CH4=U30VPN4FORWARD
+CH6=U30VPN6FORWARD
+DN4=U30VPND4NAT
+IN4=U30VPNI4INPUT
+IN6=U30VPNI6INPUT
+
+now() { awk '{printf "%.0f\n", int($1)}' /proc/uptime; }
+state() {
+    [ "$(cat "$STATE" 2>/dev/null)" = "$1" ] && return 0
+    printf '%s\n' "$1" > "$BASE/state.next" && mv "$BASE/state.next" "$STATE"
+}
+pid_matches() {
+    [ -n "$1" ] && [ -n "$2" ] && [ -r "/proc/$1/stat" ] &&
+    [ "$(awk '{print $22}' "/proc/$1/stat" 2>/dev/null)" = "$2" ] &&
+    [ "$(readlink "/proc/$1/exe" 2>/dev/null)" = "$3" ]
+}
+supervisor_matches() {
+    [ -r "$LOCK/identity" ] || return 1
+    read -r SUP_PID SUP_START SUP_BOOT < "$LOCK/identity" || return 1
+    [ "$SUP_BOOT" = "$(cat /proc/sys/kernel/random/boot_id)" ] &&
+    [ -r "/proc/$SUP_PID/stat" ] &&
+    [ "$(awk '{print $22}' "/proc/$SUP_PID/stat" 2>/dev/null)" = "$SUP_START" ] &&
+    tr '\000' '\n' < "/proc/$SUP_PID/cmdline" | grep -Fxq "$BASE/vpn-service.sh"
+}
+core_matches() {
+    [ -r "$BASE/runtime/core.pid" ] || return 1
+    read -r CORE_PID CORE_START < "$BASE/runtime/core.pid" || return 1
+    pid_matches "$CORE_PID" "$CORE_START" "$BIN"
+}
+stop_core() {
+    if core_matches; then
+        kill -TERM "$CORE_PID" || return 1
+        task_wait=0
+        while pid_matches "$CORE_PID" "$CORE_START" "$BIN" && [ "$task_wait" -lt 3 ]; do sleep 1; task_wait=$((task_wait + 1)); done
+        if pid_matches "$CORE_PID" "$CORE_START" "$BIN"; then kill -KILL "$CORE_PID" || return 1; fi
+    fi
+}
+baseline_readable() {
+    ip -4 rule show >/dev/null 2>&1 && ip -4 route show table all >/dev/null 2>&1 &&
+    iptables -w 1 -t filter -S FORWARD >/dev/null 2>&1 && iptables -w 1 -t filter -S INPUT >/dev/null 2>&1 &&
+    iptables -w 1 -t nat -S PREROUTING >/dev/null 2>&1 &&
+    ip6tables -w 1 -t filter -S FORWARD >/dev/null 2>&1 && ip6tables -w 1 -t filter -S INPUT >/dev/null 2>&1
+}
+objects_absent() {
+    baseline_readable || return 1
+    ! ip link show dev "$TUN" >/dev/null 2>&1 || return 1
+    ! ip -4 rule show | grep -Eq '^(9490|9491):' || return 1
+    [ -z "$(ip -4 route show table "$TABLE" 2>/dev/null)" ] || return 1
+    ! iptables -w 1 -t filter -S "$CH4" >/dev/null 2>&1 &&
+    ! ip6tables -w 1 -t filter -S "$CH6" >/dev/null 2>&1 &&
+    ! iptables -w 1 -t nat -S "$DN4" >/dev/null 2>&1 &&
+    ! iptables -w 1 -t filter -S "$IN4" >/dev/null 2>&1 &&
+    ! ip6tables -w 1 -t filter -S "$IN6" >/dev/null 2>&1
+}
+chain() { "$1" -w 1 -t "$2" -S "$3" >/dev/null 2>&1 || "$1" -w 1 -t "$2" -N "$3"; }
+rule() {
+    task_tool="$1"; task_table="$2"; shift 2
+    "$task_tool" -w 1 -t "$task_table" -C "$@" >/dev/null 2>&1 || "$task_tool" -w 1 -t "$task_table" -A "$@"
+}
+jump() { "$1" -w 1 -t "$2" -C "$3" -j "$4" >/dev/null 2>&1 || "$1" -w 1 -t "$2" -I "$3" 1 -j "$4"; }
+delete_rule() {
+    task_tool="$1"; task_table="$2"; shift 2
+    if "$task_tool" -w 1 -t "$task_table" -C "$@" >/dev/null 2>&1; then "$task_tool" -w 1 -t "$task_table" -D "$@"; fi
+}
+guards() {
+    # Names/table/priorities were exclusively reserved by the initial preflight.
+    printf '0\n' > "$SFP" && [ "$(cat "$SFP")" = 0 ] || return 1
+    chain iptables filter "$CH4" && chain ip6tables filter "$CH6" && chain iptables nat "$DN4" &&
+    chain iptables filter "$IN4" && chain ip6tables filter "$IN6" || return 1
+    rule iptables filter "$CH4" -i br0 -o br0 -j RETURN &&
+    rule iptables filter "$CH4" -i br0 -o "$TUN" -p tcp -j ACCEPT &&
+    rule iptables filter "$CH4" -i br0 -o "$TUN" -p udp -j ACCEPT &&
+    rule iptables filter "$CH4" -i "$TUN" -o br0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT &&
+    rule iptables filter "$CH4" -i br0 -j REJECT --reject-with icmp-net-unreachable &&
+    rule ip6tables filter "$CH6" -i br0 -o br0 -j RETURN &&
+    rule ip6tables filter "$CH6" -i br0 -j REJECT --reject-with icmp6-adm-prohibited &&
+    rule iptables nat "$DN4" -i br0 -p udp --dport 53 -j DNAT --to-destination 198.18.0.2:53 &&
+    rule iptables nat "$DN4" -i br0 -p tcp --dport 53 -j DNAT --to-destination 198.18.0.2:53 &&
+    rule iptables filter "$IN4" -i br0 -p udp --dport 53 -j REJECT --reject-with icmp-port-unreachable &&
+    rule iptables filter "$IN4" -i br0 -p tcp --dport 53 -j REJECT --reject-with tcp-reset &&
+    rule ip6tables filter "$IN6" -i br0 -p udp --dport 53 -j REJECT --reject-with icmp6-port-unreachable &&
+    rule ip6tables filter "$IN6" -i br0 -p tcp --dport 53 -j REJECT --reject-with tcp-reset || return 1
+    jump iptables filter FORWARD "$CH4" && jump ip6tables filter FORWARD "$CH6" &&
+    jump iptables filter INPUT "$IN4" && jump ip6tables filter INPUT "$IN6" && jump iptables nat PREROUTING "$DN4" || return 1
+    ip -4 route replace unreachable default table "$TABLE" metric 32760
+}
+lan_ready() {
+    [ "$(cat /proc/sys/net/ipv4/ip_forward)" = 1 ] &&
+    ip -4 addr show dev br0 | grep -q 'inet 192\.168\.0\.1/24[[:space:]]'
+}
+capture_lan() {
+    lan_ready || return 1
+    ip -4 route show table "$TABLE" | grep -q '^192\.168\.0\.0/24 dev br0 ' ||
+    ip -4 route replace table "$TABLE" 192.168.0.0/24 dev br0 scope link || return 1
+    ip -4 rule show | grep -Eq '^9490:.*iif br0.*lookup 20131([[:space:]]|$)' || ip -4 rule add pref 9490 iif br0 lookup "$TABLE"
+}
+tun_routes() {
+    ip -4 route replace table "$TABLE" default dev "$TUN" metric 10 || return 1
+    # TUN recreation changes ifindex; remove only our reserved return selector.
+    if ip -4 rule show | grep -q '^9491:'; then
+        ip -4 rule del pref 9491 to 192.168.0.0/24 lookup "$TABLE" || return 1
+    fi
+    ip -4 rule add pref 9491 iif "$TUN" to 192.168.0.0/24 lookup "$TABLE" || return 1
+    TUN_INDEX="$(cat "/sys/class/net/$TUN/ifindex")"
+}
+start_core() {
+    stop_core || return 1
+    : >> "$BASE/log/mihomo.log"; chmod 600 "$BASE/log/mihomo.log" || return 1
+    /system/bin/nohup "$BIN" -d "$BASE/cache" -f "$CFG" >> "$BASE/log/mihomo.log" 2>&1 < /dev/null &
+    CORE_PID=$!; CORE_START="$(awk '{print $22}' "/proc/$CORE_PID/stat" 2>/dev/null)"
+    printf '%s %s\n' "$CORE_PID" "$CORE_START" > "$BASE/runtime/core.pid"
+    task_wait=0
+    while [ "$task_wait" -lt 10 ] && [ ! -e "$STOP" ]; do
+        if core_matches && ip link show dev "$TUN" >/dev/null 2>&1; then tun_routes; return $?; fi
+        kill -0 "$CORE_PID" 2>/dev/null || return 1
+        sleep 1; task_wait=$((task_wait + 1))
+    done
+    return 1
+}
+healthy() {
+    core_matches && [ "$(cat "$SFP")" = 0 ] && [ -n "$TUN_INDEX" ] &&
+    [ "$TUN_INDEX" = "$(cat "/sys/class/net/$TUN/ifindex" 2>/dev/null)" ] &&
+    ip -4 route show table "$TABLE" | grep -Eq '^default dev U30VPN .*metric 10([[:space:]]|$)' || return 1
+    ip -4 route show table "$TABLE" | grep -Eq '^unreachable default .*metric 32760([[:space:]]|$)' || return 1
+    ip -4 rule show | grep -Eq '^9491:.*to 192\.168\.0\.0/24.*iif U30VPN.*lookup 20131([[:space:]]|$)'
+}
+bound_logs() {
+    # Both daemons open these files with O_APPEND; truncate the same inode.
+    for task_log_name in mihomo supervisor; do
+        task_log_size="$(stat -c '%s' "$BASE/log/$task_log_name.log" 2>/dev/null)" || continue
+        if [ "$task_log_size" -gt 2097152 ]; then
+            tail -c 2097152 "$BASE/log/$task_log_name.log" > "$BASE/log/$task_log_name-previous.log" &&
+            chmod 600 "$BASE/log/$task_log_name-previous.log" && : > "$BASE/log/$task_log_name.log"
+        fi
+    done
+}
+supervise() {
+    task_next_restart=0; task_next_guards=0; TUN_INDEX=
+    while [ ! -e "$STOP" ]; do
+        task_time="$(now)"
+        if [ "$task_time" -ge "$task_next_guards" ] || [ "$(cat "$SFP")" != 0 ]; then
+            bound_logs || true
+            if ! guards; then state CHECK_REQUIRED; sleep 2; continue; fi
+            task_next_guards=$((task_time + 10))
+        fi
+        if ! capture_lan; then state WAITING_LAN_BLOCKED; sleep 2; continue; fi
+        if healthy; then
+            state RUNNING
+        else
+            state FAILED_BLOCKED
+            if [ ! -e "$BASE/hold-restart" ] && [ "$task_time" -ge "$task_next_restart" ]; then
+                task_next_restart=$((task_time + 15))
+                if start_core && healthy; then state RUNNING; fi
+            fi
+        fi
+        sleep 2
+    done
+}
+cleanup() {
+    # The caller must have observed the explicit root-only stop marker.
+    [ -e "$STOP" ] || return 1
+    state STOPPING
+    ip -4 rule del pref 9490 iif br0 lookup "$TABLE" 2>/dev/null || true
+    ip -4 rule del pref 9491 to 192.168.0.0/24 lookup "$TABLE" 2>/dev/null || true
+    delete_rule iptables nat PREROUTING -j "$DN4"
+    delete_rule iptables filter INPUT -j "$IN4"; delete_rule ip6tables filter INPUT -j "$IN6"
+    delete_rule iptables filter FORWARD -j "$CH4"; delete_rule ip6tables filter FORWARD -j "$CH6"
+    delete_rule iptables nat "$DN4" -i br0 -p udp --dport 53 -j DNAT --to-destination 198.18.0.2:53
+    delete_rule iptables nat "$DN4" -i br0 -p tcp --dport 53 -j DNAT --to-destination 198.18.0.2:53
+    delete_rule iptables filter "$IN4" -i br0 -p udp --dport 53 -j REJECT --reject-with icmp-port-unreachable
+    delete_rule iptables filter "$IN4" -i br0 -p tcp --dport 53 -j REJECT --reject-with tcp-reset
+    delete_rule ip6tables filter "$IN6" -i br0 -p udp --dport 53 -j REJECT --reject-with icmp6-port-unreachable
+    delete_rule ip6tables filter "$IN6" -i br0 -p tcp --dport 53 -j REJECT --reject-with tcp-reset
+    delete_rule iptables filter "$CH4" -i br0 -o br0 -j RETURN
+    delete_rule iptables filter "$CH4" -i br0 -o "$TUN" -p tcp -j ACCEPT
+    delete_rule iptables filter "$CH4" -i br0 -o "$TUN" -p udp -j ACCEPT
+    delete_rule iptables filter "$CH4" -i "$TUN" -o br0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    delete_rule iptables filter "$CH4" -i br0 -j REJECT --reject-with icmp-net-unreachable
+    delete_rule ip6tables filter "$CH6" -i br0 -o br0 -j RETURN
+    delete_rule ip6tables filter "$CH6" -i br0 -j REJECT --reject-with icmp6-adm-prohibited
+    iptables -w 1 -t nat -X "$DN4"; iptables -w 1 -t filter -X "$IN4"; ip6tables -w 1 -t filter -X "$IN6"
+    iptables -w 1 -t filter -X "$CH4"; ip6tables -w 1 -t filter -X "$CH6"
+    ip -4 route del table "$TABLE" default dev "$TUN" metric 10 2>/dev/null || true
+    ip -4 route del unreachable default table "$TABLE" metric 32760 2>/dev/null || true
+    ip -4 route del table "$TABLE" 192.168.0.0/24 dev br0 2>/dev/null || true
+    stop_core || true
+    task_wait=0
+    while ip link show dev "$TUN" >/dev/null 2>&1 && [ "$task_wait" -lt 3 ]; do sleep 1; task_wait=$((task_wait + 1)); done
+    if objects_absent && ! core_matches && printf '1\n' > "$SFP" && [ "$(cat "$SFP")" = 1 ]; then
+        if rm -f "$LOCK/identity" && rmdir "$LOCK"; then state STOPPED; else state CHECK_REQUIRED; return 1; fi
+    else
+        state CHECK_REQUIRED
+        return 1
+    fi
+}
+
+# The control and installer scripts import only these fixed-path helpers.
+[ "${U30_LIBRARY:-0}" = 1 ] && return 0
+[ "$(id -u)" = 0 ] || { echo "Root required"; exit 1; }
+umask 077
+OWNERSHIP=0
+task_boot_wait=0
+while ! baseline_readable; do
+    [ "$task_boot_wait" -lt 180 ] && [ ! -e "$STOP" ] || { state CHECK_REQUIRED; exit 1; }
+    sleep 2; task_boot_wait=$((task_boot_wait + 2))
+done
+if [ -d "$LOCK" ]; then
+    supervisor_matches && { echo "Already running"; exit 0; }
+    read -r SUP_PID SUP_START SUP_BOOT < "$LOCK/identity" || { echo "Unverified lock; preserving it"; exit 1; }
+    [ "$SUP_BOOT" != "$(cat /proc/sys/kernel/random/boot_id)" ] || { echo "Stale same-boot lock; CHECK_REQUIRED"; exit 1; }
+    objects_absent && [ "$(cat "$SFP")" = 1 ] || { echo "Old lock has active network objects"; exit 1; }
+    rm -f "$LOCK/identity"; rmdir "$LOCK" || exit 1
+fi
+mkdir "$LOCK" || exit 1
+printf '%s %s %s\n' "$$" "$(awk '{print $22}' "/proc/$$/stat")" "$(cat /proc/sys/kernel/random/boot_id)" > "$LOCK/identity"
+on_exit() {
+    trap - EXIT; trap '' INT TERM HUP
+    if [ "$OWNERSHIP" = 1 ]; then
+        state CHECK_REQUIRED
+        supervise
+        cleanup
+    fi
+}
+trap on_exit EXIT
+trap '' INT TERM HUP
+state STARTING
+objects_absent && [ "$(cat "$SFP")" = 1 ] &&
+ip -4 rule show | grep -Eq '^0:.*lookup local([[:space:]]|$)' || { state CHECK_REQUIRED; exit 1; }
+[ "$(sha256sum "$BIN" | awk '{print $1}')" = @@MIHOMO_SHA256@@ ] &&
+[ "$(sha256sum "$CFG" | awk '{print $1}')" = @@CONFIG_SHA256@@ ] || { state CHECK_REQUIRED; exit 1; }
+OWNERSHIP=1
+supervise
+trap - EXIT
+cleanup

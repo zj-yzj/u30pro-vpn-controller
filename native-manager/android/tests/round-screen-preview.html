@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U30 Pro 圆屏截图验收</title>
+<style>
+  body{font:15px system-ui,sans-serif;background:#e8edf3;color:#17304b;margin:24px}
+  main{max-width:840px;margin:auto}h1{font-size:22px}p{line-height:1.6}
+  .views{display:flex;gap:28px;flex-wrap:wrap}.card{background:white;padding:20px;border-radius:16px}
+  .panel{width:240px;height:240px;position:relative;background:#f1f5f9}
+  .panel img{position:absolute;inset:0;width:240px;height:240px}
+  .round{clip-path:circle(120px at 120px 120px)}
+  .safe{display:none;position:absolute;left:38px;top:38px;width:164px;height:164px;box-sizing:border-box;border:1px dashed #11856b;pointer-events:none}
+  .inset{display:none;position:absolute;inset:4px;border:1px dotted #1664d7;border-radius:50%;box-sizing:border-box;pointer-events:none}
+  body.guides .safe,body.guides .inset{display:block}
+  .explanation{font-size:13px;color:#5f6f80}.controls{display:flex;gap:20px;margin:20px 0;flex-wrap:wrap}
+  #result{font-weight:600}
+</style>
+<main>
+  <h1>U30 Pro 圆屏验收</h1>
+  <p>选择真实设备的原始截图。右边按物理半径 120px 裁切，防止把方形 framebuffer 四角误当作实际可见区域。图片只在本机浏览器显示。</p>
+  <div class="controls"><input id="file" type="file" accept="image/png,image/jpeg"><label><input id="guides" type="checkbox">显示安全方形与 4px 内缩圆</label></div>
+  <p id="result">尚未选择截图</p>
+  <div class="views">
+    <div class="card"><h2>原始 framebuffer</h2><div class="panel"><img id="raw" alt="待选择截图"><div class="safe"></div><div class="inset"></div></div></div>
+    <div class="card"><h2>实际圆屏可见区域</h2><div class="panel round"><img id="round" alt="待选择截图"><div class="safe"></div><div class="inset"></div></div></div>
+  </div>
+  <p class="explanation">逐页检查主页、更多、节点（滚动前后）、订阅、快捷入口。所有按钮和返回键都应完整处于绿色安全方形中；悬浮入口需另拍原厂首页、拖动到边缘的截图。最后仍需在实物屏幕确认触摸和边缘可读性，几何检查不能替代实机操作。</p>
+</main>
+<script>
+  let previous;
+  document.querySelector('#guides').addEventListener('change', event => document.body.classList.toggle('guides',event.target.checked));
+  document.querySelector('#file').addEventListener('change', event => {
+    const file=event.target.files[0];
+    if(!file)return;
+    if(file.size>8*1024*1024){document.querySelector('#result').textContent='图片超过8MiB，请使用原始240×240截图';return;}
+    const url=URL.createObjectURL(file), image=new Image();
+    image.onload=()=>{
+      document.querySelector('#result').textContent=image.naturalWidth===240&&image.naturalHeight===240
+        ?'240×240 原始截图：请检查圆形视图内的控件和文字'
+        :`注意：图片为 ${image.naturalWidth}×${image.naturalHeight}，下方缩放显示；请优先使用原始240×240截图`;
+      document.querySelector('#raw').src=url;document.querySelector('#round').src=url;
+      if(previous)URL.revokeObjectURL(previous);previous=url;
+    };
+    image.onerror=()=>{URL.revokeObjectURL(url);document.querySelector('#result').textContent='图片无法读取';};
+    image.src=url;
+  });
+</script>
+</html>

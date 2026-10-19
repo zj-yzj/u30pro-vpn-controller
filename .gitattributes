@@ -1,0 +1,11 @@
+* text=auto
+*.sh text eol=lf
+*.sh.in text eol=lf
+*.go text eol=lf
+*.java text eol=lf
+*.mjs text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.ps1 text eol=lf

@@ -1,0 +1,54 @@
+# Build outputs and dependency caches
+**/build/
+**/dist/
+**/node_modules/
+**/tools-cache/
+.cache/
+coverage/
+*.class
+*.dex
+*.apk
+*.aab
+*.exe
+*.dll
+*.so
+*.o
+*.test
+*.log
+*.zip
+
+# Local configuration, subscriptions and signing identities
+private/
+.signing/
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.key
+*.pem
+local.properties
+provider.yaml
+state.json
+trust.json
+
+# Generated web artifacts (rebuild from source)
+web-manager/ui/U30ProVPN.txt
+web-manager/ui/preview-bundle.js
+web-manager/ui/preview.html
+web-manager/ui/build-manifest.json
+
+# Local investigation material and third-party tool checkouts
+inspection/
+tools/
+upstream-*/
+reader-*/
+publication/
+
+# Editor/OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

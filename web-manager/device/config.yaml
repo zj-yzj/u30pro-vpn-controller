@@ -1,0 +1,54 @@
+port: 0
+socks-port: 0
+redir-port: 0
+tproxy-port: 0
+mixed-port: 17890
+bind-address: 127.0.0.1
+allow-lan: false
+mode: rule
+log-level: warning
+ipv6: false
+find-process-mode: off
+external-controller-unix: /data/adb/u30pro-vpn/controller.sock
+profile:
+  store-selected: true
+  store-fake-ip: true
+proxy-providers:
+  Subscription:
+    type: file
+    path: /data/adb/u30pro-vpn/cache/provider.yaml
+proxy-groups:
+  - name: VPN
+    type: select
+    proxies: [Auto]
+    use: [Subscription]
+    empty-fallback: REJECT
+  - name: Auto
+    type: select
+    use: [Subscription]
+    empty-fallback: REJECT
+rules: ['MATCH,VPN']
+hosts:
+  ufi.ztedevice.com: 192.168.0.1
+dns:
+  enable: true
+  listen: ''
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver: [223.5.5.5]
+  proxy-server-nameserver: [223.5.5.5, 119.29.29.29]
+  nameserver: [https://1.1.1.1/dns-query#VPN]
+  fake-ip-filter: [ufi.ztedevice.com]
+  use-system-hosts: false
+  use-hosts: true
+tun:
+  enable: true
+  device: U30VPN
+  stack: mips
+  auto-route: false
+  auto-redirect: false
+  auto-detect-interface: false
+  strict-route: false
+  mtu: 1400
+  dns-hijack: ['any:53', 'tcp://any:53']

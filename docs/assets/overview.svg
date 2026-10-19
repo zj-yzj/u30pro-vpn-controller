@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">U30 Pro VPN Controller — a dedicated controller for the U30 Pro</title>
+  <desc id="desc">Original technical illustration of a round-screen hotspot, with on-device VPN control, manual node tests and an existing UFI web interface. The device and its screen are illustrations, not a photograph or screenshot.</desc>
+  <defs>
+    <linearGradient id="case" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#22364D"/>
+      <stop offset="1" stop-color="#101E30"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EDF5F8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" rx="24" fill="#F4F8FB"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', Arial, sans-serif">
+    <rect x="60" y="38" width="234" height="33" rx="16.5" fill="#DCF1EC"/>
+    <text x="177" y="61" text-anchor="middle" font-size="17" font-weight="700" letter-spacing="1.1" fill="#116B62">U30 PRO DEDICATED</text>
+    <text x="60" y="132" font-size="52" font-weight="700" letter-spacing="-1.4" fill="#142C46">U30 Pro VPN Controller</text>
+    <text x="62" y="172" font-size="24" fill="#4D647B">原厂 Android / root 环境下的设备端 VPN 管理</text>
+
+    <ellipse cx="253" cy="588" rx="146" ry="16" fill="#DCE6ED"/>
+    <rect x="93" y="225" width="320" height="350" rx="74" fill="url(#case)"/>
+    <rect x="103" y="235" width="300" height="330" rx="65" fill="none" stroke="#45566B" stroke-width="2"/>
+    <circle cx="253" cy="390" r="135" fill="#091522"/>
+    <circle cx="253" cy="390" r="125" fill="url(#screen)" stroke="#7891A5" stroke-width="2"/>
+    <path d="M231 252h44" fill="none" stroke="#6F8599" stroke-width="4" stroke-linecap="round"/>
+    <text x="253" y="303" text-anchor="middle" font-size="18" font-weight="700" fill="#142C46">VPN 控制</text>
+    <rect x="169" y="328" width="168" height="47" rx="13" fill="#147D72"/>
+    <path d="M194 342v13m-7-10a10 10 0 1 0 14 0" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
+    <text x="269" y="358" text-anchor="middle" font-size="20" font-weight="600" fill="#FFFFFF">关闭 VPN</text>
+    <circle cx="207" cy="399" r="4" fill="#147D72"/>
+    <text x="263" y="405" text-anchor="middle" font-size="18" fill="#147D72">VPN 运行中</text>
+    <text x="253" y="431" text-anchor="middle" font-size="16" fill="#53677D">示例节点 A / Sample A</text>
+    <rect x="169" y="447" width="80" height="36" rx="9" fill="#E5EDF7"/>
+    <rect x="257" y="447" width="80" height="36" rx="9" fill="#E5EDF7"/>
+    <text x="209" y="471" text-anchor="middle" font-size="17" fill="#235586">节点</text>
+    <text x="297" y="471" text-anchor="middle" font-size="17" fill="#235586">更多</text>
+    <text x="253" y="622" text-anchor="middle" font-size="19" font-weight="600" fill="#142C46">240 × 240 圆屏 / Round screen</text>
+    <text x="253" y="651" text-anchor="middle" font-size="16" fill="#64778A">设备与界面示意 / Device &amp; UI illustration</text>
+
+    <g fill="#FFFFFF" stroke="#DCE6EC" stroke-width="1.5">
+      <rect x="466" y="222" width="674" height="108" rx="20"/>
+      <rect x="466" y="350" width="674" height="108" rx="20"/>
+      <rect x="466" y="478" width="674" height="108" rx="20"/>
+    </g>
+    <g fill="#E3F3EF">
+      <circle cx="511" cy="276" r="25"/>
+      <circle cx="511" cy="404" r="25"/>
+      <circle cx="511" cy="532" r="25"/>
+    </g>
+    <g fill="none" stroke="#147D72" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M511 262v13m-8-9a13 13 0 1 0 16 0"/>
+      <path d="M500 404h22m-8-8 8 8-8 8m-14 4v-24"/>
+      <rect x="497" y="522" width="18" height="20" rx="3"/>
+      <path d="M519 526h8v15h-8m-18-14h10m-10 5h10m-10 5h6"/>
+    </g>
+    <text x="554" y="268" font-size="25" font-weight="700" fill="#142C46">在设备上开关 VPN、选择节点</text>
+    <text x="554" y="302" font-size="20" fill="#526B80">On-device VPN toggle and node selection</text>
+    <text x="554" y="396" font-size="25" font-weight="700" fill="#142C46">手动整批测速，左滑单独测速</text>
+    <text x="554" y="430" font-size="20" fill="#526B80">Batch test or swipe to test one node</text>
+    <text x="554" y="524" font-size="25" font-weight="700" fill="#142C46">原生圆屏应用 + UFI 网页面板</text>
+    <text x="554" y="558" font-size="20" fill="#526B80">Two interfaces, one local manager</text>
+
+    <path d="M466 623h674" stroke="#D5E1E9" stroke-width="1.5"/>
+    <text x="467" y="655" font-size="18" font-weight="600" fill="#147D72">Mihomo core</text>
+    <circle cx="618" cy="649" r="3" fill="#9EB1C0"/>
+    <text x="636" y="655" font-size="18" font-weight="600" fill="#147D72">Local Unix sockets</text>
+    <circle cx="823" cy="649" r="3" fill="#9EB1C0"/>
+    <text x="841" y="655" font-size="18" fill="#526B80">Device integration required</text>
+    <text x="60" y="693" font-size="16" fill="#6D8092">Original illustration · Fictional node · Not a device photograph or screenshot</text>
+  </g>
+</svg>

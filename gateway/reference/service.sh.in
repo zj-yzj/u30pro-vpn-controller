@@ -1,0 +1,23 @@
+#!/system/bin/sh
+# Native control startup is independent of desired VPN state.
+[ "$(id -u)" = 0 ] || exit 1
+BASE=/data/adb/u30pro-vpn
+MODULE=/data/adb/modules/codex_u30pro_vpn
+[ ! -e "$MODULE/disable" ] || exit 0
+# Integration template: deployment recovery must finish before this entry.
+# The optional native layer must not prevent the original VPN boot.
+if [ -d "$BASE/native-ui" ] && [ ! -L "$BASE/native-ui" ] &&
+     [ "$(stat -c '%u:%g:%a' "$BASE/native-ui")" = 0:0:700 ] &&
+     [ -f "$BASE/native-ui/webbridge" ] && [ ! -L "$BASE/native-ui/webbridge" ] &&
+     [ "$(stat -c '%u:%g:%a' "$BASE/native-ui/webbridge")" = 0:0:700 ]; then
+    /system/bin/timeout 5 "$BASE/native-ui/webbridge" start >/dev/null 2>&1 || true
+fi
+U30_LIBRARY=1
+. "$BASE/vpn-service.sh"
+unset U30_LIBRARY
+task_boot_wait=0
+while ! baseline_readable; do
+    [ "$task_boot_wait" -lt 180 ] || exit 1
+    sleep 2; task_boot_wait=$((task_boot_wait + 2))
+done
+exec "$BASE/webctl" boot

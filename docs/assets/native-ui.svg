@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+  <title id="title">U30 Pro native controller — round-screen UI illustrations</title>
+  <desc id="desc">Three schematic circular 240 by 240 pixel screens show the home page, a left-swiped fictional Sample A node, and a manual single-node test. Dashed centered squares represent 164 by 164 pixel interactive safe areas. These are UI illustrations, not device screenshots.</desc>
+  <defs>
+    <marker id="swipe" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10" fill="none" stroke="#147D72" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="780" rx="24" fill="#F4F8FB"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', Arial, sans-serif">
+    <text x="52" y="66" font-size="40" font-weight="700" letter-spacing="-.6" fill="#142C46">Built for the U30 Pro round screen</text>
+    <text x="54" y="108" font-size="22" fill="#526B80">UI illustration / 界面示意 · Not device screenshots / 非实机截图</text>
+    <g fill="#FFFFFF" stroke="#DDE7ED" stroke-width="1.5">
+      <rect x="42" y="142" width="356" height="497" rx="24"/>
+      <rect x="422" y="142" width="356" height="497" rx="24"/>
+      <rect x="802" y="142" width="356" height="497" rx="24"/>
+    </g>
+    <g font-size="23" font-weight="700" fill="#142C46" text-anchor="middle">
+      <text x="220" y="180">01 · 主页 / Home</text>
+      <text x="600" y="180">02 · 左滑 / Swipe left</text>
+      <text x="980" y="180">03 · 单节点 / Single test</text>
+    </g>
+
+    <g fill="#142C46">
+      <circle cx="220" cy="371" r="169"/>
+      <circle cx="600" cy="371" r="169"/>
+      <circle cx="980" cy="371" r="169"/>
+    </g>
+    <g fill="#F5F8FC" stroke="#8FA4B5" stroke-width="1.5">
+      <circle cx="220" cy="371" r="162"/>
+      <circle cx="600" cy="371" r="162"/>
+      <circle cx="980" cy="371" r="162"/>
+    </g>
+    <!-- Each 324 px circle is a uniform 1.35 × rendering of a 240 px panel.
+         Each centered 221.4 px square is the corresponding 164 px safe area. -->
+    <g fill="none" stroke="#9FB8BC" stroke-width="1.3" stroke-dasharray="5 5">
+      <rect x="109.3" y="260.3" width="221.4" height="221.4" rx="3"/>
+      <rect x="489.3" y="260.3" width="221.4" height="221.4" rx="3"/>
+      <rect x="869.3" y="260.3" width="221.4" height="221.4" rx="3"/>
+    </g>
+    <g font-size="19" font-weight="700" fill="#142C46" text-anchor="middle">
+      <text x="220" y="247">VPN 控制</text>
+      <text x="600" y="247">节点</text>
+      <text x="980" y="247">节点</text>
+    </g>
+
+    <rect x="113" y="271" width="214" height="55" rx="14" fill="#147D72"/>
+    <text x="220" y="306" text-anchor="middle" font-size="22" font-weight="600" fill="#FFFFFF">关闭 VPN</text>
+    <circle cx="170" cy="348" r="4" fill="#147D72"/>
+    <text x="234" y="355" text-anchor="middle" font-size="19" fill="#147D72">VPN 运行中</text>
+    <text x="220" y="381" text-anchor="middle" font-size="16" fill="#53677D">当前出口：</text>
+    <text x="220" y="403" text-anchor="middle" font-size="17" fill="#142C46">示例节点 A</text>
+    <g fill="#E4EDF8">
+      <rect x="113" y="419" width="103" height="45" rx="10"/>
+      <rect x="224" y="419" width="103" height="45" rx="10"/>
+    </g>
+    <text x="164.5" y="448" text-anchor="middle" font-size="18" fill="#235586">节点</text>
+    <text x="275.5" y="448" text-anchor="middle" font-size="18" fill="#235586">更多</text>
+
+    <g fill="#FFFFFF" stroke="#D8E3EB" stroke-width="1.3">
+      <rect x="493" y="265" width="214" height="62" rx="10"/>
+      <rect x="493" y="334" width="139" height="70" rx="10"/>
+      <rect x="873" y="265" width="214" height="62" rx="10"/>
+      <rect x="873" y="334" width="139" height="70" rx="10"/>
+    </g>
+    <g font-size="17" fill="#142C46">
+      <text x="505" y="289">自动选择</text>
+      <text x="885" y="289">自动选择</text>
+      <text x="505" y="359">示例节点 A</text>
+      <text x="885" y="359">示例节点 A</text>
+    </g>
+    <g font-size="16" fill="#65798D">
+      <text x="505" y="313">按上次测速优选</text>
+      <text x="885" y="313">按上次测速优选</text>
+      <text x="505" y="386">待测速</text>
+      <text x="885" y="386">正在测速…</text>
+    </g>
+    <rect x="638" y="334" width="69" height="70" rx="10" fill="#2B6497"/>
+    <rect x="1018" y="334" width="69" height="70" rx="10" fill="#2B6497" opacity=".7"/>
+    <text x="672.5" y="375" text-anchor="middle" font-size="18" fill="#FFFFFF">测速</text>
+    <text x="1052.5" y="375" text-anchor="middle" font-size="16" fill="#FFFFFF">测速中</text>
+    <g fill="#E5EDF6">
+      <rect x="493" y="416" width="103" height="45" rx="10"/>
+      <rect x="604" y="416" width="103" height="45" rx="10"/>
+      <rect x="873" y="416" width="103" height="45" rx="10"/>
+      <rect x="984" y="416" width="103" height="45" rx="10"/>
+    </g>
+    <g font-size="16" text-anchor="middle">
+      <text x="544.5" y="445" fill="#142C46">返回主页</text>
+      <text x="655.5" y="445" fill="#235586">刷新</text>
+      <text x="924.5" y="445" fill="#142C46">返回主页</text>
+      <text x="1035.5" y="445" fill="#768A9D">刷新</text>
+    </g>
+    <text x="980" y="480" text-anchor="middle" font-size="16" fill="#65798D">单节点测速中</text>
+    <path d="M653 496H548" fill="none" stroke="#147D72" stroke-width="2.5" marker-end="url(#swipe)"/>
+
+    <g text-anchor="middle">
+      <text x="220" y="580" font-size="20" font-weight="600" fill="#142C46">开关 VPN · 查看当前出口</text>
+      <text x="220" y="610" font-size="17" fill="#526B80">Toggle VPN · View current exit</text>
+      <text x="600" y="580" font-size="20" font-weight="600" fill="#142C46">左滑节点，展开“测速”</text>
+      <text x="600" y="610" font-size="17" fill="#526B80">Swipe a node to reveal Test</text>
+      <text x="980" y="580" font-size="20" font-weight="600" fill="#142C46">仅测试该节点，不切换选择</text>
+      <text x="980" y="610" font-size="17" fill="#526B80">Test one node; keep selection</text>
+    </g>
+    <path d="M54 673H1146" stroke="#D5E1E9" stroke-width="1.5"/>
+    <text x="54" y="707" font-size="18" fill="#526B80">240 × 240 px panel · Centered 164 × 164 px safe area shown with dashed guides</text>
+    <text x="54" y="740" font-size="18" fill="#526B80">虚构节点 / Fictional node: 示例节点 A / Sample A · 测速为手动连通性延迟检查</text>
+  </g>
+</svg>
