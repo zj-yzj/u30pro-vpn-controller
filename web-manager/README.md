@@ -1,17 +1,20 @@
 # U30 Pro VPN 管理后端
 
-此目录提供 Go 管理程序、原生屏幕控制桥及测试源码。它面向已具备 root、Mihomo 网关和受保护运行目录的 U30 Pro Android 系统，不是刷机包，也不包含从原厂系统开始的安装器。
+此目录提供 Go 管理程序、原生屏幕控制桥、固定设备首次安装引擎及测试。`v1.3.0-alpha.1` 提供 Magisk ZIP 和内嵌同一 ZIP 的 Android 安装器，要求已有兼容 Magisk、固定 MU5358/B23/API35 profile 与现有 UFI。下载者先读[安装与恢复](../docs/install.md)。它不刷机、不获取 root，不支持旧私有部署升级；尚无干净设备全流程实机验收。
 
 ## 程序与接口
 
 - `cmd/webctl`：状态读取、加密操作请求、任务执行、订阅规范化和持久化恢复。生产运行目录固定为 `/data/adb/u30pro-vpn`，仅允许 root 执行。
+- `cmd/u30setup`、`internal/installer`：固定 profile/发行清单核验、设备在线获取核心、首装 journal、APK/trust 配置与归属卸载。
 - `cmd/nativebridge`：Android 本机应用与管理后端之间的受限控制桥。它检查连接进程身份和本机应用的信任记录，再调用固定命令；不开放新的局域网 TCP 控制端口。
 - `cmd/normalize`：将私有的 Clash/Mihomo inline `proxies` 转为初始 provider 和节点元数据。输入、输出都可能含节点凭据，必须保存在公开仓库之外。
 - `internal/manager`、`internal/subscription`、`internal/nativebridge`：业务逻辑、输入边界、事务恢复及测试。
 - `device/config.yaml`：不含订阅或节点的配置模板。provider 从 root 私有目录加载，controller 使用 Unix socket。
 - `ui/`：网页客户端源码；其依赖与构建说明见该目录中的文件。
 
-网页客户端通过设备已有的 UFI 认证和 root helper 调用后端。UFI-TOOLS、Magisk 和 Mihomo 由使用者另外取得、审查并集成，源码包不包含这些项目的程序、固件或安装材料。Android 本机界面位于相邻的 `../native-manager/`。
+网页客户端通过设备已有的 UFI 认证和 root helper 调用后端。UFI-TOOLS 与 Magisk 需事先具备，Mihomo 在准备阶段从固定官方资源在线获取；项目 ZIP/APK 不内嵌其核心。Android 圆屏界面位于 `../native-manager/`，独立安装入口位于 `../installer-app/`。
+
+`webctl bootstrap` 在预先建立的 root 私有 Base/web/cache 目录内生成设备身份、合法空 provider 与空节点状态，`desiredEnabled=false`；无外部网络或核心调用。key→provider→state 的断点重入保留已有内容；已有 state 缺少有效 key/provider 时拒绝。`set-enabled=true` 在节点为空时先返回 `not_configured`，不写状态、不调用网关。首次订阅更新成功也保持关闭。旧 `init` 仍要求已有节点数据并保留旧集成语义。
 
 ## 手动测速语义
 
@@ -49,6 +52,6 @@ PowerShell 中应先分别设置 `$env:CGO_ENABLED`、`$env:GOOS`、`$env:GOARCH
 
 `../gateway/reference/` 提供原有固定布局网关的控制、supervisor 和启动参考源码，其中摘要参数仍需部署方填入。该目录不是通用路由器安装流程，也没有设备历史迁移或刷写脚本。
 
-部署方必须提供受保护目录、初始 provider 和状态、生成的密钥、Android 应用签名与本机信任记录、必要权限、可恢复的安装事务以及适配实际系统的网络前置检查。程序会检查目录所有权、权限、稳定节点 ID、请求时效和重放、操作锁及事务摘要；不能为方便安装而删除这些检查。
+发行安装器在其固定范围内准备目录、空状态、设备密钥、发行 APK 信任与首装恢复；其他移植仍须另外审查。程序会检查所有权、权限、稳定节点 ID、请求时效和重放、操作锁及摘要；不能为方便安装而删除这些检查。卸载仅作用于已证明归属的内容，私有数据备份保留；PM 或网络管理不可用时可延后清理。冷启动窗口与迁移边界见安装页。
 
 订阅地址、节点凭据、管理私钥、签名私钥、运行状态快照、日志、备份、provider 和实际设备信任记录都不属于公开源码。不要将它们提交到仓库。这里没有原安装设备的可直接重跑安装包；构建和单元测试通过也不代表某台未审查设备已具备正确的路由、断网保护或开机恢复能力。

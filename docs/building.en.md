@@ -7,6 +7,42 @@ Install Node.js 18 or newer, npm, Go 1.27 or a compatible toolchain, and JDK 17.
 Android builds also require Android Platform 35 and Build Tools 35.
 SDKs and signing identities are supplied by the person building the project.
 
+Downloaders can use the [v1.3.0-alpha.1 Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1)
+and [installation guide](install.en.md) without installing host build tools.
+
+## Build both release entries
+
+`release/build.ps1` requires PowerShell 7 and builds Linux/arm64 `u30setup`, `webctl` and `webbridge`, signs
+the circular control APK, renders fixed supervisor digests and packages a Magisk
+ZIP. It then embeds those exact ZIP bytes in the separate installer APK. It
+neither downloads nor packages a Mihomo executable.
+
+Set the following variables to your toolchain paths, a **fresh empty directory
+outside the checkout**, and a dedicated release keystore/password file/alias:
+
+```powershell
+./release/build.ps1 -Go $goExe -JavaHome $jdkHome -AndroidJar $androidJar `
+  -BuildTools $buildTools -OutputDir $releaseOut -Keystore $releaseKeystore `
+  -KeystorePasswordFile $passwordFile -KeyAlias $keyAlias
+```
+
+`-Node` can select Node explicitly. Use `U30PRO_NODE_RUNTIME` for pinned Forge
+dependencies installed outside the checkout. The build downloads no Android
+toolchain and does not discover the original device signer. Keep a dedicated
+release identity separate from the development device, reuse it for subsequent
+releases and back it up privately. Keys/passwords are never upload artifacts.
+
+Upload only `U30ProVPN-1.3.0-alpha.1-Magisk.zip`,
+`U30ProVPN-1.3.0-alpha.1-Installer.apk`, `U30ProVPN.txt`, `APK-CERTIFICATE.txt`,
+`release-manifest.json` and `SHA256SUMS`. The output `work/` directory contains
+intermediate files and is not an asset. For the standalone installer build with
+`-ModuleZip`, parameters and host tests, see [installer documentation](../installer-app/README.md).
+
+Checksums, signatures and embedded-ZIP identity checks establish artifact identity.
+Record actual verification results and skips in Release notes. This alpha has
+no complete fresh-device acceptance; a successful build does not establish
+physical installation, network restoration or teardown success.
+
 ## Web plugin and offline preview
 
 ```sh
@@ -57,7 +93,8 @@ go build -trimpath -ldflags='-s -w' -o build/webbridge ./cmd/nativebridge
 
 Clear cross-compilation environment variables before returning to host tests.
 The normal build does not enable the optional `diagnostic` build tag.
-Neither executable is included in this source repository.
+Git source excludes these executables; Release modules separately contain the
+compiled project programs.
 
 ## Android application
 

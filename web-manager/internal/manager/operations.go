@@ -208,6 +208,9 @@ func (m *Manager) perform(ctx context.Context, r Request) error {
 	switch r.Action {
 	case "set-enabled":
 		enabled := *r.Enabled
+		if enabled && len(s.Nodes) == 0 {
+			return fail("not_configured")
+		}
 		s.DesiredEnabled = enabled
 		s.Message = ""
 		if err = m.writeState(s); err != nil {

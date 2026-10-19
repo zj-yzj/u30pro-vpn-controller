@@ -2,19 +2,19 @@
 
 [中文](faq.md) · [English](faq.en.md) · [Home](../README.en.md) · [Usage](usage.en.md)
 
-These answers describe current source: native 1.2.0 / version code 6; known development integration is U30 Pro, MU5358/B23, stock Android/root. Images are illustrations or mock previews, not evidence of a new device acceptance test.
+These answers describe `v1.3.0-alpha.1` (circular control version code 7). First installation requires MU5358, arm64, API 35, firmware display `U30ProV1.0.0B23`, existing Magisk version code at least 28100 and SELinux already Permissive. Images remain illustrations/mock previews; no complete fresh-device acceptance has been performed for this alpha.
 
 ## 1. Can I use it immediately after downloading source, building an APK or importing the plugin?
 
-Real-device use still requires integration. This repository includes no firmware package, root tool, universal installer, proxy core, real subscription, signing identity or original trust record. Unsigned APKs cannot be installed normally; importing the plugin only adds the interface.
+Downloaders can use a Magisk ZIP or Android installer APK from the [Release](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0-alpha.1), following [Installation and recovery](install.en.md). Both require compatible Magisk on the U30 Pro; neither obtains root, flashes firmware nor upgrades private deployments. Install the installer APK on the U30 Pro itself.
 
-A maintainer must provide private root-owned `/data/adb/u30pro-vpn`, Mihomo, provider, network baseline, Go helpers, management keys, APK trust and startup recovery. `gateway/reference/` has fixed-layout reference code; startup templates lack complete installation-transaction recovery. Do not copy/execute them on an unknown device. See [integration boundaries](device-integration.en.md) and [gateway reference](../gateway/reference/README.en.md).
+The installer prepares project components, a device-generated key and current APK trust. The core is acquired online from official upstream, not embedded; offline first install is unavailable. First boot is empty with VPN off. Existing UFI needs manual `U30ProVPN.txt` import and your own URL. Building an unsigned APK or importing the plugin alone does not install the gateway; reference scripts are not the installer entry. See [integration boundaries](device-integration.en.md).
 
 To inspect the interface, run the [offline preview](usage.en.md#preview-on-a-computer) without a real device or subscription.
 
 ## 2. Does it support other U30 Pro firmware, hotspots or OpenWrt?
 
-Only the known development environment is identified; this is not a claim of support for every firmware or board. `minSdk 26` is a build constraint, not a guarantee for every Android 8.0+ device. Stock Home detection, screen geometry, root commands, SFP, interfaces and routing all make system assumptions.
+This alpha accepts only the [fixed installation profile](install.en.md#before-installation). Other firmware/hardware, root implementations and OpenWrt are outside the declared scope. Android `minSdk 26` does not expand installer compatibility. Do not lower SELinux or spoof properties to bypass checks; stock Home, SFP, interfaces and rules still have fixed system assumptions.
 
 The gateway reference fixes `br0`, `192.168.0.0/24`, `U30VPN`, particular routing tables/rules and `/proc/net/sfp/enable`. A port requires reviewing object ownership, DNS, stop restoration, startup and power-loss recovery. See the [compatibility matrix](../README.en.md#compatibility-and-prerequisites).
 
@@ -28,7 +28,7 @@ Wait for fresh local state and retry. Busy operations or stale state temporarily
 
 No. These actions affect the interface. Explicitly tap Disable VPN (“关闭 VPN”) on Home, wait for actual-state confirmation, then verify stock networking. Desired state, actual running state and real client connectivity are different observations.
 
-The manager persists power/node choices, but reboot restoration also depends on correct root startup integration. Saved settings alone do not establish reboot acceptance on new firmware.
+Power state and node selection are persisted and later boots use saved desired state. Enabled boots have a cold-start window before Android/gateway readiness, without a continuous-protection promise from power-on. A saved setting is not evidence of reboot acceptance.
 
 ## 5. How do swipe tests work, and why are the two Refresh buttons different?
 
@@ -56,7 +56,7 @@ The round screen only updates a saved URL; add/change one in UFI's Subscription 
 
 Download/parse/validation failures preserve the prior configuration. Application has backup, transaction digest, recovery and lock checks and attempts restoration. If a selected node disappears from a successfully updated list, selection falls back to `Auto` with a notice.
 
-Recovery itself may fail. After incomplete-recovery/application errors, refresh and inspect actual running state/exit; do not assume VPN stayed active or restoration succeeded. Updating with VPN enabled performs a one-time exit HTTPS check without enabling periodic measurements. Subscription transactions do not replace complete installation, upgrade or power-loss recovery.
+Recovery itself may fail. After incomplete-recovery/application errors, refresh and inspect actual running state/exit; do not assume VPN stayed active or restoration succeeded. Updating with VPN enabled performs a one-time exit HTTPS check without enabling periodic measurements. First installation has separate recovery records; subscription transactions provide no old-deployment upgrade capability.
 
 ## 9. Why is the shortcut missing? Are system permission and a notification required?
 

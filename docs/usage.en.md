@@ -2,7 +2,7 @@
 
 [中文](usage.md) · [English](usage.en.md) · [Home](../README.en.md) · [FAQ](faq.en.md)
 
-This guide covers inspecting the interface on a computer and using a device whose integration is already complete. Native app version is **1.2.0 / version code 6**, with Chinese interface text. For first deployment, read [device integration boundaries](device-integration.en.md) and the [gateway reference](../gateway/reference/README.en.md). These usage steps do not replace installation and recovery procedures.
+This guide covers offline previews and already installed devices. Current version is **1.3.0-alpha.1 / circular control version code 7**, with Chinese interface text. Start with [Installation and recovery](install.en.md) for the Magisk ZIP or Android entry embedding the same ZIP; both require existing Magisk and the fixed profile. Source ports should also read [device integration](device-integration.en.md).
 
 ## Contents
 
@@ -47,19 +47,19 @@ npm run preview -- --out C:/Temp/u30pro-ui-preview --port 18771
 
 ## Before using a device
 
-A maintainer must already have provided:
+The following runtime must already exist. The fixed-profile first installer can prepare project components; UFI must be available separately:
 
 1. A rooted U30 Pro stock Android environment with reviewed startup/recovery mechanisms.
 2. A separately obtained and verified Android arm64 Mihomo, plus gateway configuration/scripts matching the network baseline.
-3. Private root-owned `/data/adb/u30pro-vpn` with a valid provider, management state and keys.
+3. Private root-owned `/data/adb/u30pro-vpn` with management state and a device-generated key; first-install provider/nodes are empty and VPN is off.
 4. Installed `webctl`; native control also needs `webbridge`, a signed APK, and trust records matching that device's current package, UID, installed APK path and SHA-256.
 5. For web control, existing UFI-TOOLS with working authentication and an authenticated `runShellWithRoot` interface.
 
-The public template has no usable nodes. Do not copy and execute `gateway/reference/` directly: render digest placeholders from final deployment content, verify fixed network assumptions, and implement installation-transaction recovery before startup. Do not suppress errors by loosening directory permissions, removing APK/digest checks or exposing arbitrary root commands.
+The public template has no usable nodes. Manually import Release `U30ProVPN.txt` into existing UFI and enter your subscription. Enable without nodes is refused, and the first successful subscription keeps VPN off. Do not copy/execute `gateway/reference/` directly: the release installer handles its fixed-scope digests/recovery; ports still need separate review. Do not loosen permissions, remove APK/digest checks or expose arbitrary root commands to suppress errors.
 
 ## Native Home and exiting
 
-Open “VPN 控制” and wait for local status. Home shows power, actual running state, current exit, Nodes (“节点”) and More (“更多”).
+Use Magisk's module Action or the separate installer's Open control button to open “VPN 控制” and wait for local status. Home shows power, actual running state, current exit, Nodes (“节点”) and More (“更多”).
 
 - Tap Enable VPN (“开启 VPN”) or Disable VPN (“关闭 VPN”), wait, and verify actual state. Desired state and real process state may temporarily differ; button text alone does not establish connectivity.
 - The exit name describes the active exit. Pending startup or unavailable state can display waiting/unknown messages.
@@ -203,6 +203,6 @@ Remove-Item Env:CGO_ENABLED
 
 See the [FAQ](faq.en.md). Reports can include versions, firmware, action order, desired/actual state and fixed error categories after sanitization. Do not upload keys, full subscriptions, provider/trust/state files, raw logs or backups.
 
-A maintainer still needs actual-device acceptance: client DNS/TLS/HTTPS, forwarding/TUN, stock networking after explicit stop, reboot restoration, invalid-subscription retention/recovery, failure blocking and installation power-loss recovery. Host tests do not replace these checks. `gateway/reference/` includes neither the original device's historical installation transactions nor a directly rerunnable installer.
+This alpha has no complete fresh-device acceptance. Still verify client DNS/TLS/HTTPS, forwarding/TUN, stock networking after stop, reboot restoration, invalid-subscription retention/recovery, failure blocking, installation power-loss recovery and teardown. Host tests do not replace these checks. The reference directory excludes original historical transactions; downloaders should use the release entries in [Installation](install.en.md), which also describes cold-boot windows, existing-deployment refusal and deferred cleanup.
 
 Original code and this guide use [MIT](../LICENSE); see [third-party notices](../THIRD_PARTY_NOTICES.md) for separate licenses.

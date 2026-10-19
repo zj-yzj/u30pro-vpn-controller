@@ -1,0 +1,6 @@
+id=codex_u30pro_vpn
+name=U30 Pro VPN Controller (alpha)
+version=@@VERSION@@
+versionCode=130001
+author=zj-yzj
+description=Fresh-install alpha for rooted MU5358/U30 Pro B23 with Magisk. VPN starts OFF; your own subscription and existing UFI-TOOLS are required.

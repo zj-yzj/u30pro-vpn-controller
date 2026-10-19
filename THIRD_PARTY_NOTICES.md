@@ -46,6 +46,11 @@ UFI authentication assets, signing identities, or a Mihomo executable.
   its Unix HTTP controller. This repository does not distribute that executable
   or its source. A release that adds the executable must separately handle its
   license, notices, and corresponding-source requirements.
+- The `v1.3.0-alpha.1` Magisk ZIP and Android installer APK do not embed the
+  executable. Their device-side preparation downloads the pinned official
+  upstream asset directly with TLS, size and digest verification. This project
+  makes no complete corresponding-source distribution claim for that separately
+  acquired upstream binary. See [installation details](docs/install.en.md#the-core-is-downloaded-online).
 
 ## UFI-TOOLS, Magisk, and Android: integration environment
 
@@ -54,7 +59,8 @@ UFI authentication assets, signing identities, or a Mihomo executable.
 - Android: https://source.android.com/
 
 The web plugin uses UFI's existing authenticated `runShellWithRoot` interface.
-The Android app uses Android platform APIs; the gateway startup reference is
-for an already rooted device. No copied UFI HTML, requests.js, CryptoJS bundle,
+The control and installer apps use Android platform APIs. The installer calls
+the existing Magisk CLI after user root consent; it does not ship Magisk. The
+gateway startup reference is for an already rooted device. No copied UFI HTML, requests.js, CryptoJS bundle,
 Magisk package, Android SDK, or root/flash tool is distributed here. Names and
 interface markers identifying those integrations are retained accurately.

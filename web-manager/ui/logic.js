@@ -11,6 +11,7 @@ function createVPNLogic(forge, randomBytes) {
     INVALID_INPUT:'输入格式不正确，请检查后重试。',
     root_required:'需要 UFI 的 Root 管理权限，请确认高级功能已开启。',
     not_initialized:'管理组件尚未初始化，请先完成安装。',
+    not_configured:'请先添加有效订阅，再开启 VPN。',
     busy:'设备正在处理上一项操作，请稍候。',
     invalid_request:'请求无效或已过期，请刷新状态后重试。',
     replayed_request:'这项请求已经处理，请刷新状态。',
@@ -27,6 +28,7 @@ function createVPNLogic(forge, randomBytes) {
   });
   const SERVER_JOB_CODES=Object.freeze({
     '需要 UFI Root 权限':'root_required','管理组件尚未初始化':'not_initialized',
+    '请先添加有效订阅，再开启 VPN':'not_configured',
     '正在处理上一项操作，请稍后重试':'busy','请求无效或已过期，请刷新页面后重试':'invalid_request',
     '请求已处理，请刷新页面':'replayed_request','订阅下载失败，已保留原配置':'download_failed',
     '订阅格式或节点验证失败，已保留原配置':'invalid_subscription','节点应用失败，已恢复原配置':'apply_failed',

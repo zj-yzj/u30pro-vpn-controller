@@ -23,9 +23,24 @@ The root-side key is generated at runtime, rather than shipped in source.
 
 `webbridge` accepts a limited protocol and identifies clients through kernel
 peer credentials, Package Manager information and the installed APK digest.
-The Android app has no Internet permission and does not receive direct root
+The circular control app has no Internet permission and does not receive direct root
 access. Package and socket names form a shared protocol: changing one requires
 updating both ends and the installation trust record.
+
+## Installation path
+
+The Magisk ZIP and separate `com.codex.u30vpn.installer` APK use identical module
+bytes. The installer APK requests user root consent and invokes
+`magisk --install-module`. It also has no Internet permission; the root helper
+performs official online core acquisition. `u30setup` checks the fixed device,
+file manifest and network baseline, stages module files during preparation, then
+reconciles runtime, APK, trust and commit after reboot.
+
+First state has no subscription/nodes and VPN off, with a device-generated key.
+Trust accepts actual UID/path only when the installed APK matches the fixed
+release digest. Unknown runtimes or same-package applications are refused.
+See [Installation and recovery](install.en.md) for the physical-validation limits,
+enabled cold-boot window, potentially deferred teardown and retained private backups.
 
 The Mihomo controller uses a device-local Unix socket. This project does not
 add a LAN TCP administration listener. The web panel relies on UFI's existing

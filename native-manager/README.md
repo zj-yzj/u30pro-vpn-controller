@@ -1,8 +1,10 @@
 # U30 Pro native VPN controller
 
-Version 1.2.0 (Android version code 6) is a small Java touchscreen companion for the root-side controller in this repository. It targets the U30 Pro's physically circular 240 × 240 panel. Interactive controls fit inside a centered 164 × 164 pixel safe area.
+Version 1.3.0-alpha.1 (Android version code 7) is a small Java touchscreen companion for the root-side controller in this repository. It targets the U30 Pro's physically circular 240 × 240 panel. Interactive controls fit inside a centered 164 × 164 pixel safe area.
 
-This directory contains application source and a portable build. It contains no general-purpose installer, firmware image, root exploit, device-specific upgrade transaction, signing identity or real subscription configuration.
+This directory contains the everyday control app and its standalone build. The separate [Android installer](../installer-app/README.md) and Magisk ZIP are published as a fixed-profile first-install alpha. Follow [Installation and recovery](../docs/install.en.md) ([中文](../docs/install.md)); neither roots/flashes a device or upgrades a private deployment. No signing private key or real subscription is supplied.
+
+Use Magisk's module Action or the installer's Open control button after reboot. First installation has an empty node list and VPN off. Enter your own URL through the existing UFI plugin before enabling; the circular Subscription page updates only an already saved URL. Optional overlay consent is still a separate user action. This alpha has no complete fresh-device physical installation/network/teardown acceptance.
 
 ## On-device controls
 
@@ -19,7 +21,7 @@ The APK requests Android overlay, foreground-service, special-use foreground-ser
 
 Commands use the local abstract Unix socket and existing encrypted request protocol. The app requires a root peer. The root-side bridge must independently validate the caller's UID, package identity and pinned APK. A new build or signing identity therefore needs corresponding root-side trust provisioning. Copying an APK onto an arbitrary rooted hotspot is insufficient.
 
-Android updates also require the same signing certificate as the installed app. No previously used private key is supplied. Coordinate any change of signer or APK pin with the root-side installation and its recovery procedure. This source release does not automate that installation.
+Android updates also require the same signing certificate as the installed app. No previously used private key is supplied. Release signing uses a separate identity outside the checkout. The first installer accepts only its fixed release APK and provisions the actual UID/path plus pinned digest; it refuses unknown existing same-package apps and does not migrate the old device signer. Coordinate any later signer/APK-pin change with a reviewed installation/recovery procedure.
 
 ## Build
 

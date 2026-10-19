@@ -28,6 +28,15 @@ func run(args []string) (any, int) {
 	}
 	var err error
 	switch args[0] {
+	case "bootstrap":
+		if len(args) != 1 {
+			break
+		}
+		err = m.Bootstrap()
+		if err == nil {
+			return map[string]any{"ok": true, "installed": true}, 0
+		}
+		return bad(err)
 	case "init":
 		if len(args) != 1 {
 			break

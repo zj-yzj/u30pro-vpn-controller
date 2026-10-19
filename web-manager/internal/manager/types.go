@@ -10,7 +10,7 @@ import (
 )
 
 const BasePath = "/data/adb/u30pro-vpn"
-const Version = "1.2.0"
+const Version = "1.3.0-alpha.1"
 const MaxEnvelope = 24576
 const envelopeLabel = "u30pro-vpn-web-v1"
 
@@ -107,6 +107,8 @@ func SafeError(code string) ErrorResult {
 	messages := map[string]string{"root_required": "需要 UFI Root 权限", "not_initialized": "管理组件尚未初始化", "busy": "正在处理上一项操作，请稍后重试", "invalid_request": "请求无效或已过期，请刷新页面后重试", "replayed_request": "请求已处理，请刷新页面", "download_failed": "订阅下载失败，已保留原配置", "invalid_subscription": "订阅格式或节点验证失败，已保留原配置", "apply_failed": "节点应用失败，已恢复原配置", "rollback_failed": "恢复未完成，请查看运行状态后重试", "invalid_node": "该节点已不存在，请刷新列表", "control_failed": "VPN 开关操作未完成，请刷新状态", "storage_failed": "设备保存失败", "insecure_storage": "管理目录权限异常，操作已停止", "operation_failed": "操作未完成，请刷新状态", "job_interrupted": "上次操作被中断，已尝试恢复原配置"}
 	message, ok := messages[code]
 	switch code {
+	case "not_configured":
+		message, ok = "请先添加有效订阅，再开启 VPN", true
 	case "vpn_stopped":
 		message, ok = "请先开启 VPN 再测速", true
 	case "probe_failed":

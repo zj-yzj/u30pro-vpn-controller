@@ -123,6 +123,7 @@ final class Model {
             case "unauthorized":
             case "untrusted_client": return "本机授权未通过，请重新安装";
             case "not_initialized": return "管理组件尚未初始化";
+            case "not_configured": return "请先添加有效订阅，再开启 VPN";
             default: return "操作未完成，请刷新后重试";
         }
     }
