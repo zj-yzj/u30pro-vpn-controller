@@ -1,8 +1,10 @@
 # Installation and recovery
 
-[简体中文](install.md) · [Project home](../README.en.md) · [Usage](usage.en.md) · [FAQ](faq.en.md)
+[简体中文](install.md) · [Device preparation](setup.en.md) · [Project home](../README.en.md) · [Usage](usage.en.md) · [FAQ](faq.en.md)
 
 For **v1.3.0**, choose the Magisk ZIP or the Android installer APK. Both install the same module on the U30 Pro. Magisk and UFI-TOOLS must already be working; this release prepares a fresh installation and does not upgrade an existing alpha or private deployment.
+
+If the device is not rooted or UFI is not installed, start with [Device preparation to working VPN](setup.en.md), which includes the B23 rooting record and UFI setup.
 
 ## Before installation
 
@@ -21,6 +23,8 @@ Check that your device matches this profile:
 | Connection and storage | The U30 Pro can reach official GitHub release assets and passes the installer's space checks |
 
 The installer checks this profile and does not obtain root, flash firmware or lower SELinux enforcement. Other firmware, KernelSU, APatch, other hotspots and OpenWrt need separate integration. Keep your usual device-management and recovery access available.
+
+The Magisk version code is a minimum check, not an upgrade recommendation. The [B23 rooting bundle documented here](root-b23.en.md) specifies its bundled `28103`; complete that environment's repair and reboot checks first.
 
 <details>
 <summary>Existing installations and Magisk staging</summary>

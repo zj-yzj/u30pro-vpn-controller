@@ -18,7 +18,7 @@
 
 适配 **MU5358 / U30 Pro B23、Android API 35、arm64-v8a、Magisk 28.1+**，SELinux 原本需为 Permissive，设备已有可用的 UFI-TOOLS。本版用于全新安装，暂不支持覆盖已有部署。准备阶段会联网下载约 **21.9 MB** 的官方 Mihomo 核心。
 
-[中文安装与恢复](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/install.md) · [使用说明](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/usage.md) · [测试记录](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/testing.md)
+[从设备准备到 VPN 可用](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/setup.md) · [中文安装与恢复](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/install.md) · [使用说明](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/usage.md) · [测试记录](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/testing.md)
 
 下载文件可用 `SHA256SUMS` 校验；`APK-CERTIFICATE.txt` 是签名指纹，`release-manifest.json` 记录安装包的构建来源。原创代码使用 MIT，第三方许可证随模块保留。
 
@@ -40,6 +40,6 @@ Reboot after installation, import the plugin, save your own subscription and ena
 
 Supported setup: **MU5358 / U30 Pro B23, Android API 35, arm64-v8a and Magisk 28.1+**, with SELinux already Permissive and working UFI-TOOLS. This version is for fresh installations. Preparation downloads the official Mihomo core, about **21.9 MB**, over the device's Internet connection.
 
-[Installation and recovery](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/install.en.md) · [Usage](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/usage.en.md) · [Testing](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/testing.en.md)
+[Device preparation to working VPN](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/setup.en.md) · [Installation and recovery](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/install.en.md) · [Usage](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/usage.en.md) · [Testing](https://github.com/zj-yzj/u30pro-vpn-controller/blob/main/docs/testing.en.md)
 
 Use `SHA256SUMS` to check downloads. `APK-CERTIFICATE.txt` records the signing fingerprint and `release-manifest.json` records the package build provenance. Original code is MIT licensed; third-party licenses are included in the module.

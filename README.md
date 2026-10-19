@@ -21,6 +21,8 @@
 
 ## 安装
 
+第一次准备设备，先看[从设备准备到 VPN 可用](docs/setup.md)：包括固件核对、B23 root 记录、UFI 准备、安装和订阅配置。已经有可用的 Magisk 和 UFI，也请先确认下面的 B23 适配条件。
+
 当前版本：**[v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)**。两种入口选一种，安装的模块相同。
 
 | 文件 | 怎么用 |

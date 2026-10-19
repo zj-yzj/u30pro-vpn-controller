@@ -1,10 +1,12 @@
 # 安装与恢复
 
-[English](install.en.md) · [项目首页](../README.md) · [使用说明](usage.md) · [常见问题](faq.md)
+[English](install.en.md) · [设备准备](setup.md) · [项目首页](../README.md) · [使用说明](usage.md) · [常见问题](faq.md)
 
 当前版本为 **`v1.3.0`，仅用于首次安装**。可以选择 Magisk 模块 ZIP 或 Android 安装器 APK，两者安装同一个模块，都需要 U30 Pro 已有兼容的 Magisk。
 
 已在自用 U30 Pro 实测，日常使用正常，详见[测试记录](testing.md)。本项目不获取 root、不刷写固件，也不覆盖升级已有的 alpha 或私有部署。
+
+设备还没有 root，或者尚未安装 UFI？先看[从设备准备到 VPN 可用](setup.md)，其中有 B23 root 记录和 UFI 准备步骤。
 
 ## 安装前确认
 
@@ -23,6 +25,8 @@
 | 网络与空间 | U30 Pro 自身可访问 GitHub 官方发布资源，且安装器空间检查通过 |
 
 其他固件、KernelSU、APatch、其他热点和 OpenWrt 暂不支持。APK 的 `minSdk 26` 是编译声明，不扩大上表范围。安装前请保留现有可用网络和设备恢复入口。
+
+Magisk 版本码是最低检查值，不是升级建议。若使用[本文记录的 B23 root 套件](root-b23.md)，其说明指定配套 `28103`，应先完成对应的环境修复和重启检查。
 
 **手动安装 ZIP 前，确认 Magisk 没有同 ID `codex_u30pro_vpn` 的已安装或待重启模块。** Magisk 可能在项目检查前替换同 ID 的 `modules_update` 暂存内容；APK 入口会提前检查这两个目录。目录归属不明时先停止核查，安装期间也不要同时使用两个入口。
 

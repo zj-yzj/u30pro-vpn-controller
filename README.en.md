@@ -21,6 +21,8 @@ Tests measure latency in milliseconds. New nodes have no results until you run a
 
 ## Installation
 
+Setting up a device for the first time? Start with [Device preparation to working VPN](docs/setup.en.md), covering firmware checks, the B23 rooting record, UFI, installation and your subscription. If Magisk and UFI already work, check the B23 requirements below before installing.
+
 Current release: **[v1.3.0](https://github.com/zj-yzj/u30pro-vpn-controller/releases/tag/v1.3.0)**. Choose one installation entry; both install the same module.
 
 | File | How to use it |
